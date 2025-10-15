@@ -1,10 +1,5 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true,
-    'secure' => true,
-    'samesite' => 'Strict',
-]);
-session_start();
+require_once __DIR__ . '/session.php';
 header('Content-Type: application/json');
 
 // Generate a CSRF token for the session if it doesn't exist

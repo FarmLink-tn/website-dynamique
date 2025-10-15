@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 header('Content-Type: application/json');
 
 if (empty($_SESSION['csrf_token'])) {
