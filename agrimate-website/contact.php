@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 $pageTitle = 'FarmLink - Contact';
+$metaDescription = "Contactez l'équipe FarmLink pour obtenir un devis, poser vos questions et découvrir comment moderniser votre exploitation agricole en Tunisie.";
+$metaKeywords = 'FarmLink contact, devis agriculture intelligente, assistance FarmLink';
+$canonicalPath = '/contact.php';
 $activeNav = 'contact';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
@@ -37,6 +40,7 @@ include __DIR__ . '/includes/header.php';
                         <button type="submit" class="button w-full" data-translate="contact_send">
                             <i class="fas fa-paper-plane mr-2"></i> Envoyer le Message
                         </button>
+                        <p id="contact-form-feedback" class="mt-4 text-sm text-text-300" role="alert" aria-live="polite"></p>
                     </form>
                 </div>
             </div>

@@ -1,6 +1,23 @@
 <?php
 $pageTitle = $pageTitle ?? 'FarmLink';
 $pageLang = $pageLang ?? 'fr';
+$baseUrl = $baseUrl ?? 'https://farmlink.tn';
+$pageDescription = $metaDescription ?? 'FarmLink modernise les exploitations agricoles avec des solutions IoT, d\'IA et de rétrofit adaptées aux défis climatiques et hydriques en Tunisie.';
+$pageKeywords = $metaKeywords ?? 'agriculture intelligente, IoT agricole, conseiller IA, irrigation connectée, retrofit, FarmLink, Tunisie';
+$pageRobots = $metaRobots ?? 'index, follow';
+$ogImage = $metaOgImage ?? rtrim($baseUrl, '/') . '/image/logo.png';
+$requestedPath = $canonicalPath ?? (isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/');
+
+if ($requestedPath === '/index.php') {
+    $requestedPath = '/';
+}
+
+$canonicalUrl = rtrim($baseUrl, '/');
+if ($requestedPath !== '/') {
+    $canonicalUrl .= '/' . ltrim($requestedPath, '/');
+}
+
+$ogLocale = $pageLang === 'ar' ? 'ar_AR' : ($pageLang === 'en' ? 'en_GB' : 'fr_FR');
 ?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($pageLang, ENT_QUOTES, 'UTF-8'); ?>">
@@ -8,6 +25,22 @@ $pageLang = $pageLang ?? 'fr';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
+    <meta name="description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="keywords" content="<?= htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="robots" content="<?= htmlspecialchars($pageRobots, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="author" content="FarmLink">
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:title" content="<?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:type" content="<?= htmlspecialchars($metaOgType ?? 'website', ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:locale" content="<?= htmlspecialchars($ogLocale, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="theme-color" content="#0f172a">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

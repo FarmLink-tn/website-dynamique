@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 $pageTitle = 'FarmLink - Comment ça marche';
+$metaDescription = 'Comprenez étape par étape comment FarmLink installe ses solutions retrofit, connecte vos équipements agricoles au cloud et optimise vos décisions.';
+$metaKeywords = 'FarmLink, fonctionnement, retrofit agricole, IoT, contrôle agricole';
+$canonicalPath = '/how-it-works.php';
 $activeNav = 'how';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';

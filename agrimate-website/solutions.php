@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 $pageTitle = 'FarmLink - Nos Solutions';
+$metaDescription = "Explorez les solutions modulaires de FarmLink : irrigation intelligente, contrôle des pompes et surveillance environnementale pour booster vos rendements.";
+$metaKeywords = 'FarmLink solutions, irrigation intelligente, contrôle pompe, capteurs agricoles';
+$canonicalPath = '/solutions.php';
 $activeNav = 'solutions';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';

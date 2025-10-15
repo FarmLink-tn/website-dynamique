@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 $pageTitle = 'FarmLink - Accueil';
+$metaDescription = "FarmLink modernise l'agriculture tunisienne avec des solutions IoT, IA et retrofit accessibles pour optimiser l'irrigation et les rendements.";
+$metaKeywords = 'FarmLink, agriculture intelligente, IoT agricole, conseiller IA, irrigation connectée, Tunisie';
+$canonicalPath = '/';
 $activeNav = 'home';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';

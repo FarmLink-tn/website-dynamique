@@ -124,6 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_phone: "Numéro de téléphone",
             contact_message: "Message",
             contact_send: "<i class='fas fa-paper-plane mr-2'></i> Envoyer le Message",
+            contact_sending: "Envoi du message…",
+            contact_success_message: "Votre message a été envoyé avec succès.",
+            contact_error_message: "Impossible d'envoyer le message. Vérifiez les champs et réessayez.",
+            contact_network_error: "Une erreur réseau est survenue. Veuillez réessayer.",
             account_title: "Mon Compte",
             auth_login_title: "Se connecter",
             auth_login_btn: "Se connecter",
@@ -131,6 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_register_prompt: "Pas encore de compte ? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_title: "Créer un compte",
             auth_register_btn: "Créer le compte",
+            auth_register_instructions: "Tous les champs sont obligatoires. Utilisez un mot de passe d'au moins huit caractères.",
+            auth_last_name_label: "Nom",
+            auth_first_name_label: "Prénom",
+            auth_email_label: "Email",
+            auth_phone_label: "Téléphone",
+            auth_region_label: "Région",
             auth_last_name_placeholder: "Nom",
             auth_first_name_placeholder: "Prénom",
             auth_email_placeholder: "Email",
@@ -139,8 +149,35 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_login_prompt: "Déjà un compte ? <a data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             auth_login_prompt: "Déjà un compte ? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             products_section_title: "Mes Produits",
+            product_form_instructions: "Renseignez les informations clés de votre produit pour mettre à jour le tableau de bord.",
+            product_name_label: "Nom du produit",
+            product_quantity_label: "Quantité",
+            product_phone_label: "Téléphone GSM",
+            product_ph_label: "pH",
+            product_rain_label: "Pluie",
+            product_humidity_label: "Humidité",
+            product_soil_humidity_label: "Humidité du sol",
+            product_light_label: "Lumière",
+            product_valve_open_label: "Valve ouverte",
+            product_valve_angle_label: "Angle de valve",
+            product_name_placeholder: "Nom du produit",
+            product_quantity_placeholder: "Quantité",
+            product_phone_placeholder: "Téléphone GSM",
+            product_ph_placeholder: "pH",
+            product_rain_placeholder: "Pluie (mm)",
+            product_humidity_placeholder: "Humidité (%)",
+            product_soil_humidity_placeholder: "Humidité du sol (%)",
+            product_light_placeholder: "Lumière (lux)",
+            product_valve_angle_placeholder: "Angle de valve",
             add_product_btn: "Ajouter",
             logout_btn: "Se déconnecter",
+            profile_form_instructions: "Mettez à jour vos coordonnées FarmLink. Tous les champs sont obligatoires.",
+            profile_last_name_label: "Nom",
+            profile_first_name_label: "Prénom",
+            profile_email_label: "Email",
+            profile_phone_label: "Téléphone",
+            profile_region_label: "Région",
+            profile_update_button: "Mettre à jour",
             context_agricole: `
                 ### SUJET: AGRICULTURE EN TUNISIE ###
                 L'agriculture en Tunisie fait face à des défis comme la sécheresse et la salinité des sols. Les cultures principales sont les olives, les céréales, les dattes et les agrumes. La bonne gestion de l'eau est cruciale.
@@ -223,6 +260,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_phone: "Phone Number",
             contact_message: "Message",
             contact_send: "<i class='fas fa-paper-plane mr-2'></i> Send Message",
+            contact_sending: "Sending message…",
+            contact_success_message: "Your message was sent successfully.",
+            contact_error_message: "We couldn't send your message. Please check the fields and try again.",
+            contact_network_error: "A network error occurred. Please try again.",
             account_title: "My Account",
             auth_login_title: "Log In",
             auth_login_btn: "Log In",
@@ -230,6 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_register_prompt: "Don't have an account yet? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_title: "Create an Account",
             auth_register_btn: "Create Account",
+            auth_register_instructions: "All fields are required. Use a password with at least eight characters.",
+            auth_last_name_label: "Last Name",
+            auth_first_name_label: "First Name",
+            auth_email_label: "Email",
+            auth_phone_label: "Phone",
+            auth_region_label: "Region",
             auth_last_name_placeholder: "Last Name",
             auth_first_name_placeholder: "First Name",
             auth_email_placeholder: "Email",
@@ -238,8 +285,35 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_login_prompt: "Already have an account? <a data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             auth_login_prompt: "Already have an account? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             products_section_title: "My Products",
+            product_form_instructions: "Provide key product details to update the dashboard.",
+            product_name_label: "Product Name",
+            product_quantity_label: "Quantity",
+            product_phone_label: "Mobile Phone",
+            product_ph_label: "pH",
+            product_rain_label: "Rain",
+            product_humidity_label: "Humidity",
+            product_soil_humidity_label: "Soil Humidity",
+            product_light_label: "Light",
+            product_valve_open_label: "Valve Open",
+            product_valve_angle_label: "Valve Angle",
+            product_name_placeholder: "Product name",
+            product_quantity_placeholder: "Quantity",
+            product_phone_placeholder: "Mobile phone",
+            product_ph_placeholder: "pH",
+            product_rain_placeholder: "Rain (mm)",
+            product_humidity_placeholder: "Humidity (%)",
+            product_soil_humidity_placeholder: "Soil humidity (%)",
+            product_light_placeholder: "Light (lux)",
+            product_valve_angle_placeholder: "Valve angle",
             add_product_btn: "Add",
             logout_btn: "Log Out",
+            profile_form_instructions: "Update your FarmLink contact details. All fields are required.",
+            profile_last_name_label: "Last Name",
+            profile_first_name_label: "First Name",
+            profile_email_label: "Email",
+            profile_phone_label: "Phone",
+            profile_region_label: "Region",
+            profile_update_button: "Update",
             context_agricole: `
                 ### SUBJECT: AGRICULTURE IN TUNISIA ###
                 Agriculture in Tunisia faces challenges like drought and soil salinity. Main crops include olives, cereals, dates, and citrus fruits. Good water management is crucial.
@@ -318,6 +392,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_phone: "رقم الهاتف",
             contact_message: "الرسالة",
             contact_send: "<i class='fas fa-paper-plane ml-2'></i> إرسال الرسالة",
+            contact_sending: "جارٍ إرسال الرسالة…",
+            contact_success_message: "تم إرسال رسالتك بنجاح.",
+            contact_error_message: "تعذر إرسال الرسالة. تحقق من الحقول وحاول مرة أخرى.",
+            contact_network_error: "حدث خطأ في الشبكة. حاول مجددًا.",
             account_title: "حسابي",
             auth_login_title: "تسجيل الدخول",
             auth_login_btn: "تسجيل الدخول",
@@ -325,6 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_title: "إنشاء حساب",
             auth_register_btn: "إنشاء الحساب",
+            auth_register_instructions: "جميع الحقول مطلوبة. استخدم كلمة مرور لا تقل عن ثمانية أحرف.",
+            auth_last_name_label: "اللقب",
+            auth_first_name_label: "الاسم",
+            auth_email_label: "البريد الإلكتروني",
+            auth_phone_label: "الهاتف",
+            auth_region_label: "المنطقة",
             auth_last_name_placeholder: "اللقب",
             auth_first_name_placeholder: "الاسم الأول",
             auth_email_placeholder: "البريد الإلكتروني",
@@ -333,8 +417,35 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_login_prompt: "لديك حساب بالفعل؟ <a data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             auth_login_prompt: "لديك حساب بالفعل؟ <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             products_section_title: "منتجاتي",
+            product_form_instructions: "أدخل بيانات المنتج الأساسية لتحديث لوحة التحكم.",
+            product_name_label: "اسم المنتج",
+            product_quantity_label: "الكمية",
+            product_phone_label: "هاتف محمول",
+            product_ph_label: "درجة الحموضة",
+            product_rain_label: "الأمطار",
+            product_humidity_label: "الرطوبة",
+            product_soil_humidity_label: "رطوبة التربة",
+            product_light_label: "الإضاءة",
+            product_valve_open_label: "الصمام مفتوح",
+            product_valve_angle_label: "زاوية الصمام",
+            product_name_placeholder: "اسم المنتج",
+            product_quantity_placeholder: "الكمية",
+            product_phone_placeholder: "هاتف محمول",
+            product_ph_placeholder: "درجة الحموضة",
+            product_rain_placeholder: "الأمطار (مم)",
+            product_humidity_placeholder: "الرطوبة (%)",
+            product_soil_humidity_placeholder: "رطوبة التربة (%)",
+            product_light_placeholder: "الإضاءة (لوكس)",
+            product_valve_angle_placeholder: "زاوية الصمام",
             add_product_btn: "أضف",
             logout_btn: "تسجيل الخروج",
+            profile_form_instructions: "حدّث بيانات التواصل الخاصة بك في FarmLink. جميع الحقول مطلوبة.",
+            profile_last_name_label: "اللقب",
+            profile_first_name_label: "الاسم",
+            profile_email_label: "البريد الإلكتروني",
+            profile_phone_label: "الهاتف",
+            profile_region_label: "المنطقة",
+            profile_update_button: "تحديث",
             context_agricole: `
                 ### الموضوع: الزراعة في تونس ###
                 تواجه الزراعة في تونس تحديات مثل الجفاف وملوحة التربة. المحاصيل الرئيسية تشمل الزيتون والحبوب والتمور والحمضيات. الإدارة الجيدة للمياه أمر بالغ الأهمية.
@@ -1107,21 +1218,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gère la soumission du formulaire de contact
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
+        const contactFeedback = document.getElementById('contact-form-feedback');
+        const translate = (key, fallback) => (translations[currentLang] && translations[currentLang][key]) || fallback;
+        const setContactFeedback = (message, variant = 'neutral') => {
+            if (!contactFeedback) return;
+            contactFeedback.classList.remove('text-red-500', 'text-brand-green-400', 'text-text-300');
+            let toneClass = 'text-text-300';
+            if (variant === 'success') toneClass = 'text-brand-green-400';
+            if (variant === 'error') toneClass = 'text-red-500';
+            contactFeedback.classList.add(toneClass);
+            contactFeedback.textContent = message;
+        };
+
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(contactForm);
-            csrfFetch('server/contact.php', {
+
+          csrfFetch('server/contact.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.message || (data.success ? 'Message envoyé avec succès!' : 'Une erreur est survenue.'));
-                if (data.success) contactForm.reset();
-            })
-            .catch(() => {
-                alert('Erreur réseau.');
-            });
+                .then(res => res.json())
+                .then(data => {
+                    const message = data.message || translate(data.success ? 'contact_success_message' : 'contact_error_message', data.success ? 'Message envoyé avec succès!' : "Impossible d'envoyer le message.");
+                    setContactFeedback(message, data.success ? 'success' : 'error');
+                    if (data.success) {
+                        contactForm.reset();
+                    }
+                })
+                .catch(() => {
+                    setContactFeedback(translate('contact_network_error', 'Erreur réseau.'), 'error');
+                });
         });
     }
 
