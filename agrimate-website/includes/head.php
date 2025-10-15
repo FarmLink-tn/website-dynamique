@@ -11,11 +11,11 @@ $pageLang = $pageLang ?? 'fr';
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/aos.css">
+    <link rel="stylesheet" href="aos.css">
     <style>
       [data-aos]{opacity:1 !important;transform:none !important;}
     </style>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
     <?php if (!empty($extraStyles) && is_array($extraStyles)): ?>
         <?php foreach ($extraStyles as $style): ?>
             <?= $style ?>
