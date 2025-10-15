@@ -17,18 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     }
 }
 
-## codex/transform-to-fully-dynamic-website-zc2hd8
 // Load dependencies if available
 $autoload = __DIR__ . '/../vendor/autoload.php';
 if (file_exists($autoload)) {
     require_once $autoload;
 }
-=======
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-##main
 
 $name    = trim($_POST['name']    ?? '');
 $email   = trim($_POST['email']   ?? '');
@@ -42,7 +35,7 @@ if (!$name || !$email || !$message || !filter_var($email, FILTER_VALIDATE_EMAIL)
 }
 
 // Reject potential header injection
-if (preg_match('/[\r\n]/', $email)) {
+if (preg_match("/[\r\n]/", $email)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Email invalide.']);
     exit;
@@ -53,7 +46,6 @@ $to      = 'contact@farmlink.tn';
 $subject = 'Nouveau message de contact';
 $body    = "Nom: $name\nEmail: $cleanEmail\nTéléphone: $phone\nMessage:\n$message";
 
-##codex/transform-to-fully-dynamic-website-zc2hd8
 $mailerAvailable = class_exists(\PHPMailer\PHPMailer\PHPMailer::class);
 
 if ($mailerAvailable) {
@@ -90,26 +82,6 @@ $headers = [
 if (mail($to, $subject, $body, implode("\r\n", $headers))) {
     echo json_encode(['success' => true, 'message' => 'Message envoyé avec succès.']);
 } else {
-
-$mail = new PHPMailer(true); // PHPMailer helps prevent header injection
-
-try {
-    $mail->setFrom('contact@farmlink.tn', 'FarmLink');
-    $mail->addAddress($to);
-    $mail->addReplyTo($cleanEmail);
-
-    $mail->Subject = $subject;
-    $mail->Body    = $body;
-
-    if ($mail->send()) {
-        echo json_encode(['success' => true, 'message' => 'Message envoyé avec succès.']);
-    } else {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'message' => "Échec de l'envoi du message."]);
-    }
-} catch (Exception $e) {
-##main
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => "Erreur lors de l'envoi du message."]);
 }
-?>
