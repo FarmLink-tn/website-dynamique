@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 $pageTitle = 'FarmLink - Conseiller IA';
+$metaDescription = "Consultez le conseiller agricole IA de FarmLink pour obtenir des recommandations instantanées sur vos cultures et diagnostiquer les problèmes courants.";
+$metaKeywords = 'FarmLink IA, conseiller agricole, diagnostic cultures, intelligence artificielle';
+$canonicalPath = '/ai-advisor.php';
 $activeNav = 'ai';
 $beforeMainScripts = [
     '<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.21.0/dist/tf-core.min.js"></script>',

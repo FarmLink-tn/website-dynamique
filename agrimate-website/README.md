@@ -14,7 +14,7 @@ This directory contains the dynamic FarmLink website. Drop it into its own Git r
 - `contact.php` / `contact.html` – contact form
 - `includes/` – shared layout partials and bootstrap logic
 - `image/` – shared images
-- `script.js`, `style.css`, `aos.css`, `aos.js` – client-side assets
+- `script.js`, `script.min.js`, `style.css`, `style.min.css`, `aos.css`, `aos.js` – client-side assets
 - `server/` – PHP backend scripts and migrations
 - `composer.json` – PHP dependencies (for future expansion)
 
@@ -28,6 +28,10 @@ The dynamic features read database connection details from environment variables
 - `DB_PASSWORD` – Database password
 
 Ensure these variables are available in your environment before hitting the authenticated dashboards or API endpoints.
+
+Optional performance-related environment variables:
+
+- `ASSET_BASE_URL` – absolute base URL for static assets (e.g. `https://cdn.farmlink.tn`) used to offload CSS/JS delivery to a CDN.
 
 ## Local development
 

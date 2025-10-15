@@ -1,7 +1,11 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-requireAuth('/account.php');
+requireAuth('account.php');
 $pageTitle = 'FarmLink - Tableau de bord';
+$metaDescription = "Consultez votre tableau de bord FarmLink pour suivre vos capteurs, vos produits et l'état de vos équipements agricoles connectés.";
+$metaKeywords = 'FarmLink tableau de bord, suivi capteurs agricoles, plateforme IoT';
+$metaRobots = 'noindex, nofollow';
+$canonicalPath = '/profile.php';
 $activeNav = 'account';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
@@ -11,25 +15,31 @@ include __DIR__ . '/includes/header.php';
             <div class="container mx-auto px-6 text-center">
                 <h2 class="section-title">Mon Profil</h2>
                 <div class="max-w-xl mx-auto control-card mt-12 text-left">
-                    <form id="profile-form">
-                        <div class="mb-4">
-                            <input type="text" id="profile-last-name" class="form-input" placeholder="Nom" required>
+                    <form id="profile-form" aria-describedby="profile-instructions">
+                        <p id="profile-instructions" class="sr-only" data-translate="profile_form_instructions">Mettez à jour vos coordonnées FarmLink. Tous les champs sont obligatoires.</p>
+                        <div class="mb-4 text-left">
+                            <label for="profile-last-name" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_last_name_label">Nom</label>
+                            <input type="text" id="profile-last-name" name="last_name" class="form-input" placeholder="Nom" data-translate-placeholder="auth_last_name_placeholder" required aria-required="true" autocomplete="family-name" aria-describedby="profile-instructions">
                         </div>
-                        <div class="mb-4">
-                            <input type="text" id="profile-first-name" class="form-input" placeholder="Prénom" required>
+                        <div class="mb-4 text-left">
+                            <label for="profile-first-name" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_first_name_label">Prénom</label>
+                            <input type="text" id="profile-first-name" name="first_name" class="form-input" placeholder="Prénom" data-translate-placeholder="auth_first_name_placeholder" required aria-required="true" autocomplete="given-name" aria-describedby="profile-instructions">
                         </div>
-                        <div class="mb-4">
-                            <input type="email" id="profile-email" class="form-input" placeholder="Email" required>
+                        <div class="mb-4 text-left">
+                            <label for="profile-email" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_email_label">Email</label>
+                            <input type="email" id="profile-email" name="email" class="form-input" placeholder="Email" data-translate-placeholder="auth_email_placeholder" required aria-required="true" autocomplete="email" aria-describedby="profile-instructions">
                         </div>
-                        <div class="mb-4">
-                            <input type="tel" id="profile-phone" class="form-input" placeholder="Téléphone" required>
+                        <div class="mb-4 text-left">
+                            <label for="profile-phone" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_phone_label">Téléphone</label>
+                            <input type="tel" id="profile-phone" name="phone" class="form-input" placeholder="Téléphone" data-translate-placeholder="auth_phone_placeholder" required aria-required="true" autocomplete="tel" inputmode="tel" pattern="^\+?[0-9\s.-]{6,}$" aria-describedby="profile-instructions">
                         </div>
-                        <div class="mb-4">
-                            <input type="text" id="profile-region" class="form-input" placeholder="Région" required>
+                        <div class="mb-4 text-left">
+                            <label for="profile-region" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_region_label">Région</label>
+                            <input type="text" id="profile-region" name="region" class="form-input" placeholder="Région" data-translate-placeholder="auth_region_placeholder" required aria-required="true" autocomplete="address-level1" aria-describedby="profile-instructions">
                         </div>
-                        <button type="submit" class="button w-full">Mettre à jour</button>
+                        <button type="submit" class="button w-full" data-translate="profile_update_button">Mettre à jour</button>
                     </form>
-                    <p id="profile-message" class="mt-2 text-red-500"></p>
+                    <p id="profile-message" class="mt-2 text-red-500" role="alert" aria-live="polite"></p>
                 </div>
             </div>
         </section>
