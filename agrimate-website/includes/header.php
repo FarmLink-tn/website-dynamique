@@ -1,7 +1,7 @@
 <?php
 $activeNav = $activeNav ?? '';
 ?>
-<body class="dark" data-account-link="account.php" data-register-link="register.php" data-profile-link="profile.php">
+<body class="dark" data-account-link="/account.php" data-register-link="/register.php">
     <header class="sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
@@ -10,12 +10,12 @@ $activeNav = $activeNav ?? '';
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="about.php" class="nav-link<?= $activeNav === 'about' ? ' active' : ''; ?>" data-translate="nav_about">À propos</a>
-                <a href="how-it-works.php" class="nav-link<?= $activeNav === 'how' ? ' active' : ''; ?>" data-translate="nav_how_it_works">Comment ça marche</a>
-                <a href="solutions.php" class="nav-link<?= $activeNav === 'solutions' ? ' active' : ''; ?>" data-translate="nav_solutions">Nos Solutions</a>
-                <a href="ai-advisor.php" class="nav-link<?= $activeNav === 'ai' ? ' active' : ''; ?>" data-translate="nav_ai_advisor">Conseiller IA</a>
-                <a href="account.php" class="nav-link<?= $activeNav === 'account' ? ' active' : ''; ?>" data-translate="nav_account" data-route="account">Mon Compte</a>
-                <a href="contact.php" class="button<?= $activeNav === 'contact' ? ' active' : ''; ?>" data-translate="nav_get_quote">Obtenir un devis</a>
+                <a href="/about.php" class="nav-link<?= $activeNav === 'about' ? ' active' : ''; ?>" data-translate="nav_about">À propos</a>
+                <a href="/how-it-works.php" class="nav-link<?= $activeNav === 'how' ? ' active' : ''; ?>" data-translate="nav_how_it_works">Comment ça marche</a>
+                <a href="/solutions.php" class="nav-link<?= $activeNav === 'solutions' ? ' active' : ''; ?>" data-translate="nav_solutions">Nos Solutions</a>
+                <a href="/ai-advisor.php" class="nav-link<?= $activeNav === 'ai' ? ' active' : ''; ?>" data-translate="nav_ai_advisor">Conseiller IA</a>
+                <a href="/account.php" class="nav-link<?= $activeNav === 'account' ? ' active' : ''; ?>" data-translate="nav_account" data-route="account">Mon Compte</a>
+                <a href="/contact.php" class="button<?= $activeNav === 'contact' ? ' active' : ''; ?>" data-translate="nav_get_quote">Obtenir un devis</a>
             </div>
             <div class="flex items-center space-x-3">
                 <?php if (isAuthenticated()): ?>
@@ -41,12 +41,12 @@ $activeNav = $activeNav ?? '';
             </div>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden p-4 mt-2 mx-4">
-            <a href="about.php" class="block py-2 px-4 text-sm" data-translate="nav_about_mobile">À propos</a>
-            <a href="how-it-works.php" class="block py-2 px-4 text-sm" data-translate="nav_how_it_works_mobile">Comment ça marche</a>
-            <a href="solutions.php" class="block py-2 px-4 text-sm" data-translate="nav_solutions_mobile">Nos Solutions</a>
-            <a href="ai-advisor.php" class="block py-2 px-4 text-sm" data-translate="nav_ai_advisor_mobile">Conseiller IA</a>
-            <a href="account.php" class="block py-2 px-4 text-sm" data-translate="nav_account_mobile" data-route="account">Mon Compte</a>
-            <a href="contact.php" class="block py-2 px-4 text-sm" data-translate="nav_get_quote_mobile">Obtenir un devis</a>
+            <a href="/about.php" class="block py-2 px-4 text-sm" data-translate="nav_about_mobile">À propos</a>
+            <a href="/how-it-works.php" class="block py-2 px-4 text-sm" data-translate="nav_how_it_works_mobile">Comment ça marche</a>
+            <a href="/solutions.php" class="block py-2 px-4 text-sm" data-translate="nav_solutions_mobile">Nos Solutions</a>
+            <a href="/ai-advisor.php" class="block py-2 px-4 text-sm" data-translate="nav_ai_advisor_mobile">Conseiller IA</a>
+            <a href="/account.php" class="block py-2 px-4 text-sm" data-translate="nav_account_mobile" data-route="account">Mon Compte</a>
+            <a href="/contact.php" class="block py-2 px-4 text-sm" data-translate="nav_get_quote_mobile">Obtenir un devis</a>
             <?php if (isAdmin()): ?>
                 <a href="admin.php" class="block py-2 px-4 text-sm">Admin</a>
             <?php endif; ?>
