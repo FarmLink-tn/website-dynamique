@@ -1,7 +1,12 @@
 <?php
+$isSecure = (
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+    (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443')
+);
+
 session_set_cookie_params([
     'httponly' => true,
-    'secure' => true,
+    'secure' => $isSecure,
     'samesite' => 'Strict',
 ]);
 session_start();
