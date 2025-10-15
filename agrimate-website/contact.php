@@ -14,7 +14,7 @@ include __DIR__ . '/includes/header.php';
                     <p class="text-center text-text-300 mb-8" data-translate="contact_intro">
                         Une question ? Un projet ? N'hésitez pas à nous contacter. Notre équipe est prête à vous aider à franchir le pas vers l'agriculture intelligente.
                     </p>
-                    <form id="contact-form" action="/server/contact.php" method="POST">
+                    <form id="contact-form" action="server/contact.php" method="POST">
                         <input type="hidden" name="csrf_token" id="contact-csrf-token">
                         <div class="mb-6">
                             <label for="name" class="block mb-2 text-sm font-medium text-text-300" data-translate="contact_name">Nom</label>

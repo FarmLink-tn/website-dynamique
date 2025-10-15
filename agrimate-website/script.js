@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
             imagePreviewWrapper.classList.add('hidden');
 
             try {
-                const response = await fetch('/server/ai.php', {
+                const response = await fetch('server/ai.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: question })
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Fetch CSRF token for the session
-    csrfFetch('/server/auth.php?action=check')
+    csrfFetch('server/auth.php?action=check')
         .then(res => res.json())
         .then(data => {
             csrfToken = data.csrfToken;
@@ -608,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            csrfFetch('/server/auth.php?action=register', {
+            csrfFetch('server/auth.php?action=register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password, last_name: lastName, first_name: firstName, email, phone, region })
@@ -617,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.success) {
                     // Auto-login after registration then redirect to profile
-                    csrfFetch('/server/auth.php?action=login', {
+                    csrfFetch('server/auth.php?action=login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ username, password })
@@ -625,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(res => res.json())
                     .then(loginData => {
                         if (loginData.success) {
-                            window.location.href = '/profile.php';
+                            window.location.href = profileLink;
                         } else {
                             if (registerMessage) registerMessage.textContent = 'Compte créé, mais connexion impossible.';
                         }
@@ -644,7 +644,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
-            csrfFetch('/server/auth.php?action=login', {
+            csrfFetch('server/auth.php?action=login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = '/profile.php';
+                    window.location.href = profileLink;
                 } else {
                     if (loginMessage) loginMessage.textContent = data.message || "Nom d'utilisateur ou mot de passe incorrect.";
                 }
@@ -662,12 +662,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        csrfFetch('/server/auth.php?action=check', { method: 'GET' })
+        csrfFetch('server/auth.php?action=check', { method: 'GET' })
             .then(res => res.json())
             .then(data => {
                 csrfToken = data.csrfToken;
                 if (data.loggedIn) {
-                    window.location.href = '/profile.php';
+                    window.location.href = profileLink;
                 } else {
                     if (authSection) authSection.classList.remove('hidden');
                     if (registerSection) registerSection.classList.remove('hidden');
@@ -690,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 valve_open: document.getElementById('product-valve_open').checked ? 1 : 0,
                 valve_angle: parseInt(document.getElementById('product-valve_angle').value) || 0
             };
-            csrfFetch('/server/products.php', {
+            csrfFetch('server/products.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -710,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Affiche la liste des produits de l'utilisateur
         const displayProducts = () => {
             if (!productList) return;
-            csrfFetch('/server/products.php')
+            csrfFetch('server/products.php')
                 .then(res => res.json())
                 .then(products => {
                     productList.innerHTML = '';
@@ -731,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             valveBtn.className = 'button button--glass';
                             valveBtn.textContent = prod.valve_open == 1 ? 'Fermer' : 'Ouvrir';
                             valveBtn.addEventListener('click', () => {
-                                csrfFetch(`/server/products.php?id=${prod.id}`, {
+                                csrfFetch(`server/products.php?id=${prod.id}`, {
                                     method: 'PUT',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ valve_open: prod.valve_open == 1 ? 0 : 1 })
@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             angleInput.value = prod.valve_angle;
                             angleInput.className = 'form-input w-20';
                             angleInput.addEventListener('change', () => {
-                                csrfFetch(`/server/products.php?id=${prod.id}`, {
+                                csrfFetch(`server/products.php?id=${prod.id}`, {
                                     method: 'PUT',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ valve_angle: parseInt(angleInput.value) || 0 })
@@ -787,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dashboardLogoutBtn = document.getElementById('logout-btn');
 
         const loadProfile = () => {
-            csrfFetch('/server/user.php')
+            csrfFetch('server/user.php')
                 .then(res => {
                     if (!res.ok) throw new Error('Unauthorized');
                     return res.json();
@@ -805,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const loadDashboardProducts = () => {
             if (!dashboardProductList) return;
-            csrfFetch('/server/products.php')
+            csrfFetch('server/products.php')
                 .then(res => res.json())
                 .then(products => {
                     dashboardProductList.innerHTML = '';
@@ -851,7 +851,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         valveBtn.className = 'button button--glass text-sm';
                         valveBtn.textContent = Number(prod.valve_open) === 1 ? 'Fermer' : 'Ouvrir';
                         valveBtn.addEventListener('click', () => {
-                            csrfFetch(`/server/products.php?id=${prod.id}`, {
+                            csrfFetch(`server/products.php?id=${prod.id}`, {
                                 method: 'PUT',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ valve_open: Number(prod.valve_open) === 1 ? 0 : 1 })
@@ -867,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         angleInput.value = prod.valve_angle ?? 0;
                         angleInput.className = 'form-input w-20';
                         angleInput.addEventListener('change', () => {
-                            csrfFetch(`/server/products.php?id=${prod.id}`, {
+                            csrfFetch(`server/products.php?id=${prod.id}`, {
                                 method: 'PUT',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ valve_angle: parseInt(angleInput.value, 10) || 0 })
@@ -883,7 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         deleteBtn.textContent = 'Supprimer';
                         deleteBtn.addEventListener('click', () => {
                             if (!confirm('Supprimer ce module ?')) return;
-                            csrfFetch(`/server/products.php?id=${prod.id}`, {
+                            csrfFetch(`server/products.php?id=${prod.id}`, {
                                 method: 'DELETE'
                             }).then(loadDashboardProducts);
                         });
@@ -921,7 +921,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 phone: phoneInput.value.trim(),
                 region: regionInput.value.trim()
             };
-            csrfFetch('/server/user.php', {
+            csrfFetch('server/user.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -1005,7 +1005,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const fetchStats = () => {
-            csrfFetch('/server/admin.php?action=stats')
+            csrfFetch('server/admin.php?action=stats')
                 .then(res => res.json())
                 .then(response => {
                     if (!response.success) return;
@@ -1017,7 +1017,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const fetchUsers = () => {
-            csrfFetch('/server/admin.php?action=users')
+            csrfFetch('server/admin.php?action=users')
                 .then(res => res.json())
                 .then(response => {
                     if (!response.success) return;
@@ -1026,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const fetchProducts = () => {
-            csrfFetch('/server/admin.php?action=products')
+            csrfFetch('server/admin.php?action=products')
                 .then(res => res.json())
                 .then(response => {
                     if (!response.success) return;
@@ -1048,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(contactForm);
-            csrfFetch('/server/contact.php', {
+            csrfFetch('server/contact.php', {
                 method: 'POST',
                 body: formData
             })

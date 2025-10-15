@@ -5,8 +5,8 @@ $activeNav = $activeNav ?? '';
     <header class="sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <a href="/index.php">
-                    <img src="/image/logo.png" alt="Logo FarmLink" class="h-14 w-auto">
+                <a href="index.php">
+                    <img src="image/logo.png" alt="Logo FarmLink" class="h-14 w-auto">
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-8">
@@ -21,7 +21,7 @@ $activeNav = $activeNav ?? '';
                 <?php if (isAuthenticated()): ?>
                     <span class="hidden md:inline text-sm text-text-500">👋 <?= htmlspecialchars($currentUser['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
                     <?php if (isAdmin()): ?>
-                        <a href="/admin.php" class="button button--glass text-xs">Admin</a>
+                        <a href="admin.php" class="button button--glass text-xs">Admin</a>
                     <?php endif; ?>
                 <?php endif; ?>
                 <select id="language-switcher" class="mr-1">
@@ -48,7 +48,7 @@ $activeNav = $activeNav ?? '';
             <a href="/account.php" class="block py-2 px-4 text-sm" data-translate="nav_account_mobile" data-route="account">Mon Compte</a>
             <a href="/contact.php" class="block py-2 px-4 text-sm" data-translate="nav_get_quote_mobile">Obtenir un devis</a>
             <?php if (isAdmin()): ?>
-                <a href="/admin.php" class="block py-2 px-4 text-sm">Admin</a>
+                <a href="admin.php" class="block py-2 px-4 text-sm">Admin</a>
             <?php endif; ?>
         </div>
     </header>

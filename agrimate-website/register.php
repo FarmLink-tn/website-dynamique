@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 if (isAuthenticated()) {
-    header('Location: /profile.php');
+    header('Location: profile.php');
     exit;
 }
 $pageTitle = 'FarmLink - Créer un compte';
