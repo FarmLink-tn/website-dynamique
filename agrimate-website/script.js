@@ -1,11 +1,55 @@
 let csrfToken = null;
+let csrfTokenPromise = null;
+
+function setCsrfToken(token) {
+    csrfToken = token || null;
+    document.querySelectorAll('input[name="csrf_token"]').forEach(input => {
+        input.value = csrfToken || '';
+    });
+}
+
+function refreshCsrfToken() {
+    csrfTokenPromise = fetch('server/auth.php?action=check', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            setCsrfToken(data.csrfToken);
+            return csrfToken;
+        })
+        .catch(() => {
+            setCsrfToken(null);
+            return null;
+        })
+        .finally(() => {
+            csrfTokenPromise = null;
+        });
+    return csrfTokenPromise;
+}
+
+function ensureCsrfToken() {
+    if (csrfToken) {
+        return Promise.resolve(csrfToken);
+    }
+    if (csrfTokenPromise) {
+        return csrfTokenPromise;
+    }
+    return refreshCsrfToken();
+}
 
 function csrfFetch(url, options = {}) {
-    options.headers = options.headers || {};
-    if (options.method && options.method.toUpperCase() !== 'GET') {
-        options.headers['X-CSRF-Token'] = csrfToken;
+    const opts = { ...options };
+    opts.credentials = opts.credentials || 'include';
+    const method = (opts.method || 'GET').toUpperCase();
+    if (method === 'GET') {
+        return fetch(url, opts);
     }
-    return fetch(url, options);
+    return ensureCsrfToken().then(() => {
+        if (!csrfToken) {
+            return Promise.reject(new Error('CSRF token unavailable'));
+        }
+        opts.headers = { ...(opts.headers || {}) };
+        opts.headers['X-CSRF-Token'] = csrfToken;
+        return fetch(url, opts);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -83,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "Mon Compte",
             auth_login_title: "Se connecter",
             auth_login_btn: "Se connecter",
+            auth_register_prompt: "Pas encore de compte ? <a data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_prompt: "Pas encore de compte ? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_title: "Créer un compte",
             auth_register_btn: "Créer le compte",
@@ -91,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Numéro de téléphone",
             auth_region_placeholder: "Région",
+            auth_login_prompt: "Déjà un compte ? <a data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             auth_login_prompt: "Déjà un compte ? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             products_section_title: "Mes Produits",
             add_product_btn: "Ajouter",
@@ -180,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "My Account",
             auth_login_title: "Log In",
             auth_login_btn: "Log In",
+            auth_register_prompt: "Don't have an account yet? <a data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_prompt: "Don't have an account yet? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_title: "Create an Account",
             auth_register_btn: "Create Account",
@@ -188,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Phone Number",
             auth_region_placeholder: "Region",
+            auth_login_prompt: "Already have an account? <a data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             auth_login_prompt: "Already have an account? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             products_section_title: "My Products",
             add_product_btn: "Add",
@@ -273,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "حسابي",
             auth_login_title: "تسجيل الدخول",
             auth_login_btn: "تسجيل الدخول",
+            auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_title: "إنشاء حساب",
             auth_register_btn: "إنشاء الحساب",
@@ -281,6 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "البريد الإلكتروني",
             auth_phone_placeholder: "رقم الهاتف",
             auth_region_placeholder: "المنطقة",
+            auth_login_prompt: "لديك حساب بالفعل؟ <a data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             auth_login_prompt: "لديك حساب بالفعل؟ <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             products_section_title: "منتجاتي",
             add_product_btn: "أضف",
@@ -305,6 +355,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeIconDark = document.getElementById('theme-icon-dark');
     const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
     const ctaButtons = document.querySelectorAll('.button, .cta-button');
+    const accountLink = document.body.dataset.accountLink || 'account.php';
+    const registerLink = document.body.dataset.registerLink || 'register.php';
+    const profileLink = document.body.dataset.profileLink || 'profile.php';
     const accountLink = document.body.dataset.accountLink || '/account.php';
     const registerLink = document.body.dataset.registerLink || '/register.php';
 
@@ -314,6 +367,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.querySelectorAll('[data-route="register"]').forEach(link => {
             link.setAttribute('href', registerLink);
+        });
+        document.querySelectorAll('[data-route="profile"]').forEach(link => {
+            link.setAttribute('href', profileLink);
         });
     };
 
@@ -565,6 +621,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Fetch CSRF token for the session
+    refreshCsrfToken().catch(() => {});
     csrfFetch('server/auth.php?action=check')
         .then(res => res.json())
         .then(data => {
@@ -615,6 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(res => res.json())
             .then(data => {
+                if (data.csrfToken) setCsrfToken(data.csrfToken);
                 if (data.success) {
                     // Auto-login after registration then redirect to profile
                     csrfFetch('server/auth.php?action=login', {
@@ -624,6 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .then(res => res.json())
                     .then(loginData => {
+                        if (loginData.csrfToken) setCsrfToken(loginData.csrfToken);
                         if (loginData.success) {
                             window.location.href = profileLink;
                         } else {
@@ -651,6 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(res => res.json())
             .then(data => {
+                if (data.csrfToken) setCsrfToken(data.csrfToken);
                 if (data.success) {
                     window.location.href = profileLink;
                 } else {
@@ -665,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
         csrfFetch('server/auth.php?action=check', { method: 'GET' })
             .then(res => res.json())
             .then(data => {
-                csrfToken = data.csrfToken;
+                setCsrfToken(data.csrfToken);
                 if (data.loggedIn) {
                     window.location.href = profileLink;
                 } else {
@@ -703,6 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Gère la déconnexion
         if (logoutBtn) logoutBtn.addEventListener('click', () => {
+            csrfFetch('server/auth.php?action=logout', { method: 'POST' })
             csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
                 .then(() => { window.location.href = accountLink; });
         });
@@ -907,6 +968,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (dashboardLogoutBtn) {
             dashboardLogoutBtn.addEventListener('click', () => {
+                csrfFetch('server/auth.php?action=logout', { method: 'POST' })
                 csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
                     .then(() => { window.location.href = accountLink; });
             });

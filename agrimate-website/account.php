@@ -26,6 +26,7 @@ include __DIR__ . '/includes/header.php';
                             <button type="submit" class="button w-full" data-translate="auth_login_btn">Se connecter</button>
                         </form>
                         <p id="login-message" class="mt-2 text-red-500"></p>
+                        <p class="mt-4 text-text-300" data-translate="auth_register_prompt">Pas encore de compte ? <a href="register.php" class="text-brand-green-400 font-bold" data-route="register">Créer un compte</a></p>
                         <p class="mt-4 text-text-300" data-translate="auth_register_prompt">Pas encore de compte ? <a href="/register.php" class="text-brand-green-400 font-bold" data-route="register">Créer un compte</a></p>
                     </div>
 

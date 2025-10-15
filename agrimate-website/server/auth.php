@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/session.php';
 $isSecure = (
     (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
     (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443')

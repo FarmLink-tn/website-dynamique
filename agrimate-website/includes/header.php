@@ -1,6 +1,7 @@
 <?php
 $activeNav = $activeNav ?? '';
 ?>
+<body class="dark" data-account-link="account.php" data-register-link="register.php" data-profile-link="profile.php">
 <body class="dark" data-account-link="/account.php" data-register-link="/register.php">
     <header class="sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
