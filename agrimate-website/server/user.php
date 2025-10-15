@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/logger.php';
 header('Content-Type: application/json');
 
 // Ensure a CSRF token exists for this session
@@ -13,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
         http_response_code(403);
         echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
+        app_log('user_invalid_csrf', []);
         exit;
     }
 }
@@ -20,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    app_log('user_unauthorized', []);
     exit;
 }
 
@@ -35,6 +38,7 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    app_log('user_db_failure', ['error' => $e->getCode()]);
     exit;
 }
 
@@ -49,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else {
         http_response_code(404);
         echo json_encode(['success' => false, 'message' => 'User not found']);
+        app_log('user_not_found', ['user_id' => $userId]);
     }
     exit;
 }
@@ -64,12 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
     if (!$lastName || !$firstName || !$email || !$phone || !$region) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Missing fields']);
+        app_log('user_update_missing_fields', []);
         exit;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/^\d{8,}$/', $phone)) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Invalid fields']);
+        app_log('user_update_invalid_fields', []);
         exit;
     }
 
@@ -78,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
     if ($stmt->fetch()) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Email already in use']);
+        app_log('user_update_email_conflict', ['email_hash' => substr(hash('sha256', strtolower($email)), 0, 12)]);
         exit;
     }
 
@@ -85,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
     $stmt->execute([$lastName, $firstName, $email, $phone, $region, $userId]);
 
     echo json_encode(['success' => true]);
+    app_log('user_update_success', ['user_id' => $userId]);
     exit;
 }
 
