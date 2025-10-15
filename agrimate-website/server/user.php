@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 header('Content-Type: application/json');
 
 // Ensure a CSRF token exists for this session
