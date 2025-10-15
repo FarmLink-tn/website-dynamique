@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
         http_response_code(403);
         echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
+        app_log('contact_invalid_csrf', ['token' => $token !== '' ? 'provided' : 'missing']);
         exit;
     }
 }
@@ -31,6 +32,11 @@ $message = trim($_POST['message'] ?? '');
 if (!$name || !$email || !$message || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Champs invalides ou manquants.']);
+    app_log('contact_invalid_fields', [
+        'name' => (bool) $name,
+        'email_valid' => filter_var($email, FILTER_VALIDATE_EMAIL) !== false,
+        'message' => (bool) $message,
+    ]);
     exit;
 }
 
@@ -38,6 +44,7 @@ if (!$name || !$email || !$message || !filter_var($email, FILTER_VALIDATE_EMAIL)
 if (preg_match("/[\r\n]/", $email)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Email invalide.']);
+    app_log('contact_header_injection', ['length' => strlen($email)]);
     exit;
 }
 
@@ -61,13 +68,19 @@ if ($mailerAvailable) {
 
         if ($mail->send()) {
             echo json_encode(['success' => true, 'message' => 'Message envoyé avec succès.']);
+            app_log('contact_mail_sent', ['transport' => 'phpmailer']);
         } else {
             http_response_code(500);
             echo json_encode(['success' => false, 'message' => "Échec de l'envoi du message."]);
+            app_log('contact_mail_failed', ['transport' => 'phpmailer', 'error' => 'unknown']);
         }
     } catch (\Throwable $e) {
         http_response_code(500);
         echo json_encode(['success' => false, 'message' => "Erreur lors de l'envoi du message."]);
+        app_log('contact_mail_exception', [
+            'transport' => 'phpmailer',
+            'error' => $e->getMessage(),
+        ]);
     }
     exit;
 }
@@ -81,7 +94,9 @@ $headers = [
 
 if (mail($to, $subject, $body, implode("\r\n", $headers))) {
     echo json_encode(['success' => true, 'message' => 'Message envoyé avec succès.']);
+    app_log('contact_mail_sent', ['transport' => 'mail']);
 } else {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => "Erreur lors de l'envoi du message."]);
+    app_log('contact_mail_failed', ['transport' => 'mail']);
 }

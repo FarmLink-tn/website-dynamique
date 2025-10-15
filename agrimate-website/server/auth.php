@@ -40,6 +40,7 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    app_log('auth_db_failure', ['error' => $e->getCode()]);
     exit;
 }
 
@@ -78,6 +79,10 @@ switch ($action) {
         if ($stmt->fetch()) {
             http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Username or email already exists']);
+            app_log('auth_register_conflict', [
+                'username' => $username,
+                'email_hash' => substr(hash('sha256', strtolower($email)), 0, 12),
+            ]);
             break;
         }
         $hash = password_hash($password, PASSWORD_DEFAULT);
@@ -111,8 +116,10 @@ switch ($action) {
                 'role' => $_SESSION['role'],
                 'csrfToken' => $_SESSION['csrf_token']
             ]);
+            app_log('auth_login_success', ['user_id' => $user['id']]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Invalid credentials']);
+            app_log('auth_login_failed', ['username' => $username !== '' ? 'provided' : 'missing']);
         }
         break;
 

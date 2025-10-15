@@ -9,6 +9,7 @@ if (empty($_SESSION['csrf_token'])) {
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Forbidden']);
+    app_log('admin_forbidden', ['user_id' => $_SESSION['user_id'] ?? null]);
     exit;
 }
 
@@ -30,6 +31,7 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    app_log('admin_db_failure', ['error' => $e->getCode()]);
     exit;
 }
 

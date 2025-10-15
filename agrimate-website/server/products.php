@@ -10,6 +10,7 @@ if (empty($_SESSION['csrf_token'])) {
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Not authenticated']);
+    app_log('products_unauthenticated', []);
     exit;
 }
 
@@ -19,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
         http_response_code(403);
         echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
+        app_log('products_invalid_csrf', []);
         exit;
     }
 }
@@ -34,6 +36,7 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    app_log('products_db_failure', ['error' => $e->getCode()]);
     exit;
 }
 
@@ -52,14 +55,14 @@ function send_sms($phone, $message) {
     ]);
     $response = curl_exec($ch);
     if ($response === false) {
-        error_log('SMS API request error: ' . curl_error($ch));
+        app_log('sms_request_error', ['error' => curl_error($ch)]);
         curl_close($ch);
         return false;
     }
     $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
     if ($status >= 400) {
-        error_log("SMS API responded with HTTP $status: $response");
+        app_log('sms_http_error', ['status' => $status]);
         return false;
     }
     return true;
@@ -141,7 +144,7 @@ switch ($method) {
         ]);
         if (!empty($input['send_sms'])) {
             if (!send_sms($input['phone'], 'New order for ' . ($input['name'] ?? 'product'))) {
-                error_log('Failed to send SMS for product creation');
+                app_log('sms_send_failed', ['context' => 'create']);
             }
         }
         echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
@@ -184,7 +187,7 @@ switch ($method) {
             $prod = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($prod) {
                 if (!send_sms($prod['phone'], 'Order update for ' . $prod['name'])) {
-                    error_log('Failed to send SMS for product update');
+                    app_log('sms_send_failed', ['context' => 'update']);
                 }
             }
         }
