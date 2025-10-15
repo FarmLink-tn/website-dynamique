@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
 $pageTitle = 'FarmLink - À propos';
+$metaDescription = "Découvrez la mission de FarmLink : rendre l'agriculture intelligente accessible grâce au retrofit, à l'IoT et à l'IA pour les exploitations tunisiennes.";
+$metaKeywords = 'FarmLink, à propos, mission, retrofit agricole, innovation agricole Tunisie';
+$canonicalPath = '/about.php';
 $activeNav = 'about';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
@@ -10,7 +13,7 @@ include __DIR__ . '/includes/header.php';
             <h2 class="section-title" data-translate="about_main_title">L'Agriculture de Demain, Une Récolte à la Fois.</h2>
             <div class="grid md:grid-cols-2 gap-16 items-center mt-20">
                 <div>
-                    <img src="/image/about_us_im2.jpg" alt="Ferme Intelligente avec IoT" class="rounded-lg shadow-2xl w-full">
+                    <img src="image/about_us_im2.jpg" alt="Ferme Intelligente avec IoT" class="rounded-lg shadow-2xl w-full" width="1024" height="640" loading="lazy" decoding="async" srcset="image/about_us_im2.jpg 1024w" sizes="(min-width: 1024px) 50vw, 100vw">
                 </div>
                 <div class="text-left">
                     <h3 class="text-2xl font-bold text-brand-blue-500 mb-4" data-translate="about_vision_title">Notre Vision : Un futur où chaque ferme est intelligente.</h3>
