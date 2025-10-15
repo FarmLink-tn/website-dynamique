@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "Mon Compte",
             auth_login_title: "Se connecter",
             auth_login_btn: "Se connecter",
-            auth_register_prompt: "Pas encore de compte ? <a href='register.php' class='text-brand-green-400 font-bold'>Créer un compte</a>",
+            auth_register_prompt: "Pas encore de compte ? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_title: "Créer un compte",
             auth_register_btn: "Créer le compte",
             auth_last_name_placeholder: "Nom",
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Numéro de téléphone",
             auth_region_placeholder: "Région",
-            auth_login_prompt: "Déjà un compte ? <a href='account.php' class='text-brand-blue-500 font-bold'>Se connecter</a>",
+            auth_login_prompt: "Déjà un compte ? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             products_section_title: "Mes Produits",
             add_product_btn: "Ajouter",
             logout_btn: "Se déconnecter",
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "My Account",
             auth_login_title: "Log In",
             auth_login_btn: "Log In",
-            auth_register_prompt: "Don't have an account yet? <a href='register.php' class='text-brand-green-400 font-bold'>Create an account</a>",
+            auth_register_prompt: "Don't have an account yet? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_title: "Create an Account",
             auth_register_btn: "Create Account",
             auth_last_name_placeholder: "Last Name",
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Phone Number",
             auth_region_placeholder: "Region",
-            auth_login_prompt: "Already have an account? <a href='account.php' class='text-brand-blue-500 font-bold'>Log In</a>",
+            auth_login_prompt: "Already have an account? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             products_section_title: "My Products",
             add_product_btn: "Add",
             logout_btn: "Log Out",
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "حسابي",
             auth_login_title: "تسجيل الدخول",
             auth_login_btn: "تسجيل الدخول",
-            auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a href='register.php' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
+            auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_title: "إنشاء حساب",
             auth_register_btn: "إنشاء الحساب",
             auth_last_name_placeholder: "اللقب",
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "البريد الإلكتروني",
             auth_phone_placeholder: "رقم الهاتف",
             auth_region_placeholder: "المنطقة",
-            auth_login_prompt: "لديك حساب بالفعل؟ <a href='account.php' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
+            auth_login_prompt: "لديك حساب بالفعل؟ <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             products_section_title: "منتجاتي",
             add_product_btn: "أضف",
             logout_btn: "تسجيل الخروج",
@@ -305,6 +305,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeIconDark = document.getElementById('theme-icon-dark');
     const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
     const ctaButtons = document.querySelectorAll('.button, .cta-button');
+    const accountLink = document.body.dataset.accountLink || '/account.php';
+    const registerLink = document.body.dataset.registerLink || '/register.php';
+
+    const applyDynamicLinks = () => {
+        document.querySelectorAll('[data-route="account"]').forEach(link => {
+            link.setAttribute('href', accountLink);
+        });
+        document.querySelectorAll('[data-route="register"]').forEach(link => {
+            link.setAttribute('href', registerLink);
+        });
+    };
 
     const applyLanguage = (lang) => {
         currentLang = lang;
@@ -347,6 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (languageSwitcher) languageSwitcher.value = savedLang;
     applyLanguage(savedLang);
+    applyDynamicLinks();
     applyTheme(savedTheme);
 
     const currentPage = window.location.pathname.split("/").pop() || "index.php";
@@ -358,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newLang = e.target.value;
         localStorage.setItem('language', newLang);
         applyLanguage(newLang);
+        applyDynamicLinks();
     });
     if (menuBtn && mobileMenu) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     if (themeToggle) themeToggle.addEventListener('click', () => {
@@ -691,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gère la déconnexion
         if (logoutBtn) logoutBtn.addEventListener('click', () => {
             csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
-                .then(() => { window.location.href = '/account.php'; });
+                .then(() => { window.location.href = accountLink; });
         });
 
         // Affiche la liste des produits de l'utilisateur
@@ -787,7 +800,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     regionInput.value = data.region || '';
                 })
                 .catch(() => {
-                    window.location.href = '/account.php';
+                    window.location.href = accountLink;
                 });
         };
         const loadDashboardProducts = () => {
@@ -895,7 +908,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dashboardLogoutBtn) {
             dashboardLogoutBtn.addEventListener('click', () => {
                 csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
-                    .then(() => { window.location.href = '/account.php'; });
+                    .then(() => { window.location.href = accountLink; });
             });
         }
 
