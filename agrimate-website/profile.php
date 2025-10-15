@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-requireAuth('/account.php');
+requireAuth('account.php');
 $pageTitle = 'FarmLink - Tableau de bord';
 $activeNav = 'account';
 include __DIR__ . '/includes/head.php';

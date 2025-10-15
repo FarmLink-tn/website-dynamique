@@ -26,7 +26,7 @@ function isAdmin(): bool
     return isset($currentUser['role']) && $currentUser['role'] === 'admin';
 }
 
-function requireAuth(string $redirect = '/account.php'): void
+function requireAuth(string $redirect = 'account.php'): void
 {
     if (!isAuthenticated()) {
         header('Location: ' . $redirect);
@@ -34,7 +34,7 @@ function requireAuth(string $redirect = '/account.php'): void
     }
 }
 
-function requireAdmin(string $redirect = '/account.php'): void
+function requireAdmin(string $redirect = 'account.php'): void
 {
     if (!isAdmin()) {
         header('Location: ' . $redirect);
