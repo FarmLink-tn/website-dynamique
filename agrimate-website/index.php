@@ -21,7 +21,7 @@ include __DIR__ . '/includes/header.php';
         <section class="summary-section py-24" data-aos="fade-up">
             <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
                 <div class="summary-image">
-                    <img src="image/about_us_im1.png" alt="Notre vision pour l'agriculture" class="rounded-lg shadow-2xl" width="2816" height="1536" loading="lazy" decoding="async" srcset="image/about_us_im1.png 2816w" sizes="(min-width: 1024px) 45vw, 90vw">
+                    <img src="image/about_us_im1.png" alt="Notre vision pour l'agriculture" class="rounded-lg shadow-2xl">
                 </div>
                 <div class="summary-text text-left">
                     <h2 class="section-title" data-translate="summary_about_title">Notre Vision : Un Futur Intelligent</h2>
@@ -39,7 +39,7 @@ include __DIR__ . '/includes/header.php';
                     <a href="solutions.php" class="button button--glass" data-translate="explore_solutions">Explorer nos solutions</a>
                 </div>
                 <div class="summary-image">
-                    <img src="image/background_im1.png" alt="Processus de modernisation" class="rounded-lg shadow-2xl" width="1024" height="610" loading="lazy" decoding="async" srcset="image/background_im1.png 1024w" sizes="(min-width: 1024px) 45vw, 90vw">
+                    <img src="image/background_im1.png" alt="Processus de modernisation" class="rounded-lg shadow-2xl">
                 </div>
             </div>
         </section>
@@ -52,7 +52,7 @@ include __DIR__ . '/includes/header.php';
                     <a href="ai-advisor.php" class="button button--glass" data-translate="try_ai_advisor">Essayer le conseiller IA</a>
                 </div>
                 <div class="summary-image md:order-1">
-                    <img src="image/about_us_im2.jpg" alt="Conseiller agricole IA" class="rounded-lg shadow-2xl" width="1024" height="640" loading="lazy" decoding="async" srcset="image/about_us_im2.jpg 1024w" sizes="(min-width: 1024px) 45vw, 90vw">
+                    <img src="image/about_us_im2.jpg" alt="Conseiller agricole IA" class="rounded-lg shadow-2xl">
                 </div>
             </div>
         </section>
@@ -70,7 +70,7 @@ include __DIR__ . '/includes/header.php';
                 <h2 class="section-title" data-translate="testimonials_title">Ce que disent nos agriculteurs</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                     <div class="testimonial-card">
-                        <img src="image/Karim A.png" alt="Photo de Karim A." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft" width="512" height="512" loading="lazy" decoding="async" srcset="image/Karim A.png 512w" sizes="96px">
+                        <img src="image/Karim A.png" alt="Photo de Karim A." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft">
                         <p class="text-lg italic mt-4" data-translate="testimonial_1_text">"FarmLink a transformé ma gestion de l'eau. J'économise du temps et de l'argent, et mes rendements n'ont jamais été aussi bons."</p>
                         <div class="mt-4">
                             <p class="font-bold" data-translate="testimonial_1_name">Karim A.</p>
@@ -78,7 +78,7 @@ include __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="testimonial-card">
-                        <img src="image/fatma.png" alt="Photo de Fatma M." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft" width="2048" height="2048" loading="lazy" decoding="async" srcset="image/fatma.png 2048w" sizes="96px">
+                        <img src="image/fatma.png" alt="Photo de Fatma M." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft">
                         <p class="text-lg italic mt-4" data-translate="testimonial_2_text">"L'installation a été incroyablement simple sur mon équipement existant. Le panneau de contrôle est très intuitif."</p>
                         <div class="mt-4">
                             <p class="font-bold" data-translate="testimonial_2_name">Fatma M.</p>
@@ -86,7 +86,7 @@ include __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="testimonial-card">
-                        <img src="image/yousef.png" alt="Photo de Youssef B." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft" width="1905" height="1909" loading="lazy" decoding="async" srcset="image/yousef.png 1909w" sizes="96px">
+                        <img src="image/yousef.png" alt="Photo de Youssef B." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft">
                         <p class="text-lg italic mt-4" data-translate="testimonial_3_text">"Le conseiller IA est un véritable plus. Il m'a aidé à identifier un problème de ravageurs avant qu'il ne se propage. C'est l'avenir !"</p>
                         <div class="mt-4">
                             <p class="font-bold" data-translate="testimonial_3_name">Youssef B.</p>

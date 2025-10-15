@@ -131,10 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "Mon Compte",
             auth_login_title: "Se connecter",
             auth_login_btn: "Se connecter",
-            auth_login_instructions: "Saisissez votre nom d'utilisateur et votre mot de passe pour accéder à votre espace sécurisé FarmLink.",
-            auth_username_label: "Nom d'utilisateur",
-            auth_password_label: "Mot de passe",
             auth_register_prompt: "Pas encore de compte ? <a data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
+            auth_register_prompt: "Pas encore de compte ? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_title: "Créer un compte",
             auth_register_btn: "Créer le compte",
             auth_register_instructions: "Tous les champs sont obligatoires. Utilisez un mot de passe d'au moins huit caractères.",
@@ -148,9 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Numéro de téléphone",
             auth_region_placeholder: "Région",
-            auth_username_placeholder: "Nom d'utilisateur",
-            auth_password_placeholder: "Mot de passe",
             auth_login_prompt: "Déjà un compte ? <a data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
+            auth_login_prompt: "Déjà un compte ? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             products_section_title: "Mes Produits",
             product_form_instructions: "Renseignez les informations clés de votre produit pour mettre à jour le tableau de bord.",
             product_name_label: "Nom du produit",
@@ -270,10 +267,8 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "My Account",
             auth_login_title: "Log In",
             auth_login_btn: "Log In",
-            auth_login_instructions: "Enter your username and password to access your secure FarmLink space.",
-            auth_username_label: "Username",
-            auth_password_label: "Password",
             auth_register_prompt: "Don't have an account yet? <a data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
+            auth_register_prompt: "Don't have an account yet? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_title: "Create an Account",
             auth_register_btn: "Create Account",
             auth_register_instructions: "All fields are required. Use a password with at least eight characters.",
@@ -287,9 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Phone Number",
             auth_region_placeholder: "Region",
-            auth_username_placeholder: "Username",
-            auth_password_placeholder: "Password",
             auth_login_prompt: "Already have an account? <a data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
+            auth_login_prompt: "Already have an account? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             products_section_title: "My Products",
             product_form_instructions: "Provide key product details to update the dashboard.",
             product_name_label: "Product Name",
@@ -405,10 +399,8 @@ document.addEventListener('DOMContentLoaded', () => {
             account_title: "حسابي",
             auth_login_title: "تسجيل الدخول",
             auth_login_btn: "تسجيل الدخول",
-            auth_login_instructions: "أدخل اسم المستخدم وكلمة المرور للوصول إلى مساحة FarmLink الآمنة.",
-            auth_username_label: "اسم المستخدم",
-            auth_password_label: "كلمة المرور",
             auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
+            auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_title: "إنشاء حساب",
             auth_register_btn: "إنشاء الحساب",
             auth_register_instructions: "جميع الحقول مطلوبة. استخدم كلمة مرور لا تقل عن ثمانية أحرف.",
@@ -422,9 +414,8 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "البريد الإلكتروني",
             auth_phone_placeholder: "رقم الهاتف",
             auth_region_placeholder: "المنطقة",
-            auth_username_placeholder: "اسم المستخدم",
-            auth_password_placeholder: "كلمة المرور",
             auth_login_prompt: "لديك حساب بالفعل؟ <a data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
+            auth_login_prompt: "لديك حساب بالفعل؟ <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             products_section_title: "منتجاتي",
             product_form_instructions: "أدخل بيانات المنتج الأساسية لتحديث لوحة التحكم.",
             product_name_label: "اسم المنتج",
@@ -478,6 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const accountLink = document.body.dataset.accountLink || 'account.php';
     const registerLink = document.body.dataset.registerLink || 'register.php';
     const profileLink = document.body.dataset.profileLink || 'profile.php';
+    const accountLink = document.body.dataset.accountLink || '/account.php';
+    const registerLink = document.body.dataset.registerLink || '/register.php';
 
     const applyDynamicLinks = () => {
         document.querySelectorAll('[data-route="account"]').forEach(link => {
@@ -740,6 +733,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch CSRF token for the session
     refreshCsrfToken().catch(() => {});
+    csrfFetch('server/auth.php?action=check')
+        .then(res => res.json())
+        .then(data => {
+            csrfToken = data.csrfToken;
+            document.querySelectorAll('input[name="csrf_token"]').forEach(input => {
+                input.value = csrfToken;
+            });
+        })
+        .catch(() => {});
 
     // --- NOUVELLE LOGIQUE POUR LA PAGE 'ACCOUNT.HTML' ---
     if (document.getElementById('account')) {
@@ -873,6 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gère la déconnexion
         if (logoutBtn) logoutBtn.addEventListener('click', () => {
             csrfFetch('server/auth.php?action=logout', { method: 'POST' })
+            csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
                 .then(() => { window.location.href = accountLink; });
         });
 
@@ -1077,6 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dashboardLogoutBtn) {
             dashboardLogoutBtn.addEventListener('click', () => {
                 csrfFetch('server/auth.php?action=logout', { method: 'POST' })
+                csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
                     .then(() => { window.location.href = accountLink; });
             });
         }
@@ -1229,8 +1233,8 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(contactForm);
-            setContactFeedback(translate('contact_sending', 'Envoi du message…'), 'neutral');
-            csrfFetch('server/contact.php', {
+
+          csrfFetch('server/contact.php', {
                 method: 'POST',
                 body: formData
             })

@@ -4,22 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FarmLink - Tableau de bord</title>
-    <meta name="description" content="Consultez votre tableau de bord FarmLink pour suivre vos capteurs, vos produits et l'état de vos équipements agricoles connectés." />
-    <meta name="keywords" content="FarmLink tableau de bord, suivi capteurs agricoles, plateforme IoT" />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="author" content="FarmLink" />
-    <link rel="canonical" href="https://farmlink.tn/profile.html" />
-    <meta property="og:title" content="FarmLink - Tableau de bord" />
-    <meta property="og:description" content="Surveillez vos données agricoles et pilotez vos modules connectés depuis le tableau de bord FarmLink." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://farmlink.tn/profile.html" />
-    <meta property="og:image" content="https://farmlink.tn/image/logo.png" />
-    <meta property="og:locale" content="fr_FR" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FarmLink - Tableau de bord" />
-    <meta name="twitter:description" content="Pilotage en temps réel de vos équipements agricoles via la plateforme FarmLink." />
-    <meta name="twitter:image" content="https://farmlink.tn/image/logo.png" />
-    <meta name="theme-color" content="#0f172a" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -34,7 +18,7 @@
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
                 <a href="index.html">
-                    <img src="image/logo.png" alt="Logo FarmLink" class="h-14 w-auto" width="168" height="56" loading="eager" decoding="async" fetchpriority="high">
+                    <img src="image/logo.png" alt="Logo FarmLink" class="h-14 w-auto">
                 </a>
             </div>
             <div class="hidden md:flex items-center space-x-8">
@@ -76,31 +60,25 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="section-title">Mon Profil</h2>
                 <div class="max-w-xl mx-auto control-card mt-12 text-left">
-                    <form id="profile-form" aria-describedby="profile-instructions">
-                        <p id="profile-instructions" class="sr-only" data-translate="profile_form_instructions">Mettez à jour vos coordonnées FarmLink. Tous les champs sont obligatoires.</p>
-                        <div class="mb-4 text-left">
-                            <label for="profile-last-name" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_last_name_label">Nom</label>
-                            <input type="text" id="profile-last-name" name="last_name" class="form-input" placeholder="Nom" data-translate-placeholder="auth_last_name_placeholder" required aria-required="true" autocomplete="family-name" aria-describedby="profile-instructions">
+                    <form id="profile-form">
+                        <div class="mb-4">
+                            <input type="text" id="profile-last-name" class="form-input" placeholder="Nom" required>
                         </div>
-                        <div class="mb-4 text-left">
-                            <label for="profile-first-name" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_first_name_label">Prénom</label>
-                            <input type="text" id="profile-first-name" name="first_name" class="form-input" placeholder="Prénom" data-translate-placeholder="auth_first_name_placeholder" required aria-required="true" autocomplete="given-name" aria-describedby="profile-instructions">
+                        <div class="mb-4">
+                            <input type="text" id="profile-first-name" class="form-input" placeholder="Prénom" required>
                         </div>
-                        <div class="mb-4 text-left">
-                            <label for="profile-email" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_email_label">Email</label>
-                            <input type="email" id="profile-email" name="email" class="form-input" placeholder="Email" data-translate-placeholder="auth_email_placeholder" required aria-required="true" autocomplete="email" aria-describedby="profile-instructions">
+                        <div class="mb-4">
+                            <input type="email" id="profile-email" class="form-input" placeholder="Email" required>
                         </div>
-                        <div class="mb-4 text-left">
-                            <label for="profile-phone" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_phone_label">Téléphone</label>
-                            <input type="tel" id="profile-phone" name="phone" class="form-input" placeholder="Téléphone" data-translate-placeholder="auth_phone_placeholder" required aria-required="true" autocomplete="tel" inputmode="tel" pattern="^\+?[0-9\s.-]{6,}$" aria-describedby="profile-instructions">
+                        <div class="mb-4">
+                            <input type="tel" id="profile-phone" class="form-input" placeholder="Téléphone" required>
                         </div>
-                        <div class="mb-4 text-left">
-                            <label for="profile-region" class="block mb-2 text-sm font-medium text-text-300" data-translate="profile_region_label">Région</label>
-                            <input type="text" id="profile-region" name="region" class="form-input" placeholder="Région" data-translate-placeholder="auth_region_placeholder" required aria-required="true" autocomplete="address-level1" aria-describedby="profile-instructions">
+                        <div class="mb-4">
+                            <input type="text" id="profile-region" class="form-input" placeholder="Région" required>
                         </div>
-                        <button type="submit" class="button w-full" data-translate="profile_update_button">Mettre à jour</button>
+                        <button type="submit" class="button w-full">Mettre à jour</button>
                     </form>
-                    <p id="profile-message" class="mt-2 text-red-500" role="alert" aria-live="polite"></p>
+                    <p id="profile-message" class="mt-2 text-red-500"></p>
                 </div>
             </div>
         </section>

@@ -13,7 +13,7 @@ include __DIR__ . '/includes/header.php';
             <h2 class="section-title" data-translate="about_main_title">L'Agriculture de Demain, Une Récolte à la Fois.</h2>
             <div class="grid md:grid-cols-2 gap-16 items-center mt-20">
                 <div>
-                    <img src="image/about_us_im2.jpg" alt="Ferme Intelligente avec IoT" class="rounded-lg shadow-2xl w-full" width="1024" height="640" loading="lazy" decoding="async" srcset="image/about_us_im2.jpg 1024w" sizes="(min-width: 1024px) 50vw, 100vw">
+                    <img src="image/about_us_im2.jpg" alt="Ferme Intelligente avec IoT" class="rounded-lg shadow-2xl w-full">
                 </div>
                 <div class="text-left">
                     <h3 class="text-2xl font-bold text-brand-blue-500 mb-4" data-translate="about_vision_title">Notre Vision : Un futur où chaque ferme est intelligente.</h3>
