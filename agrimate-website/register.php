@@ -43,6 +43,7 @@ include __DIR__ . '/includes/header.php';
                         </form>
                         <p id="register-message" class="mt-2 text-red-500"></p>
                         <p class="mt-4 text-text-300" data-translate="auth_login_prompt">Déjà un compte ? <a href="account.php" class="text-brand-blue-500 font-bold" data-route="account">Se connecter</a></p>
+                        <p class="mt-4 text-text-300" data-translate="auth_login_prompt">Déjà un compte ? <a href="/account.php" class="text-brand-blue-500 font-bold" data-route="account">Se connecter</a></p>
                     </div>
 
                 </div>

@@ -1,6 +1,16 @@
 <?php
 require_once __DIR__ . '/session.php';
-require_once __DIR__ . '/logger.php';
+$isSecure = (
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+    (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443')
+);
+
+session_set_cookie_params([
+    'httponly' => true,
+    'secure' => $isSecure,
+    'samesite' => 'Strict',
+]);
+session_start();
 header('Content-Type: application/json');
 
 // Generate a CSRF token for the session if it doesn't exist

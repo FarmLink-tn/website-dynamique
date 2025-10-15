@@ -16,6 +16,7 @@ include __DIR__ . '/includes/header.php';
                     </p>
                     <form id="contact-form" action="server/contact.php" method="POST" aria-describedby="contact-form-instructions">
                         <p id="contact-form-instructions" class="sr-only">Tous les champs sauf le numéro de téléphone sont obligatoires.</p>
+                    <form id="contact-form" action="server/contact.php" method="POST">
                         <input type="hidden" name="csrf_token" id="contact-csrf-token">
                         <div class="mb-6">
                             <label id="contact-name-label" for="name" class="block mb-2 text-sm font-medium text-text-300" data-translate="contact_name">Nom</label>
