@@ -53,8 +53,9 @@ include __DIR__ . '/includes/header.php';
                             </div>
                             <button type="submit" class="button w-full" data-translate="auth_register_btn">Créer le compte</button>
                         </form>
-                        <p id="register-message" class="mt-2 text-red-500" role="alert" aria-live="polite"></p>
+                        <p id="register-message" class="mt-2 text-red-500"></p>
                         <p class="mt-4 text-text-300" data-translate="auth_login_prompt">Déjà un compte ? <a href="account.php" class="text-brand-blue-500 font-bold" data-route="account">Se connecter</a></p>
+                        <p class="mt-4 text-text-300" data-translate="auth_login_prompt">Déjà un compte ? <a href="/account.php" class="text-brand-blue-500 font-bold" data-route="account">Se connecter</a></p>
                     </div>
 
                 </div>

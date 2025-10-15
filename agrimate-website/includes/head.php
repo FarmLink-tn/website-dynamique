@@ -41,21 +41,14 @@ $ogLocale = $pageLang === 'ar' ? 'ar_AR' : ($pageLang === 'en' ? 'en_GB' : 'fr_F
     <meta name="twitter:description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="twitter:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="theme-color" content="#0f172a">
-    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="preload" href="<?= htmlspecialchars(asset_url('style.min.css'), ENT_QUOTES, 'UTF-8'); ?>" as="style">
-    <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('aos.css'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="stylesheet" href="aos.css">
     <style>
       [data-aos]{opacity:1 !important;transform:none !important;}
     </style>
-    <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('style.min.css'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="stylesheet" href="style.css">
     <?php if (!empty($extraStyles) && is_array($extraStyles)): ?>
         <?php foreach ($extraStyles as $style): ?>
             <?= $style ?>

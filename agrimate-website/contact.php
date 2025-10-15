@@ -19,6 +19,7 @@ include __DIR__ . '/includes/header.php';
                     </p>
                     <form id="contact-form" action="server/contact.php" method="POST" aria-describedby="contact-form-instructions">
                         <p id="contact-form-instructions" class="sr-only">Tous les champs sauf le numéro de téléphone sont obligatoires.</p>
+                    <form id="contact-form" action="server/contact.php" method="POST">
                         <input type="hidden" name="csrf_token" id="contact-csrf-token">
                         <div class="mb-6">
                             <label id="contact-name-label" for="name" class="block mb-2 text-sm font-medium text-text-300" data-translate="contact_name">Nom</label>
@@ -30,7 +31,7 @@ include __DIR__ . '/includes/header.php';
                         </div>
                         <div class="mb-6">
                             <label id="contact-phone-label" for="phone" class="block mb-2 text-sm font-medium text-text-300" data-translate="contact_phone">Numéro de téléphone</label>
-                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="Votre numéro de téléphone (Optionnel)" aria-labelledby="contact-phone-label" autocomplete="tel" inputmode="tel" pattern="^\+?[0-9\s.-]{6,}$">
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="Votre numéro de téléphone (Optionnel)" aria-labelledby="contact-phone-label" autocomplete="tel">
                         </div>
                         <div class="mb-6">
                             <label id="contact-message-label" for="message" class="block mb-2 text-sm font-medium text-text-300" data-translate="contact_message">Message</label>
