@@ -1,14 +1,14 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-$pageTitle = 'FarmLink - À propos';
-$metaDescription = "Découvrez la mission de FarmLink : rendre l'agriculture intelligente accessible grâce au retrofit, à l'IoT et à l'IA pour les exploitations tunisiennes.";
-$metaKeywords = 'FarmLink, à propos, mission, retrofit agricole, innovation agricole Tunisie';
+$pageTitle = 'À propos de FarmLink Tunisie - Notre mission et notre équipe';
+$metaDescription = "Découvrez l'histoire de FarmLink, notre mission pour digitaliser l'agriculture tunisienne et l'équipe pluridisciplinaire qui accompagne les exploitations vers des performances durables.";
+$metaKeywords = 'FarmLink Tunisie, mission, équipe, agriculture intelligente, retrofit, innovation agricole';
 $canonicalPath = '/about.php';
 $activeNav = 'about';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" class="py-20" tabindex="-1">
+    <main id="main-content" class="py-20" role="main" tabindex="-1">
         <section id="about" class="container mx-auto px-6">
             <h2 class="section-title" data-translate="about_main_title">L'Agriculture de Demain, Une Récolte à la Fois.</h2>
             <div class="grid md:grid-cols-2 gap-16 items-center mt-20">
