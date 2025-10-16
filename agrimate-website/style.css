@@ -216,6 +216,22 @@ header {
   color: var(--text-100);
 }
 
+.mobile-link {
+  display: block;
+  color: var(--text-300);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  transition: background var(--speed-fast) ease, color var(--speed-fast) ease;
+}
+
+.mobile-link:hover,
+.mobile-link:focus-visible {
+  background: var(--surface-700);
+  color: var(--text-100);
+}
+
 .mobile-link--cta {
   display: inline-flex;
   justify-content: center;

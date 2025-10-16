@@ -41,6 +41,32 @@ $currentLang = $_SESSION['lang']
 
 $_SESSION['lang'] = $currentLang;
 
+$supportedLanguages = ['fr', 'en', 'ar'];
+$defaultLanguage = 'fr';
+$httpsOn = $httpsOn ?? ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443'));
+
+if (isset($_GET['lang'])) {
+    $requestedLang = strtolower((string) $_GET['lang']);
+    if (in_array($requestedLang, $supportedLanguages, true)) {
+        $_SESSION['lang'] = $requestedLang;
+        setcookie('fl_lang', $requestedLang, [
+            'expires' => time() + 60 * 60 * 24 * 30,
+            'path' => '/',
+            'secure' => $httpsOn,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ]);
+    }
+}
+
+$currentLang = $_SESSION['lang']
+    ?? (isset($_COOKIE['fl_lang']) && in_array($_COOKIE['fl_lang'], $supportedLanguages, true)
+        ? $_COOKIE['fl_lang']
+        : $defaultLanguage);
+
+$_SESSION['lang'] = $currentLang;
+
 if (!function_exists('asset_url')) {
     function asset_url(string $path): string
     {
