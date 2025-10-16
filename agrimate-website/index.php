@@ -9,36 +9,15 @@ include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
     <main id="main-content" role="main" tabindex="-1">
-        <section class="hero" aria-labelledby="hero-heading">
-            <div class="hero__media" aria-hidden="true">
-                <picture>
-                    <source srcset="image/background_im1.png" media="(min-width: 1024px)">
-                    <img src="image/background_im2.png" width="1920" height="1080" loading="eager" decoding="async" fetchpriority="high" alt="Culture irriguée au lever du soleil en Tunisie" class="hero__image">
-                </picture>
-                <div class="hero__overlay"></div>
-            </div>
-            <div class="hero__content container">
-                <p class="hero__eyebrow" data-translate="hero_tagline">Plateforme agricole intelligente 100% tunisienne</p>
-                <h1 id="hero-heading" class="hero__title" data-translate="hero_title">Connectez votre ferme et pilotez chaque goutte d'eau.</h1>
-                <p class="hero__subtitle" data-translate="hero_subtitle">FarmLink digitalise l'irrigation, la fertigation et le suivi des cultures avec des kits retrofit et une plateforme IA pensée pour les climats du Maghreb.</p>
-                <div class="hero__actions">
-                    <a href="solutions.php" class="button button--primary" data-translate="hero_primary_cta">Découvrir nos modules</a>
-                    <a href="contact.php" class="button button--ghost" data-translate="hero_secondary_cta">Parler à un conseiller</a>
-                </div>
-                <dl class="hero__metrics" aria-label="Indicateurs FarmLink">
-                    <div class="hero__metric">
-                        <dt data-translate="hero_metric_clients_label">Fermes connectées</dt>
-                        <dd data-translate="hero_metric_clients_value">250+</dd>
-                    </div>
-                    <div class="hero__metric">
-                        <dt data-translate="hero_metric_water_label">Eau économisée</dt>
-                        <dd data-translate="hero_metric_water_value">35%</dd>
-                    </div>
-                    <div class="hero__metric">
-                        <dt data-translate="hero_metric_regions_label">Gouvernorats couverts</dt>
-                        <dd data-translate="hero_metric_regions_value">18</dd>
-                    </div>
-                </dl>
+        <section id="home" class="hero-bg text-white min-h-screen flex items-center relative overflow-hidden">
+            <picture class="hero-media" aria-hidden="true">
+                <img src="image/background_im2.png" alt="Champ irrigué connecté au coucher du soleil" class="hero-image" width="1024" height="559" loading="eager" decoding="async" fetchpriority="high">
+            </picture>
+            <div class="absolute inset-0 bg-black bg-opacity-60 z-10" aria-hidden="true"></div>
+            <div class="container mx-auto px-6 text-left md:w-1/2 relative z-20" data-aos="fade-right">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight" data-translate="hero_title">Du traditionnel au smart - connectez votre ferme à l'avenir.</h1>
+                <p class="text-xl mb-8" data-translate="hero_subtitle">Solutions de modernisation abordables pour une agriculture plus efficace.</p>
+                <a href="solutions.php" class="button button--glass" data-translate="hero_button">Découvrir nos solutions</a>
             </div>
         </section>
 

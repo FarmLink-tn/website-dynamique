@@ -83,15 +83,6 @@ $ctaNavItem = [
 $navItems = array_merge($commonNavItems, $authNavItems, [$ctaNavItem]);
 
 $supportedLanguages = supported_languages();
-$languageUrls = [];
-foreach ($supportedLanguages as $langCode) {
-    $languageUrls[$langCode] = localized_url(
-        $baseUrl,
-        $requestedPath,
-        $langCode,
-        $defaultLanguage
-    );
-}
 ?>
 <body class="dark" data-current-lang="<?= htmlspecialchars($pageLang, ENT_QUOTES, 'UTF-8'); ?>" data-default-lang="<?= htmlspecialchars($defaultLanguage, ENT_QUOTES, 'UTF-8'); ?>" data-request-path="<?= htmlspecialchars($requestedPath, ENT_QUOTES, 'UTF-8'); ?>" data-base-url="<?= htmlspecialchars(rtrim($baseUrl, '/'), ENT_QUOTES, 'UTF-8'); ?>" data-account-link="<?= htmlspecialchars($navAccountPath, ENT_QUOTES, 'UTF-8'); ?>" data-register-link="<?= htmlspecialchars($registerPath, ENT_QUOTES, 'UTF-8'); ?>" data-profile-link="profile.php">
     <a href="#main-content" class="skip-link">Aller au contenu</a>
@@ -130,16 +121,8 @@ foreach ($supportedLanguages as $langCode) {
                 <label for="language-switcher" class="sr-only">Choisir la langue</label>
                 <select id="language-switcher" class="mr-1" aria-label="Sélectionner la langue">
                     <?php foreach ($supportedLanguages as $langCode): ?>
-                        <?php
-                            $langLabel = strtoupper($langCode);
-                            $optionHref = $languageUrls[$langCode] ?? '';
-                        ?>
-                        <option value="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>"
-                                lang="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>"
-                                data-href="<?= htmlspecialchars($optionHref, ENT_QUOTES, 'UTF-8'); ?>"
-                                <?= $pageLang === $langCode ? 'selected' : ''; ?>>
-                            <?= htmlspecialchars($langLabel, ENT_QUOTES, 'UTF-8'); ?>
-                        </option>
+                        <?php $langLabel = strtoupper($langCode); ?>
+                        <option value="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>" lang="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>" <?= $pageLang === $langCode ? 'selected' : ''; ?>><?= htmlspecialchars($langLabel, ENT_QUOTES, 'UTF-8'); ?></option>
                     <?php endforeach; ?>
                 </select>
                 <button class="flex items-center cursor-pointer" id="theme-toggle" type="button" aria-label="Basculer le thème">
