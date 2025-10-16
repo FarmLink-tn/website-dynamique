@@ -13,14 +13,13 @@ $activeNav = 'account';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" role="main" tabindex="-1">
         <section id="account" class="py-20">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="section-title" data-translate="auth_register_title">Créer un compte</h2>
                 <div class="max-w-xl mx-auto control-card mt-12">
 
                     <div id="register-section">
-                        <h3 class="text-2xl font-bold mb-6 text-brand-green-400" data-translate="auth_register_title">Créer un compte</h3>
                         <form id="register-form" aria-describedby="register-instructions">
                             <p id="register-instructions" class="sr-only" data-translate="auth_register_instructions">Tous les champs sont obligatoires. Utilisez un mot de passe d'au moins huit caractères.</p>
                             <div class="mb-4 text-left">

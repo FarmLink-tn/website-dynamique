@@ -53,7 +53,6 @@ function csrfFetch(url, options = {}) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    AOS.init();
     // --- DICTIONNAIRE DE TRADUCTION COMPLET ---
     const translations = {
         fr: {
@@ -485,9 +484,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     // --- SÉLECTEURS D'ÉLÉMENTS ---
-    const defaultLang = 'fr';
-    const htmlElement = document.documentElement;
     const body = document.body;
+    const defaultLang = body.dataset.defaultLang || 'fr';
+    const htmlElement = document.documentElement;
     const languageSwitcher = document.getElementById('language-switcher');
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -500,7 +499,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const requestPath = body.dataset.requestPath || window.location.pathname;
 
     const savedLang = localStorage.getItem('language');
-    let currentLang = savedLang || body.dataset.currentLang || defaultLang;
+    const sessionLang = body.dataset.currentLang || defaultLang;
+    let currentLang = savedLang && translations[savedLang] ? savedLang : sessionLang;
+    if (!translations[currentLang]) {
+        currentLang = defaultLang;
+    }
+    localStorage.setItem('language', currentLang);
 
     const applyDynamicLinks = () => {
         document.querySelectorAll('[data-route="account"]').forEach(link => {
@@ -551,10 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (!translations[currentLang]) {
-        currentLang = defaultLang;
-    }
-
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (languageSwitcher) {
         languageSwitcher.value = currentLang;
@@ -573,7 +573,11 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('language', newLang);
         applyLanguage(newLang);
         const url = new URL(window.location.href);
-        url.searchParams.set('lang', newLang);
+        if (newLang === defaultLang) {
+            url.searchParams.delete('lang');
+        } else {
+            url.searchParams.set('lang', newLang);
+        }
         window.location.href = url.toString();
     });
     if (menuBtn && mobileMenu) {
@@ -771,6 +775,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('ai-advisor')) {
             preloadModels();
         }
+    }
+
+    const skipLink = document.querySelector('.skip-link');
+    const mainContent = document.getElementById('main-content');
+    if (skipLink && mainContent) {
+        skipLink.addEventListener('click', () => {
+            requestAnimationFrame(() => {
+                mainContent.focus();
+            });
+        });
     }
 
     // Fetch CSRF token for the session
