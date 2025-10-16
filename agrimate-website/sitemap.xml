@@ -60,34 +60,4 @@
     <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/contact.php?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/contact.php"/>
   </url>
-  <url>
-    <loc>https://farmlink.tn/privacy.php</loc>
-    <lastmod>2024-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/privacy.php"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/privacy.php?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/privacy.php?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/privacy.php"/>
-  </url>
-  <url>
-    <loc>https://farmlink.tn/terms.php</loc>
-    <lastmod>2024-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/terms.php"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/terms.php?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/terms.php?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/terms.php"/>
-  </url>
-  <url>
-    <loc>https://farmlink.tn/cookies.php</loc>
-    <lastmod>2024-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/cookies.php"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/cookies.php?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/cookies.php?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/cookies.php"/>
-  </url>
 </urlset>
