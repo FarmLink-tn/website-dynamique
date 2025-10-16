@@ -1,7 +1,7 @@
 <?php
 $pageTitle = $pageTitle ?? 'FarmLink';
 $pageLang = $pageLang ?? current_language();
-$baseUrl = $baseUrl ?? 'https://farmlink.tn';
+$baseUrl = $baseUrl ?? site_base_url();
 $pageDescription = $metaDescription ?? 'FarmLink modernise les exploitations agricoles avec des solutions IoT, d\'IA et de rétrofit adaptées aux défis climatiques et hydriques en Tunisie.';
 $pageKeywords = $metaKeywords ?? 'agriculture intelligente, IoT agricole, conseiller IA, irrigation connectée, retrofit, FarmLink, Tunisie';
 $pageRobots = $metaRobots ?? 'index, follow';
@@ -27,17 +27,24 @@ $ogAlternateLocales = array_filter([
     'en' => 'en_GB',
     'ar' => 'ar_AR',
 ], static fn ($value, $lang) => $lang !== $pageLang, ARRAY_FILTER_USE_BOTH);
+$preconnectHosts = [
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com',
+    'https://cdnjs.cloudflare.com',
+];
 ?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($pageLang, ENT_QUOTES, 'UTF-8'); ?>" dir="<?= htmlspecialchars($dir, ENT_QUOTES, 'UTF-8'); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
     <meta name="description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="keywords" content="<?= htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="robots" content="<?= htmlspecialchars($pageRobots, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="author" content="FarmLink">
+    <meta name="language" content="<?= htmlspecialchars($pageLang, ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:title" content="<?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
@@ -45,6 +52,7 @@ $ogAlternateLocales = array_filter([
     <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:locale" content="<?= htmlspecialchars($ogLocale, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:site_name" content="FarmLink">
     <?php foreach ($ogAlternateLocales as $alternate): ?>
         <meta property="og:locale:alternate" content="<?= htmlspecialchars($alternate, ENT_QUOTES, 'UTF-8'); ?>">
     <?php endforeach; ?>
@@ -52,9 +60,13 @@ $ogAlternateLocales = array_filter([
     <meta name="twitter:title" content="<?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="twitter:description" content="<?= htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="twitter:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:site" content="@FarmLink">
     <meta name="theme-color" content="#0f172a">
     <?php foreach ($alternateLinks as $langCode => $href): ?>
         <link rel="alternate" hreflang="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>" href="<?= htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>">
+    <?php endforeach; ?>
+    <?php foreach ($preconnectHosts as $host): ?>
+        <link rel="preconnect" href="<?= htmlspecialchars($host, ENT_QUOTES, 'UTF-8'); ?>" crossorigin>
     <?php endforeach; ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
