@@ -6,8 +6,8 @@
             <?= $script ?>
         <?php endforeach; ?>
     <?php endif; ?>
-    <script src="aos.js"></script>
-    <script src="script.js"></script>
+    <script src="aos.js" defer></script>
+    <script src="script.js" defer></script>
     <?php if (!empty($afterMainScripts) && is_array($afterMainScripts)): ?>
         <?php foreach ($afterMainScripts as $script): ?>
             <?= $script ?>

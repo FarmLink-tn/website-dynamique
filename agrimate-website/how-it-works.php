@@ -8,7 +8,7 @@ $activeNav = 'how';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main>
+    <main id="main-content" tabindex="-1">
         <section id="how-it-works" class="py-20">
              <div class="container mx-auto px-6 text-center">
                 <h2 class="section-title" data-translate="how_it_works_title">Comment ça marche ?</h2>

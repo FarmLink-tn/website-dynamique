@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/logger.php';
 header('Content-Type: application/json');
 
 // Ensure a CSRF token exists for this session

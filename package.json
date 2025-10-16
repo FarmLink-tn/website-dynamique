@@ -1,0 +1,27 @@
+{
+  "name": "agrimate-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint:js": "eslint agrimate-website/script.js --max-warnings=0",
+    "lint:css": "stylelint \"agrimate-website/**/*.css\"",
+    "lint:html": "bash -c 'shopt -s nullglob; files=(agrimate-website/**/*.html); if [ ${#files[@]} -gt 0 ]; then html-validate \"${files[@]}\"; else echo \"No HTML files to validate.\"; fi'",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+    "test:playwright": "playwright test",
+    "test": "npm run lint && npm run test:playwright",
+    "lhci:collect": "CHROME_PATH=$(node -e 'const {chromium}=require(\"playwright\"); process.stdout.write(chromium.executablePath());') lhci collect --config=./lighthouserc.json",
+    "lhci:assert": "lhci assert --config=./lighthouserc.json",
+    "ci": "npm run lint && npm run test:playwright && npm run lhci:collect && npm run lhci:assert"
+  },
+  "devDependencies": {
+    "@eslint/js": "^8.57.0",
+    "@lhci/cli": "^0.12.0",
+    "@playwright/test": "^1.41.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "html-validate": "^9.3.0",
+    "lighthouse": "^11.6.0",
+    "stylelint": "^16.3.1",
+    "stylelint-config-standard": "^36.0.1"
+  }
+}

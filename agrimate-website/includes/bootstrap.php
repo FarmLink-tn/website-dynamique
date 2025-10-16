@@ -7,11 +7,38 @@ if (session_status() === PHP_SESSION_NONE) {
         'httponly' => true,
         'secure' => $httpsOn,
         'samesite' => 'Strict',
+        'path' => '/',
     ]);
     session_start();
 }
 
 $assetBaseUrl = rtrim(getenv('ASSET_BASE_URL') ?: '', '/');
+
+$supportedLanguages = ['fr', 'en', 'ar'];
+$defaultLanguage = 'fr';
+$httpsOn = $httpsOn ?? ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443'));
+
+if (isset($_GET['lang'])) {
+    $requestedLang = strtolower((string) $_GET['lang']);
+    if (in_array($requestedLang, $supportedLanguages, true)) {
+        $_SESSION['lang'] = $requestedLang;
+        setcookie('fl_lang', $requestedLang, [
+            'expires' => time() + 60 * 60 * 24 * 30,
+            'path' => '/',
+            'secure' => $httpsOn,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ]);
+    }
+}
+
+$currentLang = $_SESSION['lang']
+    ?? (isset($_COOKIE['fl_lang']) && in_array($_COOKIE['fl_lang'], $supportedLanguages, true)
+        ? $_COOKIE['fl_lang']
+        : $defaultLanguage);
+
+$_SESSION['lang'] = $currentLang;
 
 if (!function_exists('asset_url')) {
     function asset_url(string $path): string
@@ -24,6 +51,35 @@ if (!function_exists('asset_url')) {
         }
 
         return $normalized;
+    }
+}
+
+if (!function_exists('current_language')) {
+    function current_language(): string
+    {
+        return $_SESSION['lang'] ?? 'fr';
+    }
+}
+
+if (!function_exists('supported_languages')) {
+    function supported_languages(): array
+    {
+        return ['fr', 'en', 'ar'];
+    }
+}
+
+if (!function_exists('localized_url')) {
+    function localized_url(string $baseUrl, string $path, string $lang, string $default = 'fr'): string
+    {
+        $normalizedBase = rtrim($baseUrl, '/');
+        $normalizedPath = '/' . ltrim($path, '/');
+        $query = $lang === $default ? '' : ('?lang=' . rawurlencode($lang));
+
+        if ($normalizedPath === '/index.php') {
+            $normalizedPath = '/';
+        }
+
+        return $normalizedBase . $normalizedPath . $query;
     }
 }
 
@@ -48,9 +104,13 @@ if (!headers_sent()) {
     header('Cross-Origin-Opener-Policy: same-origin');
     header('Cross-Origin-Resource-Policy: same-origin');
     header('X-XSS-Protection: 0');
-    header('Cache-Control: no-cache, no-store, must-revalidate');
-    header('Pragma: no-cache');
-    header('Expires: 0');
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET') {
+        header('Cache-Control: public, max-age=600, stale-while-revalidate=300');
+    } else {
+        header('Cache-Control: no-store, must-revalidate');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+    }
 
     if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
         header('Strict-Transport-Security: max-age=63072000; includeSubDomains; preload');
