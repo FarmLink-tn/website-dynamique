@@ -6,7 +6,7 @@ $activeNav = 'account';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main>
+    <main id="main-content" tabindex="-1">
         <section id="admin-dashboard" class="py-16">
             <div class="container mx-auto px-6">
                 <h2 class="section-title mb-10">Panel d'administration</h2>

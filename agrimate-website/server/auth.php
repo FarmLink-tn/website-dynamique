@@ -1,16 +1,6 @@
 <?php
 require_once __DIR__ . '/session.php';
-$isSecure = (
-    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
-    (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443')
-);
-
-session_set_cookie_params([
-    'httponly' => true,
-    'secure' => $isSecure,
-    'samesite' => 'Strict',
-]);
-session_start();
+require_once __DIR__ . '/logger.php';
 header('Content-Type: application/json');
 
 // Generate a CSRF token for the session if it doesn't exist
@@ -28,20 +18,36 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     }
 }
 
-$config = require __DIR__ . '/config.php';
+function auth_pdo(): ?PDO
+{
+    static $pdo = null;
+    static $attempted = false;
 
-try {
-    $pdo = new PDO(
-        "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8mb4",
-        $config['user'],
-        $config['password'],
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
-    app_log('auth_db_failure', ['error' => $e->getCode()]);
-    exit;
+    if ($pdo instanceof PDO || $attempted) {
+        return $pdo;
+    }
+
+    $attempted = true;
+    $config = require __DIR__ . '/config.php';
+
+    if (empty($config['host']) || empty($config['dbname']) || empty($config['user'])) {
+        app_log('auth_db_config_missing', []);
+        return null;
+    }
+
+    try {
+        $pdo = new PDO(
+            "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8mb4",
+            $config['user'],
+            $config['password'],
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
+    } catch (PDOException $e) {
+        app_log('auth_db_failure', ['error' => $e->getCode()]);
+        $pdo = null;
+    }
+
+    return $pdo;
 }
 
 $action = $_GET['action'] ?? '';
@@ -74,6 +80,13 @@ switch ($action) {
             echo json_encode(['success' => false, 'message' => 'Invalid fields']);
             break;
         }
+        $pdo = auth_pdo();
+        if (!$pdo) {
+            http_response_code(503);
+            echo json_encode(['success' => false, 'message' => 'Service unavailable']);
+            break;
+        }
+
         $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ? OR email = ?');
         $stmt->execute([$username, $email]);
         if ($stmt->fetch()) {
@@ -102,6 +115,13 @@ switch ($action) {
             echo json_encode(['success' => false, 'message' => 'Missing fields']);
             break;
         }
+        $pdo = auth_pdo();
+        if (!$pdo) {
+            http_response_code(503);
+            echo json_encode(['success' => false, 'message' => 'Service unavailable']);
+            break;
+        }
+
         $stmt = $pdo->prepare('SELECT id, password_hash, role FROM users WHERE username = ?');
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
