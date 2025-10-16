@@ -6,7 +6,7 @@ $metaDescription = "Consultez votre tableau de bord FarmLink pour suivre vos cap
 $metaKeywords = 'FarmLink tableau de bord, suivi capteurs agricoles, plateforme IoT';
 $metaRobots = 'noindex, nofollow';
 $canonicalPath = '/profile.php';
-$activeNav = 'account';
+$activeNav = 'dashboard';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>

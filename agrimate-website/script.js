@@ -523,6 +523,9 @@ document.addEventListener('DOMContentLoaded', () => {
         body.dataset.currentLang = lang;
         htmlElement.lang = lang;
         htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        if (languageSwitcher && languageSwitcher.value !== lang) {
+            languageSwitcher.value = lang;
+        }
         document.querySelectorAll('[data-translate]').forEach(el => {
             const key = el.getAttribute('data-translate');
             if (!el.dataset.original) {
@@ -556,6 +559,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const savedTheme = localStorage.getItem('theme') || 'dark';
+    const localeHrefMap = languageSwitcher
+        ? Array.from(languageSwitcher.options).reduce((acc, option) => {
+            const value = option.value.trim();
+            const href = option.dataset.href;
+            if (value && href) {
+                acc[value] = href;
+            }
+            return acc;
+        }, {})
+        : {};
+
     if (languageSwitcher) {
         languageSwitcher.value = currentLang;
     }
@@ -570,8 +584,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (languageSwitcher) languageSwitcher.addEventListener('change', (e) => {
         const newLang = e.target.value;
-        localStorage.setItem('language', newLang);
+        if (translations[newLang]) {
+            localStorage.setItem('language', newLang);
+        } else {
+            localStorage.removeItem('language');
+        }
         applyLanguage(newLang);
+        const targetHref = localeHrefMap[newLang];
+        if (targetHref) {
+            window.location.href = targetHref;
+            return;
+        }
         const url = new URL(window.location.href);
         if (newLang === defaultLang) {
             url.searchParams.delete('lang');
