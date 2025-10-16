@@ -5,6 +5,7 @@ $metaDescription = "Découvrez l'histoire de FarmLink, notre mission pour digita
 $metaKeywords = 'FarmLink Tunisie, mission, équipe, agriculture intelligente, retrofit, innovation agricole';
 $canonicalPath = '/about.php';
 $activeNav = 'about';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
@@ -15,11 +16,73 @@ include __DIR__ . '/includes/header.php';
                 <div>
                     <img src="image/about_us_im2.jpg" alt="Ferme intelligente équipée de capteurs IoT" class="rounded-lg shadow-2xl w-full" width="1024" height="640" loading="lazy" decoding="async">
                 </div>
-                <div class="text-left">
-                    <h3 class="text-2xl font-bold text-brand-blue-500 mb-4" data-translate="about_vision_title">Notre Vision : Un futur où chaque ferme est intelligente.</h3>
-                    <p class="text-lg text-text-300" data-translate="about_intro_text">Chez FarmLink, nous voyons l'agriculture non pas comme une industrie du passé, mais comme la technologie la plus essentielle de l'avenir. Nous croyons que la sagesse des pratiques traditionnelles et la puissance des innovations de pointe peuvent coexister pour créer quelque chose de véritablement révolutionnaire. Notre mission est de démocratiser l'agriculture intelligente.</p>
-                    <h4 class="text-xl font-bold text-brand-green-400 mt-6 mb-2" data-translate="about_commitment_title">Notre Engagement : Affronter les défis mondiaux avec l'innovation "retrofit".</h4>
-                    <p class="text-lg text-text-300" data-translate="about_commitment_text">Dans un monde où les ressources sont limitées et les défis climatiques s'intensifient, la mission de FarmLink est plus vitale que jamais.</p>
+                <figure class="hero__visual" aria-hidden="true">
+                    <img src="image/about_us_im1.png" alt="Équipe FarmLink sur le terrain" loading="lazy" width="960" height="640">
+                </figure>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <p class="eyebrow"><?= htmlspecialchars($mission['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <h2 class="section__title"><?= htmlspecialchars($mission['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="grid grid--three">
+                    <?php foreach ($mission['items'] ?? [] as $item): ?>
+                        <article class="card">
+                            <h3><?= htmlspecialchars($item['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($item['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($timeline['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="timeline">
+                    <?php foreach ($timeline['items'] ?? [] as $event): ?>
+                        <article class="timeline__item">
+                            <h3><?= htmlspecialchars($event['year'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($event['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($team['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="team-grid">
+                    <?php foreach ($team['members'] ?? [] as $member): ?>
+                        <article class="team-card">
+                            <h3><?= htmlspecialchars($member['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($member['role'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($values['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="grid grid--three">
+                    <?php foreach ($values['items'] ?? [] as $value): ?>
+                        <article class="card">
+                            <h3><?= htmlspecialchars($value['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($value['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>

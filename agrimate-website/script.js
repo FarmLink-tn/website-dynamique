@@ -1,56 +1,40 @@
-let csrfToken = null;
-let csrfTokenPromise = null;
+(function () {
+    const body = document.body;
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuButton = document.getElementById('menu-btn');
+    const languageSwitcher = document.getElementById('language-switcher');
+    const themeToggle = document.getElementById('theme-toggle');
+    const skipLink = document.querySelector('.skip-link');
+    const contactForm = document.getElementById('contact-form');
+    const contactFeedback = document.getElementById('contact-form-feedback');
+    const contactSubmit = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
+    const csrfInput = contactForm ? contactForm.querySelector('input[name="csrf_token"]') : null;
 
-function setCsrfToken(token) {
-    csrfToken = token || null;
-    document.querySelectorAll('input[name="csrf_token"]').forEach(input => {
-        input.value = csrfToken || '';
-    });
-}
+    const STORAGE_THEME_KEY = 'fl-theme';
 
-function refreshCsrfToken() {
-    csrfTokenPromise = fetch('server/auth.php?action=check', { credentials: 'include' })
-        .then(res => res.json())
-        .then(data => {
-            setCsrfToken(data.csrfToken);
-            return csrfToken;
-        })
-        .catch(() => {
-            setCsrfToken(null);
-            return null;
-        })
-        .finally(() => {
-            csrfTokenPromise = null;
-        });
-    return csrfTokenPromise;
-}
-
-function ensureCsrfToken() {
-    if (csrfToken) {
-        return Promise.resolve(csrfToken);
-    }
-    if (csrfTokenPromise) {
-        return csrfTokenPromise;
-    }
-    return refreshCsrfToken();
-}
-
-function csrfFetch(url, options = {}) {
-    const opts = { ...options };
-    opts.credentials = opts.credentials || 'include';
-    const method = (opts.method || 'GET').toUpperCase();
-    if (method === 'GET') {
-        return fetch(url, opts);
-    }
-    return ensureCsrfToken().then(() => {
-        if (!csrfToken) {
-            return Promise.reject(new Error('CSRF token unavailable'));
+    function getPreferredTheme() {
+        const stored = localStorage.getItem(STORAGE_THEME_KEY);
+        if (stored === 'light' || stored === 'dark') {
+            return stored;
         }
-        opts.headers = { ...(opts.headers || {}) };
-        opts.headers['X-CSRF-Token'] = csrfToken;
-        return fetch(url, opts);
-    });
-}
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return systemPrefersDark ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+        body.dataset.theme = theme;
+        if (themeToggle) {
+            themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+            themeToggle.classList.toggle('is-dark', theme === 'dark');
+        }
+    }
+
+    function toggleTheme() {
+        const current = body.dataset.theme || getPreferredTheme();
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(STORAGE_THEME_KEY, next);
+        applyTheme(next);
+    }
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- DICTIONNAIRE DE TRADUCTION COMPLET ---
@@ -1107,15 +1091,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const applyTheme = (theme) => {
-        if (theme === 'dark') {
-            body.classList.add('dark');
-            if(themeIconLight) themeIconLight.classList.add('hidden');
-            if(themeIconDark) themeIconDark.classList.remove('hidden');
+    function toggleMobileMenu() {
+        if (!mobileMenu || !menuButton) {
+            return;
+        }
+        const isOpen = mobileMenu.classList.contains('is-open');
+        if (isOpen) {
+            closeMobileMenu();
         } else {
-            body.classList.remove('dark');
-            if(themeIconLight) themeIconLight.classList.remove('hidden');
-            if(themeIconDark) themeIconDark.classList.add('hidden');
+            openMobileMenu();
         }
     };
 
@@ -1134,14 +1118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (languageSwitcher) {
         languageSwitcher.value = currentLang;
     }
-    applyLanguage(currentLang);
-    applyDynamicLinks();
-    applyTheme(savedTheme);
-
-    const currentPage = (requestPath.split("/").pop() || 'index.php') || 'index.php';
-    document.querySelectorAll('.nav-link').forEach(link => {
-        if (link.getAttribute('href') === currentPage) link.classList.add('active');
-    });
 
     if (languageSwitcher) languageSwitcher.addEventListener('change', (e) => {
         const newLang = e.target.value;
@@ -1171,194 +1147,21 @@ document.addEventListener('DOMContentLoaded', () => {
             menuBtn.setAttribute('aria-expanded', String(isHidden));
         });
     }
-    if (themeToggle) themeToggle.addEventListener('click', () => {
-        const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-    });
 
-    // --- LOGIQUE SPÉCIFIQUE À LA PAGE AI-ADVISOR ---
-    if (document.getElementById('ai-advisor')) {
-        let models = { image: null, ready: false };
-        let stream = null;
-
-        const aiInputForm = document.getElementById('ai-input-form');
-        const textInput = document.getElementById('text-input');
-        const fileInput = document.getElementById('fileInput');
-        const webcamBtn = document.getElementById('webcamBtn');
-        const captureBtn = document.getElementById('captureBtn');
-
-        const imagePreviewWrapper = document.getElementById('image-preview-wrapper');
-        const previewImg = document.getElementById('previewImg');
-        const cam = document.getElementById('cam');
-        const aiResponseText = document.getElementById('ai-response-text');
-        const aiSpinner = document.getElementById('ai-spinner');
-
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progressBar');
-
-        const showSpinner = (show) => { aiSpinner.classList.toggle('hidden', !show); };
-        const updateProgressBar = (p) => { if (progressBar) progressBar.style.width = `${p}%`; };
-
-        const setInputEnabled = (enabled) => {
-            textInput.disabled = !enabled;
-            aiInputForm.querySelector('button[type="submit"]').disabled = !enabled;
-            textInput.placeholder = enabled ? "Posez votre question ici..." : "Chargement des modèles IA...";
-        };
-
-        const preloadModels = async () => {
-            setInputEnabled(false);
-            progressContainer.classList.remove('hidden');
-            updateProgressBar(10);
-            aiResponseText.textContent = "Chargement des modèles IA...";
-            try {
-                if (typeof mobilenet !== 'undefined') {
-                    await tf.setBackend('webgl');
-                    models.image = await mobilenet.load({ version: 2, alpha: 1.0 });
-                    updateProgressBar(100);
-                }
-                models.ready = true;
-                aiResponseText.innerHTML = `<p data-translate="ai_welcome">${translations[currentLang].ai_welcome}</p>`;
-                setInputEnabled(true);
-            } catch (error) {
-                console.error('Échec du chargement des modèles:', error);
-                aiResponseText.textContent = "Erreur lors du chargement des modèles IA.";
-            } finally {
-                 setTimeout(() => progressContainer.classList.add('hidden'), 1000);
-            }
-        };
-
-        const handleTextAnalysis = async (question) => {
-            if (!question.trim()) return;
-            showSpinner(true);
-            aiResponseText.textContent = '';
-            imagePreviewWrapper.classList.add('hidden');
-
-            try {
-                const response = await fetch('server/ai.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: question })
-                });
-                const data = await response.json();
-                if (data && data.answer) {
-                    aiResponseText.textContent = data.answer;
-                } else {
-                    aiResponseText.textContent = 'Aucune réponse reçue.';
-                }
-            } catch (error) {
-                console.error('Erreur IA:', error);
-                aiResponseText.textContent = "Une erreur est survenue lors de l'analyse.";
-            } finally {
-                showSpinner(false);
-            }
-        };
-
-        const handleImageAnalysis = async (imageElement) => {
-            if (!imageElement || !imageElement.src) return;
-            if (!models.ready || !models.image) {
-                 aiResponseText.textContent = "Le modèle IA image n'est pas encore prêt.";
-                 return;
-            }
-            showSpinner(true);
-            aiResponseText.textContent = "Analyse de l'image en cours...";
-
-            try {
-                const predictions = await models.image.classify(imageElement);
-                if (predictions && predictions.length > 0) {
-                     const mainObject = predictions[0].className.split(',')[0];
-                     const generatedQuestion = `Quelles sont les causes des taches sur une feuille de ${mainObject} ?`;
-                     textInput.value = generatedQuestion;
-                     textInput.style.height = 'auto'; textInput.style.height = textInput.scrollHeight + 'px';
-                     aiResponseText.innerHTML = `<p>J'ai identifié un(e) <strong>${mainObject}</strong>. J'ai préparé une question pour vous. Appuyez sur Envoyer pour obtenir une analyse.</p>`;
-                } else {
-                    aiResponseText.innerHTML = "<p>Aucun objet n'a pu être identifié. Essayez une autre photo.</p>";
-                }
-            } catch (error) {
-                console.error('Erreur MobileNet:', error);
-                aiResponseText.textContent = "Une erreur est survenue lors de l'analyse de l'image.";
-            } finally {
-                showSpinner(false);
-            }
-        };
-
-        const displayImage = (src) => {
-            imagePreviewWrapper.classList.remove('hidden');
-            previewImg.src = src;
-            previewImg.hidden = false;
-            cam.hidden = true;
-            captureBtn.classList.add('hidden');
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-                webcamBtn.classList.remove('active');
-            }
-            handleImageAnalysis(previewImg);
-        };
-
-        const toggleCam = async () => {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-                cam.hidden = true;
-                captureBtn.classList.add('hidden');
-                webcamBtn.classList.remove('active');
-                aiResponseText.innerHTML = `<p data-translate="ai_welcome">${translations[currentLang].ai_welcome}</p>`;
-                return;
-            }
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                cam.srcObject = stream;
-                await cam.play();
-                imagePreviewWrapper.classList.remove('hidden');
-                cam.hidden = false;
-                previewImg.hidden = true;
-                webcamBtn.classList.add('active');
-                captureBtn.classList.remove('hidden');
-                aiResponseText.innerHTML = `<p>Caméra active. Appuyez sur le bouton <i class="fas fa-camera"></i> pour capturer.</p>`;
-            } catch (err) {
-                console.error('Erreur caméra:', err);
-                alert("Impossible d'accéder à la caméra.");
-            }
-        };
-
-        const captureImageFromCam = () => {
-            if (!stream) return;
-            const canvas = document.createElement('canvas');
-            canvas.width = cam.videoWidth;
-            canvas.height = cam.videoHeight;
-            canvas.getContext('2d').drawImage(cam, 0, 0);
-            const imageUrl = canvas.toDataURL('image/jpeg');
-            displayImage(imageUrl);
-        };
-
-        aiInputForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleTextAnalysis(textInput.value);
-            textInput.value = '';
-            textInput.style.height = '40px';
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => displayImage(event.target.result);
-                reader.readAsDataURL(file);
-            }
-        });
-
-        if(webcamBtn) webcamBtn.addEventListener('click', toggleCam);
-        if(captureBtn) captureBtn.addEventListener('click', captureImageFromCam);
-
-        if(textInput) textInput.addEventListener('input', () => {
-            textInput.style.height = 'auto';
-            textInput.style.height = textInput.scrollHeight + 'px';
-        });
-
-        if (document.getElementById('ai-advisor')) {
-            preloadModels();
+    function setSubmitting(isSubmitting) {
+        if (!contactForm || !contactSubmit) {
+            return;
         }
+        contactSubmit.disabled = isSubmitting;
+        contactSubmit.classList.toggle('is-loading', isSubmitting);
+    }
+
+    function showFeedback(message, type) {
+        if (!contactFeedback) {
+            return;
+        }
+        contactFeedback.textContent = message || '';
+        contactFeedback.dataset.state = type || '';
     }
 
     const skipLink = document.querySelector('.skip-link');
@@ -1383,571 +1186,101 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(() => {});
 
-    // --- NOUVELLE LOGIQUE POUR LA PAGE 'ACCOUNT.HTML' ---
-    if (document.getElementById('account')) {
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const authSection = document.getElementById('auth-section');
-        const registerSection = document.getElementById('register-section');
-        const loginMessage = document.getElementById('login-message');
-        const registerMessage = document.getElementById('register-message');
-        const addProductForm = document.getElementById('add-product-form');
-        const productList = document.getElementById('product-list');
-        const logoutBtn = document.getElementById('logout-btn');
-
-        // Gère la soumission du formulaire d'inscription
-        if (registerForm) registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const lastName = document.getElementById('register-last-name').value.trim();
-            const firstName = document.getElementById('register-first-name').value.trim();
-            const email = document.getElementById('register-email').value.trim();
-            const phone = document.getElementById('register-phone').value.trim();
-            const region = document.getElementById('register-region').value.trim();
-            const username = document.getElementById('register-username').value.trim();
-            const password = document.getElementById('register-password').value;
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                if (registerMessage) registerMessage.textContent = 'Email invalide.';
-                return;
-            }
-            if (!/^\d{8,}$/.test(phone)) {
-                if (registerMessage) registerMessage.textContent = 'Le numéro de téléphone doit contenir au moins 8 chiffres.';
-                return;
-            }
-
-            csrfFetch('server/auth.php?action=register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password, last_name: lastName, first_name: firstName, email, phone, region })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.csrfToken) setCsrfToken(data.csrfToken);
-                if (data.success) {
-                    // Auto-login after registration then redirect to profile
-                    csrfFetch('server/auth.php?action=login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    })
-                    .then(res => res.json())
-                    .then(loginData => {
-                        if (loginData.csrfToken) setCsrfToken(loginData.csrfToken);
-                        if (loginData.success) {
-                            window.location.href = profileLink;
-                        } else {
-                            if (registerMessage) registerMessage.textContent = 'Compte créé, mais connexion impossible.';
-                        }
-                    });
-                } else {
-                    if (registerMessage) registerMessage.textContent = data.message || 'Erreur lors de la création du compte.';
-                }
-            })
-            .catch(() => {
-                if (registerMessage) registerMessage.textContent = 'Erreur réseau.';
-            });
-        });
-
-        // Gère la soumission du formulaire de connexion
-        if (loginForm) loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            csrfFetch('server/auth.php?action=login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.csrfToken) setCsrfToken(data.csrfToken);
-                if (data.success) {
-                    window.location.href = profileLink;
-                } else {
-                    if (loginMessage) loginMessage.textContent = data.message || "Nom d'utilisateur ou mot de passe incorrect.";
-                }
-            })
-            .catch(() => {
-                if (loginMessage) loginMessage.textContent = 'Erreur réseau.';
-            });
-        });
-
-        csrfFetch('server/auth.php?action=check', { method: 'GET' })
-            .then(res => res.json())
-            .then(data => {
-                setCsrfToken(data.csrfToken);
-                if (data.loggedIn) {
-                    window.location.href = profileLink;
-                } else {
-                    if (authSection) authSection.classList.remove('hidden');
-                    if (registerSection) registerSection.classList.remove('hidden');
-                }
-            });
-
-        // Gère la soumission du formulaire d'ajout de produit
-        if (addProductForm) addProductForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const data = {
-                name: document.getElementById('product-name').value,
-                quantity: parseInt(document.getElementById('product-quantity').value) || 0,
-                phone: document.getElementById('product-phone').value,
-                ph: parseFloat(document.getElementById('product-ph').value) || null,
-                rain: parseFloat(document.getElementById('product-rain').value) || null,
-                humidity: parseFloat(document.getElementById('product-humidity').value) || null,
-                soil_humidity: parseFloat(document.getElementById('product-soil_humidity').value) || null,
-                light: parseFloat(document.getElementById('product-light').value) || null,
-                valve_open: document.getElementById('product-valve_open').checked ? 1 : 0,
-                valve_angle: parseInt(document.getElementById('product-valve_angle').value) || 0
-            };
-            csrfFetch('server/products.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(() => {
-                displayProducts();
-                addProductForm.reset();
-            });
-        });
-
-        // Gère la déconnexion
-        if (logoutBtn) logoutBtn.addEventListener('click', () => {
-            csrfFetch('server/auth.php?action=logout', { method: 'POST' })
-                .then(() => { window.location.href = accountLink; });
-        });
-
-        // Affiche la liste des produits de l'utilisateur
-        const displayProducts = () => {
-            if (!productList) return;
-            csrfFetch('server/products.php')
-                .then(res => res.json())
-                .then(products => {
-                    productList.innerHTML = '';
-                    if (Array.isArray(products) && products.length > 0) {
-                        products.forEach(prod => {
-                            const tr = document.createElement('tr');
-                            const fields = ['name','quantity','ph','rain','humidity','soil_humidity','light'];
-                            fields.forEach(f => {
-                                const td = document.createElement('td');
-                                td.className = 'px-2';
-                                td.textContent = prod[f] ?? '';
-                                tr.appendChild(td);
-                            });
-
-                            const valveTd = document.createElement('td');
-                            valveTd.className = 'px-2';
-                            const valveBtn = document.createElement('button');
-                            valveBtn.className = 'button button--glass';
-                            valveBtn.textContent = prod.valve_open == 1 ? 'Fermer' : 'Ouvrir';
-                            valveBtn.addEventListener('click', () => {
-                                csrfFetch(`server/products.php?id=${prod.id}`, {
-                                    method: 'PUT',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ valve_open: prod.valve_open == 1 ? 0 : 1 })
-                                }).then(displayProducts);
-                            });
-                            valveTd.appendChild(valveBtn);
-                            tr.appendChild(valveTd);
-
-                            const angleTd = document.createElement('td');
-                            angleTd.className = 'px-2';
-                            const angleInput = document.createElement('input');
-                            angleInput.type = 'number';
-                            angleInput.value = prod.valve_angle;
-                            angleInput.className = 'form-input w-20';
-                            angleInput.addEventListener('change', () => {
-                                csrfFetch(`server/products.php?id=${prod.id}`, {
-                                    method: 'PUT',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ valve_angle: parseInt(angleInput.value) || 0 })
-                                }).then(displayProducts);
-                            });
-                            angleTd.appendChild(angleInput);
-                            tr.appendChild(angleTd);
-
-                            productList.appendChild(tr);
-                        });
-                    } else {
-                        const tr = document.createElement('tr');
-                        const td = document.createElement('td');
-                        td.colSpan = 9;
-                        td.textContent = 'Aucun produit ajouté.';
-                        tr.appendChild(td);
-                        productList.appendChild(tr);
-                    }
-                });
-        };
-
-        displayProducts();
-    }
-
-
-    // --- LOGIQUE POUR LA PAGE 'PROFILE.PHP' ---
-    if (document.getElementById('profile')) {
-        const profileForm = document.getElementById('profile-form');
-        const lastNameInput = document.getElementById('profile-last-name');
-        const firstNameInput = document.getElementById('profile-first-name');
-        const emailInput = document.getElementById('profile-email');
-        const phoneInput = document.getElementById('profile-phone');
-        const regionInput = document.getElementById('profile-region');
-        const profileMessage = document.getElementById('profile-message');
-        const dashboardProductList = document.getElementById('dashboard-product-list');
-        const refreshProductsBtn = document.getElementById('refresh-products');
-        const metricActiveModules = document.getElementById('metric-active-modules');
-        const metricAvgHumidity = document.getElementById('metric-avg-humidity');
-        const metricOpenValves = document.getElementById('metric-open-valves');
-        const dashboardLogoutBtn = document.getElementById('logout-btn');
-
-        const loadProfile = () => {
-            csrfFetch('server/user.php')
-                .then(res => {
-                    if (!res.ok) throw new Error('Unauthorized');
-                    return res.json();
-                })
-                .then(data => {
-                    lastNameInput.value = data.last_name || '';
-                    firstNameInput.value = data.first_name || '';
-                    emailInput.value = data.email || '';
-                    phoneInput.value = data.phone || '';
-                    regionInput.value = data.region || '';
-                })
-                .catch(() => {
-                    window.location.href = accountLink;
-                });
-        };
-        const loadDashboardProducts = () => {
-            if (!dashboardProductList) return;
-            csrfFetch('server/products.php')
-                .then(res => res.json())
-                .then(products => {
-                    dashboardProductList.innerHTML = '';
-                    const list = Array.isArray(products) ? products : [];
-
-                    if (metricActiveModules) metricActiveModules.textContent = list.length.toString();
-                    if (metricAvgHumidity) {
-                        const humidityValues = list
-                            .map(p => parseFloat(p.humidity))
-                            .filter(value => !Number.isNaN(value));
-                        const average = humidityValues.length
-                            ? humidityValues.reduce((acc, value) => acc + value, 0) / humidityValues.length
-                            : 0;
-                        metricAvgHumidity.textContent = `${average.toFixed(1)}%`;
-                    }
-                    if (metricOpenValves) {
-                        metricOpenValves.textContent = list.filter(p => Number(p.valve_open) === 1).length.toString();
-                    }
-
-                    if (!list.length) {
-                        const emptyRow = document.createElement('tr');
-                        const emptyCell = document.createElement('td');
-                        emptyCell.colSpan = 10;
-                        emptyCell.textContent = 'Aucun module IoT configuré pour le moment.';
-                        emptyRow.appendChild(emptyCell);
-                        dashboardProductList.appendChild(emptyRow);
-                        return;
-                    }
-
-                    list.forEach(prod => {
-                        const tr = document.createElement('tr');
-                        const fields = ['name','quantity','ph','rain','humidity','soil_humidity','light'];
-                        fields.forEach(field => {
-                            const td = document.createElement('td');
-                            td.className = 'px-2 py-2';
-                            td.textContent = prod[field] ?? '';
-                            tr.appendChild(td);
-                        });
-
-                        const valveTd = document.createElement('td');
-                        valveTd.className = 'px-2 py-2';
-                        const valveBtn = document.createElement('button');
-                        valveBtn.className = 'button button--glass text-sm';
-                        valveBtn.textContent = Number(prod.valve_open) === 1 ? 'Fermer' : 'Ouvrir';
-                        valveBtn.addEventListener('click', () => {
-                            csrfFetch(`server/products.php?id=${prod.id}`, {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ valve_open: Number(prod.valve_open) === 1 ? 0 : 1 })
-                            }).then(loadDashboardProducts);
-                        });
-                        valveTd.appendChild(valveBtn);
-                        tr.appendChild(valveTd);
-
-                        const angleTd = document.createElement('td');
-                        angleTd.className = 'px-2 py-2';
-                        const angleInput = document.createElement('input');
-                        angleInput.type = 'number';
-                        angleInput.value = prod.valve_angle ?? 0;
-                        angleInput.className = 'form-input w-20';
-                        angleInput.addEventListener('change', () => {
-                            csrfFetch(`server/products.php?id=${prod.id}`, {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ valve_angle: parseInt(angleInput.value, 10) || 0 })
-                            }).then(loadDashboardProducts);
-                        });
-                        angleTd.appendChild(angleInput);
-                        tr.appendChild(angleTd);
-
-                        const actionTd = document.createElement('td');
-                        actionTd.className = 'px-2 py-2';
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.className = 'button button--glass text-sm';
-                        deleteBtn.textContent = 'Supprimer';
-                        deleteBtn.addEventListener('click', () => {
-                            if (!confirm('Supprimer ce module ?')) return;
-                            csrfFetch(`server/products.php?id=${prod.id}`, {
-                                method: 'DELETE'
-                            }).then(loadDashboardProducts);
-                        });
-                        actionTd.appendChild(deleteBtn);
-                        tr.appendChild(actionTd);
-
-                        dashboardProductList.appendChild(tr);
-                    });
-                });
-        };
-
-        loadProfile();
-        loadDashboardProducts();
-
-        if (refreshProductsBtn) {
-            refreshProductsBtn.addEventListener('click', (event) => {
-                event.preventDefault();
-                loadDashboardProducts();
-            });
+    function submitContactForm(event) {
+        event.preventDefault();
+        if (!contactForm) {
+            return;
         }
 
-        if (dashboardLogoutBtn) {
-            dashboardLogoutBtn.addEventListener('click', () => {
-                csrfFetch('server/auth.php?action=logout', { method: 'POST' })
-                    .then(() => { window.location.href = accountLink; });
-            });
+        if (!contactForm.checkValidity()) {
+            contactForm.reportValidity();
+            return;
         }
 
-        profileForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const payload = {
-                last_name: lastNameInput.value.trim(),
-                first_name: firstNameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                region: regionInput.value.trim()
-            };
-            csrfFetch('server/user.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    profileMessage.textContent = 'Profil mis à jour';
-                    profileMessage.classList.remove('text-red-500');
-                    profileMessage.classList.add('text-green-500');
-                } else {
-                    profileMessage.textContent = data.message || 'Erreur lors de la mise à jour.';
-                    profileMessage.classList.remove('text-green-500');
-                    profileMessage.classList.add('text-red-500');
-                }
-            })
-            .catch(() => {
-                profileMessage.textContent = 'Erreur réseau.';
-                profileMessage.classList.remove('text-green-500');
-                profileMessage.classList.add('text-red-500');
-            });
-        });
-    }
+        setSubmitting(true);
+        showFeedback('', '');
 
-    if (document.getElementById('admin-dashboard')) {
-        const statUsers = document.getElementById('stat-total-users');
-        const statProducts = document.getElementById('stat-total-products');
-        const statOpenValves = document.getElementById('stat-open-valves');
-        const userList = document.getElementById('admin-user-list');
-        const productList = document.getElementById('admin-product-list');
-        const refreshUsersBtn = document.getElementById('refresh-users');
-        const refreshProductsBtn = document.getElementById('refresh-admin-products');
-
-        const renderUsers = (users = []) => {
-            if (!userList) return;
-            userList.innerHTML = '';
-            if (!users.length) {
-                const emptyRow = document.createElement('tr');
-                const emptyCell = document.createElement('td');
-                emptyCell.colSpan = 5;
-                emptyCell.textContent = 'Aucun utilisateur enregistré.';
-                emptyRow.appendChild(emptyCell);
-                userList.appendChild(emptyRow);
-                return;
-            }
-            users.forEach(user => {
-                const tr = document.createElement('tr');
-                ['last_name','first_name','email','region','role'].forEach(key => {
-                    const td = document.createElement('td');
-                    td.className = 'px-2 py-2';
-                    td.textContent = user[key] ?? '';
-                    tr.appendChild(td);
-                });
-                userList.appendChild(tr);
-            });
-        };
-
-        const renderAdminProducts = (products = []) => {
-            if (!productList) return;
-            productList.innerHTML = '';
-            if (!products.length) {
-                const emptyRow = document.createElement('tr');
-                const emptyCell = document.createElement('td');
-                emptyCell.colSpan = 5;
-                emptyCell.textContent = 'Aucun module enregistré.';
-                emptyRow.appendChild(emptyCell);
-                productList.appendChild(emptyRow);
-                return;
-            }
-            products.forEach(prod => {
-                const tr = document.createElement('tr');
-                const values = [prod.username, prod.name, prod.quantity, prod.humidity ?? '-', Number(prod.valve_open) === 1 ? 'Ouverte' : 'Fermée'];
-                values.forEach(value => {
-                    const td = document.createElement('td');
-                    td.className = 'px-2 py-2';
-                    td.textContent = value ?? '';
-                    tr.appendChild(td);
-                });
-                productList.appendChild(tr);
-            });
-        };
-
-        const fetchStats = () => {
-            csrfFetch('server/admin.php?action=stats')
-                .then(res => res.json())
-                .then(response => {
-                    if (!response.success) return;
-                    const data = response.data || {};
-                    if (statUsers) statUsers.textContent = (data.users ?? 0).toString();
-                    if (statProducts) statProducts.textContent = (data.products ?? 0).toString();
-                    if (statOpenValves) statOpenValves.textContent = (data.openValves ?? 0).toString();
-                });
-        };
-
-        const fetchUsers = () => {
-            csrfFetch('server/admin.php?action=users')
-                .then(res => res.json())
-                .then(response => {
-                    if (!response.success) return;
-                    renderUsers(response.data || []);
-                });
-        };
-
-        const fetchProducts = () => {
-            csrfFetch('server/admin.php?action=products')
-                .then(res => res.json())
-                .then(response => {
-                    if (!response.success) return;
-                    renderAdminProducts(response.data || []);
-                });
-        };
-
-        if (refreshUsersBtn) refreshUsersBtn.addEventListener('click', () => fetchUsers());
-        if (refreshProductsBtn) refreshProductsBtn.addEventListener('click', () => fetchProducts());
-
-        fetchStats();
-        fetchUsers();
-        fetchProducts();
-    }
-
-    // Gère la soumission du formulaire de contact
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        const contactFeedback = document.getElementById('contact-form-feedback');
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const submitLabel = submitButton ? submitButton.querySelector('[data-translate="contact_send_label"]') : null;
-        const translate = (key, fallback) => (translations[currentLang] && translations[currentLang][key]) || fallback;
-        const setContactFeedback = (message, variant = 'neutral') => {
-            if (!contactFeedback) return;
-            contactFeedback.classList.remove('text-red-500', 'text-brand-green-400', 'text-text-300');
-            let toneClass = 'text-text-300';
-            if (variant === 'success') toneClass = 'text-brand-green-400';
-            if (variant === 'error') toneClass = 'text-red-500';
-            contactFeedback.classList.add(toneClass);
-            contactFeedback.textContent = message;
-        };
-        const setSubmitting = (isSubmitting) => {
-            if (!submitButton) return;
-            submitButton.disabled = isSubmitting;
-            submitButton.setAttribute('aria-busy', String(isSubmitting));
-            if (submitLabel) {
-                submitLabel.textContent = translate(isSubmitting ? 'contact_sending' : 'contact_send_label', isSubmitting ? 'Envoi du message…' : 'Envoyer le message');
-            }
-        };
-
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        const submitRequest = (token) => {
             const formData = new FormData(contactForm);
-            setContactFeedback('');
-
-            const name = (formData.get('name') || '').toString().trim();
-            const email = (formData.get('email') || '').toString().trim();
-            const phone = (formData.get('phone') || '').toString().trim();
-            const message = (formData.get('message') || '').toString().trim();
-            const honeypot = (formData.get('company') || '').toString().trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const phoneRegex = /^\+?[0-9\s.-]{6,25}$/;
-
-            if (name.length < 2 || name.length > 120) {
-                setContactFeedback(translate('contact_validation_name', 'Veuillez saisir un nom valide (2 à 120 caractères).'), 'error');
-                return;
-            }
-            if (!emailRegex.test(email)) {
-                setContactFeedback(translate('contact_validation_email', 'Veuillez saisir une adresse email valide.'), 'error');
-                return;
-            }
-            if (phone && !phoneRegex.test(phone)) {
-                setContactFeedback(translate('contact_validation_phone', 'Le numéro de téléphone est invalide.'), 'error');
-                return;
-            }
-            if (message.length < 20 || message.length > 2000) {
-                setContactFeedback(translate('contact_validation_message', 'Votre message doit contenir au moins 20 caractères.'), 'error');
-                return;
-            }
-
-            if (honeypot) {
-                contactForm.reset();
-                setContactFeedback(translate('contact_success_message', 'Votre message a été envoyé avec succès.'), 'success');
-                return;
-            }
-
-            setSubmitting(true);
-            csrfFetch('server/contact.php', {
+            return fetch('server/contact.php', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: token ? { 'X-CSRF-Token': token } : {},
+                credentials: 'include',
+            });
+        };
+
+        const ensureToken = csrfInput && csrfInput.value ? Promise.resolve(csrfInput.value) : fetchCsrfToken();
+
+        ensureToken
+            .then(submitRequest)
+            .then(async (response) => {
+                if (response.status === 204) {
+                    showFeedback('', 'success');
+                    return;
+                }
+                const payload = await response.json().catch(() => ({}));
+                if (response.ok && payload.success) {
+                    contactForm.reset();
+                    showFeedback(payload.message || contactForm.dataset.successMessage || '', 'success');
+                } else {
+                    showFeedback(payload.message || contactForm.dataset.errorMessage || '', 'error');
+                }
             })
-                .then(async (res) => {
-                    if (res.status === 204) {
-                        return { success: true, message: translate('contact_success_message', 'Votre message a été envoyé avec succès.') };
-                    }
-                    const data = await res.json();
-                    return data;
-                })
-                .then((data) => {
-                    const messageText = data && data.message ? data.message : translate(data && data.success ? 'contact_success_message' : 'contact_error_message', data && data.success ? 'Votre message a été envoyé avec succès.' : "Impossible d'envoyer le message.");
-                    setContactFeedback(messageText, data && data.success ? 'success' : 'error');
-                    if (data && data.success) {
-                        contactForm.reset();
-                    }
-                })
-                .catch(() => {
-                    setContactFeedback(translate('contact_network_error', 'Une erreur réseau est survenue. Veuillez réessayer.'), 'error');
-                })
-                .finally(() => {
-                    setSubmitting(false);
-                });
+            .catch(() => {
+                showFeedback(contactForm.dataset.errorMessage || '', 'error');
+            })
+            .finally(() => {
+                setSubmitting(false);
+            });
+    }
+
+    function init() {
+        applyTheme(getPreferredTheme());
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        if (menuButton) {
+            menuButton.addEventListener('click', toggleMobileMenu);
+        }
+
+        if (mobileMenu) {
+            mobileMenu.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }
+
+        if (languageSwitcher) {
+            languageSwitcher.addEventListener('change', handleLanguageChange);
+        }
+
+        if (skipLink) {
+            skipLink.addEventListener('click', focusMainLandmark);
+        }
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', submitContactForm);
+            if (contactForm.dataset.successMessage === undefined || contactForm.dataset.errorMessage === undefined) {
+                contactForm.dataset.successMessage = contactForm.getAttribute('data-success-message') || '';
+                contactForm.dataset.errorMessage = contactForm.getAttribute('data-error-message') || '';
+            }
+            if (csrfInput && !csrfInput.value) {
+                fetchCsrfToken();
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeMobileMenu();
+            }
         });
     }
 
-    try {
-        AOS.init({ duration: 800, once: true, offset: 50 });
-    } catch (e) {
-        console.error('AOS init failed', e);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
-});
-
+})();

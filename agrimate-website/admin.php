@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-requireAdmin('/account.php');
+requireAdmin();
+
 $pageTitle = 'FarmLink - Administration';
 $activeNav = 'dashboard';
 include __DIR__ . '/includes/head.php';

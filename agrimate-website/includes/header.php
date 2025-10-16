@@ -114,9 +114,9 @@ $supportedLanguages = supported_languages();
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <div class="flex items-center space-x-3">
+            <div class="nav-actions">
                 <?php if (isAuthenticated()): ?>
-                    <span class="hidden md:inline text-sm text-text-500"><span data-translate="nav_logged_in_prefix">Connecté en tant que</span> <span class="font-semibold"><?= htmlspecialchars($currentUser['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span></span>
+                    <span class="nav-user"><?= htmlspecialchars(trans('nav.logged_in', $pageLang), ENT_QUOTES, 'UTF-8'); ?> <strong><?= htmlspecialchars($currentUser['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong></span>
                 <?php endif; ?>
                 <label for="language-switcher" class="sr-only">Choisir la langue</label>
                 <select id="language-switcher" class="mr-1" aria-label="Sélectionner la langue">
@@ -125,13 +125,13 @@ $supportedLanguages = supported_languages();
                         <option value="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>" lang="<?= htmlspecialchars($langCode, ENT_QUOTES, 'UTF-8'); ?>" <?= $pageLang === $langCode ? 'selected' : ''; ?>><?= htmlspecialchars($langLabel, ENT_QUOTES, 'UTF-8'); ?></option>
                     <?php endforeach; ?>
                 </select>
-                <button class="flex items-center cursor-pointer" id="theme-toggle" type="button" aria-label="Basculer le thème">
-                    <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Basculer le thème">
+                    <span class="theme-toggle__sun" aria-hidden="true"><i class="fas fa-sun"></i></span>
+                    <span class="theme-toggle__moon" aria-hidden="true"><i class="fas fa-moon"></i></span>
                 </button>
-                <button id="menu-btn" class="md:hidden ml-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-400" type="button" aria-expanded="false" aria-controls="mobile-menu">
-                    <span class="sr-only">Ouvrir le menu</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <button id="menu-btn" class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="sr-only">Menu</span>
+                    <span class="menu-toggle__icon" aria-hidden="true"></span>
                 </button>
             </div>
         </nav>

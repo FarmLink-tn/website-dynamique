@@ -1,17 +1,13 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
+
+$pageLang = current_language();
+
 $pageTitle = 'FarmLink - Conseiller IA';
-$metaDescription = "Consultez le conseiller agricole IA de FarmLink pour obtenir des recommandations instantanées sur vos cultures et diagnostiquer les problèmes courants.";
-$metaKeywords = 'FarmLink IA, conseiller agricole, diagnostic cultures, intelligence artificielle';
+$metaDescription = 'Explorez comment le conseiller IA FarmLink anticipe le stress hydrique et guide vos décisions agronomiques.';
 $canonicalPath = '/ai-advisor.php';
 $activeNav = 'ai';
-$beforeMainScripts = [
-    '<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.21.0/dist/tf-core.min.js"></script>',
-    '<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@4.21.0/dist/tf-converter.min.js"></script>',
-    '<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@4.21.0/dist/tf-backend-webgl.min.js"></script>',
-    '<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna@1.7.1/dist/qna.min.js"></script>',
-    '<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>',
-];
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
@@ -32,27 +28,38 @@ include __DIR__ . '/includes/header.php';
                         </div>
                          <div id="ai-spinner" class="spinner mx-auto hidden"></div>
                     </div>
+                </div>
+                <figure class="hero__visual" aria-hidden="true">
+                    <img src="image/karim-a.png" alt="Interface du conseiller IA FarmLink" loading="lazy" width="960" height="640">
+                </figure>
+            </div>
+        </section>
 
-                    <div class="progress-bar-container my-2 hidden" id="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+        <section class="section">
+            <div class="container">
+                <div class="grid grid--three">
+                    <article class="card">
+                        <h3>Analyses multicanales</h3>
+                        <p>Combinez images satellites, photos mobiles et données météo pour détecter ravageurs, stress hydrique et dérives de fertigation.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Alertes contextualisées</h3>
+                        <p>Recevez des scénarios d’irrigation, recommandations phytosanitaires et consignes de sécurité adaptées à votre culture et à votre équipe.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Rapports instantanés</h3>
+                        <p>Exportez des rapports prêts à partager avec les coopératives, bailleurs et certificateurs pour justifier vos actions.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-                    <form id="ai-input-form" class="ai-input-form">
-                        <label for="fileInput" class="ai-action-button" title="Téléverser une image">
-                            <i class="fas fa-paperclip"></i>
-                        </label>
-                        <input id="fileInput" type="file" class="hidden" accept="image/*" />
-
-                        <button type="button" id="webcamBtn" class="ai-action-button" title="Utiliser la caméra">
-                            <i class="fas fa-camera"></i>
-                        </button>
-
-                        <textarea id="text-input" class="form-input flex-grow" rows="4" placeholder="Posez votre question ici..."></textarea>
-
-                        <button type="submit" class="button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-
-                     <p class="text-sm mt-4 text-text-500" data-translate="privacyNote">Confidentialité garantie : Toute l'analyse est effectuée sur votre appareil.</p>
+        <section class="section">
+            <div class="container">
+                <div class="cta-block">
+                    <h2>Connectons votre exploitation à l’IA FarmLink</h2>
+                    <p>Nous calibrons le conseiller IA avec vos objectifs et votre historique pour délivrer des recommandations exploitables dès la première campagne.</p>
+                    <a class="button button--primary" href="contact.php">Parler à un expert</a>
                 </div>
             </div>
         </section>

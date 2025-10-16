@@ -12,6 +12,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+$translations = [];
+require_once __DIR__ . '/translations.php';
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $assetBaseUrl = rtrim(getenv('ASSET_BASE_URL') ?: '', '/');
 $siteBaseUrlEnv = rtrim(getenv('SITE_BASE_URL') ?: getenv('BASE_URL') ?: '', '/');
 
@@ -108,6 +115,67 @@ if (!function_exists('current_language')) {
     }
 }
 
+if (!function_exists('available_translations')) {
+    function available_translations(): array
+    {
+        global $translations;
+        return $translations;
+    }
+}
+
+if (!function_exists('translation_lookup')) {
+    function translation_lookup(array $source, array $segments)
+    {
+        $value = $source;
+        foreach ($segments as $segment) {
+            if (!is_array($value) || !array_key_exists($segment, $value)) {
+                return null;
+            }
+            $value = $value[$segment];
+        }
+
+        return $value;
+    }
+}
+
+if (!function_exists('trans')) {
+    function trans(string $key, ?string $lang = null, $fallback = null)
+    {
+        global $translations, $defaultLanguage;
+
+        if ($key === '') {
+            return $fallback ?? '';
+        }
+
+        $segments = explode('.', $key);
+        $lang = $lang ?? current_language();
+
+        $primary = $translations[$lang] ?? [];
+        $fallbackLang = $defaultLanguage ?? array_key_first($translations) ?? 'fr';
+        $defaultSource = $translations[$fallbackLang] ?? [];
+
+        $value = translation_lookup($primary, $segments);
+        if ($value === null && $fallbackLang !== $lang) {
+            $value = translation_lookup($defaultSource, $segments);
+        }
+
+        if ($value === null) {
+            foreach ($translations as $candidate) {
+                $value = translation_lookup($candidate, $segments);
+                if ($value !== null) {
+                    break;
+                }
+            }
+        }
+
+        if ($value === null) {
+            return $fallback ?? $key;
+        }
+
+        return $value;
+    }
+}
+
 if (!function_exists('supported_languages')) {
     function supported_languages(): array
     {
@@ -132,7 +200,7 @@ if (!function_exists('localized_url')) {
 
 if (!headers_sent()) {
     $csp = "default-src 'self'; "
-        . "script-src 'self' 'unsafe-eval' https://cdn.tailwindcss.com; "
+        . "script-src 'self'; "
         . "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
         . "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
         . "img-src 'self' data: blob:; "

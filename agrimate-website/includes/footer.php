@@ -40,7 +40,6 @@
             <?= $script ?>
         <?php endforeach; ?>
     <?php endif; ?>
-    <script src="aos.js" defer></script>
     <script src="script.js" defer></script>
     <?php if (!empty($afterMainScripts) && is_array($afterMainScripts)): ?>
         <?php foreach ($afterMainScripts as $script): ?>

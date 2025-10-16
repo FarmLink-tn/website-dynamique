@@ -1,9 +1,11 @@
 <?php
-require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/logger.php';
+
 header('Content-Type: application/json');
 
-// Ensure CSRF token exists
+$responseStrings = trans('contact', current_language());
+
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -29,7 +31,6 @@ if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
     exit;
 }
 
-// Load dependencies if available
 $autoload = __DIR__ . '/../vendor/autoload.php';
 if (file_exists($autoload)) {
     require_once $autoload;
@@ -55,7 +56,7 @@ $isNameValid = (bool) preg_match("/^[\p{L}'\s-]{2,120}$/u", $name);
 
 if (!$isNameValid || !$isEmailValid || $messageLength < 20 || $messageLength > 2000 || !$isPhoneValid) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Champs invalides ou manquants.']);
+    echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Invalid fields']);
     app_log('contact_invalid_fields', [
         'name_length' => $nameLength,
         'name_valid' => $isNameValid,
@@ -66,10 +67,9 @@ if (!$isNameValid || !$isEmailValid || $messageLength < 20 || $messageLength > 2
     exit;
 }
 
-// Reject potential header injection
 if (preg_match("/[\r\n]/", $email)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Email invalide.']);
+    echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Invalid email']);
     app_log('contact_header_injection', ['length' => strlen($email)]);
     exit;
 }
@@ -82,7 +82,7 @@ $body    = "Nom: $name\nEmail: $cleanEmail\nTéléphone: $phone\nMessage:\n$mess
 $mailerAvailable = class_exists(\PHPMailer\PHPMailer\PHPMailer::class);
 
 if ($mailerAvailable) {
-    $mail = new \PHPMailer\PHPMailer\PHPMailer(true); // PHPMailer helps prevent header injection
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
     try {
         $mail->setFrom('contact@farmlink.tn', 'FarmLink');
@@ -93,16 +93,16 @@ if ($mailerAvailable) {
         $mail->Body    = $body;
 
         if ($mail->send()) {
-            echo json_encode(['success' => true, 'message' => 'Message envoyé avec succès.']);
+            echo json_encode(['success' => true, 'message' => $responseStrings['success'] ?? 'Message sent successfully.']);
             app_log('contact_mail_sent', ['transport' => 'phpmailer']);
         } else {
             http_response_code(500);
-            echo json_encode(['success' => false, 'message' => "Échec de l'envoi du message."]);
+            echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Unable to send message']);
             app_log('contact_mail_failed', ['transport' => 'phpmailer', 'error' => 'unknown']);
         }
     } catch (\Throwable $e) {
         http_response_code(500);
-        echo json_encode(['success' => false, 'message' => "Erreur lors de l'envoi du message."]);
+        echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Unable to send message']);
         app_log('contact_mail_exception', [
             'transport' => 'phpmailer',
             'error' => $e->getMessage(),
@@ -111,7 +111,6 @@ if ($mailerAvailable) {
     exit;
 }
 
-// Fallback to the native mail() function when PHPMailer is unavailable
 $headers = [
     'From: contact@farmlink.tn',
     'Reply-To: ' . $cleanEmail,
@@ -119,10 +118,10 @@ $headers = [
 ];
 
 if (mail($to, $subject, $body, implode("\r\n", $headers))) {
-    echo json_encode(['success' => true, 'message' => 'Message envoyé avec succès.']);
+    echo json_encode(['success' => true, 'message' => $responseStrings['success'] ?? 'Message sent successfully.']);
     app_log('contact_mail_sent', ['transport' => 'mail']);
 } else {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => "Erreur lors de l'envoi du message."]);
+    echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Unable to send message']);
     app_log('contact_mail_failed', ['transport' => 'mail']);
 }

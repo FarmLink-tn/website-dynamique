@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-requireAuth('account.php');
+requireAuth();
+
 $pageTitle = 'FarmLink - Tableau de bord';
-$metaDescription = "Consultez votre tableau de bord FarmLink pour suivre vos capteurs, vos produits et l'état de vos équipements agricoles connectés.";
-$metaKeywords = 'FarmLink tableau de bord, suivi capteurs agricoles, plateforme IoT';
+$metaDescription = 'Espace sécurisé FarmLink pour le suivi des déploiements.';
 $metaRobots = 'noindex, nofollow';
 $canonicalPath = '/profile.php';
 $activeNav = 'dashboard';

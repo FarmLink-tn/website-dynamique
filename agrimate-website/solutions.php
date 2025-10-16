@@ -1,10 +1,16 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-$pageTitle = 'FarmLink - Nos Solutions';
-$metaDescription = "Explorez les solutions modulaires de FarmLink : irrigation intelligente, contrôle des pompes et surveillance environnementale pour booster vos rendements.";
-$metaKeywords = 'FarmLink solutions, irrigation intelligente, contrôle pompe, capteurs agricoles';
+
+$pageLang = current_language();
+$solutions = trans('home.solutions', $pageLang);
+$workflow = trans('home.workflow', $pageLang);
+$cta = trans('home.cta', $pageLang);
+
+$pageTitle = 'FarmLink - ' . ($solutions['title'] ?? 'Solutions');
+$metaDescription = $solutions['description'] ?? trans('meta.description', $pageLang);
 $canonicalPath = '/solutions.php';
 $activeNav = 'solutions';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>

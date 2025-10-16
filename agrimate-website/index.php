@@ -5,6 +5,7 @@ $metaDescription = "FarmLink transforme les exploitations agricoles tunisiennes 
 $metaKeywords = 'FarmLink Tunisie, agriculture intelligente, retrofit IoT, irrigation connectée, conseiller IA, transformation digitale';
 $canonicalPath = '/';
 $activeNav = 'home';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>

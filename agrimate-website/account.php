@@ -1,15 +1,12 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-if (isAuthenticated()) {
-    header('Location: profile.php');
-    exit;
-}
-$pageTitle = 'FarmLink - Mon Compte';
-$metaDescription = "Accédez à votre compte FarmLink pour gérer vos produits agricoles, consulter vos données et profiter des services connectés.";
-$metaKeywords = 'FarmLink compte, tableau de bord agriculteur, gestion produits';
+
+$pageTitle = 'FarmLink - Espace client';
+$metaDescription = 'Demandez un accès à l’espace client FarmLink pour suivre vos projets et vos déploiements.';
 $metaRobots = 'noindex, nofollow';
 $canonicalPath = '/account.php';
-$activeNav = 'account';
+$activeNav = '';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>

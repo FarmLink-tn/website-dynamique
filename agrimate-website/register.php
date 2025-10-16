@@ -1,15 +1,12 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-if (isAuthenticated()) {
-    header('Location: profile.php');
-    exit;
-}
-$pageTitle = 'FarmLink - Créer un compte';
-$metaDescription = "Créez votre compte FarmLink pour bénéficier des services d'agriculture intelligente et piloter vos équipements connectés.";
-$metaKeywords = 'FarmLink inscription, créer compte, agriculture intelligente';
+
+$pageTitle = 'FarmLink - Demander un accès';
+$metaDescription = 'Demandez un accès au portail FarmLink pour suivre vos indicateurs et projets.';
 $metaRobots = 'noindex, nofollow';
 $canonicalPath = '/register.php';
-$activeNav = 'account';
+$activeNav = '';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>

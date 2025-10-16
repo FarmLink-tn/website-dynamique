@@ -5,6 +5,7 @@ $metaDescription = "Suivez la méthodologie FarmLink pour connecter votre exploi
 $metaKeywords = 'FarmLink méthodologie, retrofit agricole, déploiement IoT, coaching agronomique';
 $canonicalPath = '/how-it-works.php';
 $activeNav = 'how';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>

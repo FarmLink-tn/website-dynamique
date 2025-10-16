@@ -1,10 +1,14 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-$pageTitle = 'FarmLink - Contact';
-$metaDescription = "Contactez l'équipe FarmLink pour obtenir un devis, poser vos questions et découvrir comment moderniser votre exploitation agricole en Tunisie.";
-$metaKeywords = 'FarmLink contact, devis agriculture intelligente, assistance FarmLink';
+
+$pageLang = current_language();
+$content = trans('contact', $pageLang);
+
+$pageTitle = 'FarmLink - ' . ($content['title'] ?? 'Contact');
+$metaDescription = $content['intro'] ?? trans('meta.description', $pageLang);
 $canonicalPath = '/contact.php';
 $activeNav = 'contact';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
@@ -21,7 +25,7 @@ include __DIR__ . '/includes/header.php';
                         <p id="contact-form-instructions" class="sr-only">Tous les champs sauf le numéro de téléphone sont obligatoires.</p>
                         <input type="hidden" name="csrf_token" id="contact-csrf-token">
                         <div class="honeypot" aria-hidden="true">
-                            <label for="contact-company">Entreprise</label>
+                            <label for="contact-company">Company</label>
                             <input type="text" id="contact-company" name="company" tabindex="-1" autocomplete="off">
                         </div>
                         <div class="mb-6">
@@ -40,10 +44,10 @@ include __DIR__ . '/includes/header.php';
                             <label id="contact-message-label" for="message" class="block mb-2 text-sm font-medium text-text-300" data-translate="contact_message">Message</label>
                             <textarea id="message" name="message" rows="4" class="form-input" placeholder="Décrivez votre projet ou votre question ici..." data-translate-placeholder="contact_message_placeholder" required aria-required="true" aria-labelledby="contact-message-label" minlength="20" maxlength="2000"></textarea>
                         </div>
-                        <button type="submit" class="button w-full" aria-live="off">
-                            <span class="flex items-center justify-center gap-2"><i class="fas fa-paper-plane" aria-hidden="true"></i><span data-translate="contact_send_label">Envoyer le message</span></span>
+                        <button type="submit" class="button button--primary" aria-live="polite">
+                            <span><i class="fas fa-paper-plane" aria-hidden="true"></i> <?= htmlspecialchars($content['submit'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
                         </button>
-                        <p id="contact-form-feedback" class="mt-4 text-sm text-text-300" role="alert" aria-live="polite"></p>
+                        <p id="contact-form-feedback" role="status" aria-live="polite"></p>
                     </form>
                 </div>
             </div>
