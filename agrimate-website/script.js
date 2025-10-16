@@ -53,7 +53,6 @@ function csrfFetch(url, options = {}) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    AOS.init();
     // --- DICTIONNAIRE DE TRADUCTION COMPLET ---
     const translations = {
         fr: {
@@ -485,9 +484,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     // --- SÉLECTEURS D'ÉLÉMENTS ---
-    const defaultLang = 'fr';
-    const htmlElement = document.documentElement;
     const body = document.body;
+    const defaultLang = body.dataset.defaultLang || 'fr';
+    const htmlElement = document.documentElement;
     const languageSwitcher = document.getElementById('language-switcher');
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -500,7 +499,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const requestPath = body.dataset.requestPath || window.location.pathname;
 
     const savedLang = localStorage.getItem('language');
-    let currentLang = savedLang || body.dataset.currentLang || defaultLang;
+    const sessionLang = body.dataset.currentLang || defaultLang;
+    let currentLang = savedLang && translations[savedLang] ? savedLang : sessionLang;
+    if (!translations[currentLang]) {
+        currentLang = defaultLang;
+    }
+    localStorage.setItem('language', currentLang);
 
     const applyDynamicLinks = () => {
         document.querySelectorAll('[data-route="account"]').forEach(link => {
@@ -519,6 +523,9 @@ document.addEventListener('DOMContentLoaded', () => {
         body.dataset.currentLang = lang;
         htmlElement.lang = lang;
         htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        if (languageSwitcher && languageSwitcher.value !== lang) {
+            languageSwitcher.value = lang;
+        }
         document.querySelectorAll('[data-translate]').forEach(el => {
             const key = el.getAttribute('data-translate');
             if (!el.dataset.original) {
@@ -551,11 +558,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (!translations[currentLang]) {
-        currentLang = defaultLang;
-    }
-
     const savedTheme = localStorage.getItem('theme') || 'dark';
+    const localeHrefMap = languageSwitcher
+        ? Array.from(languageSwitcher.options).reduce((acc, option) => {
+            const value = option.value.trim();
+            const href = option.dataset.href;
+            if (value && href) {
+                acc[value] = href;
+            }
+            return acc;
+        }, {})
+        : {};
+
     if (languageSwitcher) {
         languageSwitcher.value = currentLang;
     }
@@ -570,10 +584,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (languageSwitcher) languageSwitcher.addEventListener('change', (e) => {
         const newLang = e.target.value;
-        localStorage.setItem('language', newLang);
+        if (translations[newLang]) {
+            localStorage.setItem('language', newLang);
+        } else {
+            localStorage.removeItem('language');
+        }
         applyLanguage(newLang);
+        const targetHref = localeHrefMap[newLang];
+        if (targetHref) {
+            window.location.href = targetHref;
+            return;
+        }
         const url = new URL(window.location.href);
-        url.searchParams.set('lang', newLang);
+        if (newLang === defaultLang) {
+            url.searchParams.delete('lang');
+        } else {
+            url.searchParams.set('lang', newLang);
+        }
         window.location.href = url.toString();
     });
     if (menuBtn && mobileMenu) {
@@ -771,6 +798,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('ai-advisor')) {
             preloadModels();
         }
+    }
+
+    const skipLink = document.querySelector('.skip-link');
+    const mainContent = document.getElementById('main-content');
+    if (skipLink && mainContent) {
+        skipLink.addEventListener('click', () => {
+            requestAnimationFrame(() => {
+                mainContent.focus();
+            });
+        });
     }
 
     // Fetch CSRF token for the session

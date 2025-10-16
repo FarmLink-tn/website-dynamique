@@ -1,6 +1,9 @@
 User-agent: *
 Disallow: /server/
 Disallow: /admin.php
+Disallow: /profile.php
+Disallow: /register.php
 Allow: /
+Clean-param: lang /
 
 Sitemap: https://farmlink.tn/sitemap.xml
