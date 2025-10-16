@@ -8,7 +8,7 @@ $activeNav = 'about';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" class="py-20" tabindex="-1">
+    <main id="main-content" class="py-20" role="main" tabindex="-1">
         <section id="about" class="container mx-auto px-6">
             <h2 class="section-title" data-translate="about_main_title">L'Agriculture de Demain, Une Récolte à la Fois.</h2>
             <div class="grid md:grid-cols-2 gap-16 items-center mt-20">

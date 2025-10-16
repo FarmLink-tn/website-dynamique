@@ -8,15 +8,25 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Validate CSRF token on POST requests
-$token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? ($_POST['csrf_token'] ?? '');
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
-        http_response_code(403);
-        echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
-        app_log('contact_invalid_csrf', ['token' => $token !== '' ? 'provided' : 'missing']);
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+if ($method !== 'POST') {
+    if ($method === 'OPTIONS') {
+        http_response_code(204);
         exit;
     }
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Méthode non autorisée.']);
+    exit;
+}
+
+// Validate CSRF token on POST requests
+$token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? ($_POST['csrf_token'] ?? '');
+if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
+    app_log('contact_invalid_csrf', ['token' => $token !== '' ? 'provided' : 'missing']);
+    exit;
 }
 
 // Load dependencies if available
@@ -41,12 +51,14 @@ $nameLength = mb_strlen($name);
 $messageLength = mb_strlen($message);
 $isEmailValid = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 $isPhoneValid = $phone === '' || preg_match('/^\+?[0-9\s.-]{6,25}$/', $phone);
+$isNameValid = (bool) preg_match("/^[\p{L}'\s-]{2,120}$/u", $name);
 
-if ($nameLength < 2 || $nameLength > 120 || !$isEmailValid || !$messageLength || $messageLength < 20 || $messageLength > 2000 || !$isPhoneValid) {
+if (!$isNameValid || !$isEmailValid || $messageLength < 20 || $messageLength > 2000 || !$isPhoneValid) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Champs invalides ou manquants.']);
     app_log('contact_invalid_fields', [
         'name_length' => $nameLength,
+        'name_valid' => $isNameValid,
         'email_valid' => $isEmailValid,
         'message_length' => $messageLength,
         'phone_valid' => $isPhoneValid,
