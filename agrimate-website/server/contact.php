@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/logger.php';
 header('Content-Type: application/json');
 
 // Ensure CSRF token exists
@@ -28,14 +29,27 @@ $name    = trim($_POST['name']    ?? '');
 $email   = trim($_POST['email']   ?? '');
 $phone   = trim($_POST['phone']   ?? '');
 $message = trim($_POST['message'] ?? '');
+$company = trim($_POST['company'] ?? '');
 
-if (!$name || !$email || !$message || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if ($company !== '') {
+    http_response_code(204);
+    app_log('contact_spam_honeypot', []);
+    exit;
+}
+
+$nameLength = mb_strlen($name);
+$messageLength = mb_strlen($message);
+$isEmailValid = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+$isPhoneValid = $phone === '' || preg_match('/^\+?[0-9\s.-]{6,25}$/', $phone);
+
+if ($nameLength < 2 || $nameLength > 120 || !$isEmailValid || !$messageLength || $messageLength < 20 || $messageLength > 2000 || !$isPhoneValid) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Champs invalides ou manquants.']);
     app_log('contact_invalid_fields', [
-        'name' => (bool) $name,
-        'email_valid' => filter_var($email, FILTER_VALIDATE_EMAIL) !== false,
-        'message' => (bool) $message,
+        'name_length' => $nameLength,
+        'email_valid' => $isEmailValid,
+        'message_length' => $messageLength,
+        'phone_valid' => $isPhoneValid,
     ]);
     exit;
 }

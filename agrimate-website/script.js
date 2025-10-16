@@ -68,6 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_solutions_mobile: "Nos Solutions",
             nav_ai_advisor_mobile: "✨ Conseiller IA",
             nav_account_mobile: "Mon Compte",
+            nav_login: "Se connecter",
+            nav_register: "Créer un compte",
+            nav_dashboard: "Tableau de bord",
+            nav_login_mobile: "Se connecter",
+            nav_register_mobile: "Créer un compte",
+            nav_dashboard_mobile: "Tableau de bord",
+            nav_logged_in_prefix: "Connecté en tant que",
             nav_get_quote_mobile: "Obtenir un devis",
             hero_title: "Du traditionnel au smart - connectez votre ferme à l'avenir.",
             hero_subtitle: "Solutions de modernisation abordables pour une agriculture plus efficace.",
@@ -123,15 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_email: "Email",
             contact_phone: "Numéro de téléphone",
             contact_message: "Message",
-            contact_send: "<i class='fas fa-paper-plane mr-2'></i> Envoyer le Message",
+            contact_send: "Envoyer le message",
+            contact_send_label: "Envoyer le message",
             contact_sending: "Envoi du message…",
             contact_success_message: "Votre message a été envoyé avec succès.",
             contact_error_message: "Impossible d'envoyer le message. Vérifiez les champs et réessayez.",
             contact_network_error: "Une erreur réseau est survenue. Veuillez réessayer.",
+            contact_validation_name: "Veuillez saisir un nom valide (2 à 120 caractères).",
+            contact_validation_email: "Veuillez saisir une adresse email valide.",
+            contact_validation_phone: "Le numéro de téléphone est invalide.",
+            contact_validation_message: "Votre message doit contenir au moins 20 caractères.",
             account_title: "Mon Compte",
             auth_login_title: "Se connecter",
             auth_login_btn: "Se connecter",
-            auth_register_prompt: "Pas encore de compte ? <a data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_prompt: "Pas encore de compte ? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Créer un compte</a>",
             auth_register_title: "Créer un compte",
             auth_register_btn: "Créer le compte",
@@ -146,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Numéro de téléphone",
             auth_region_placeholder: "Région",
-            auth_login_prompt: "Déjà un compte ? <a data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             auth_login_prompt: "Déjà un compte ? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Se connecter</a>",
             products_section_title: "Mes Produits",
             product_form_instructions: "Renseignez les informations clés de votre produit pour mettre à jour le tableau de bord.",
@@ -204,6 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_solutions_mobile: "Solutions",
             nav_ai_advisor_mobile: "✨ AI Advisor",
             nav_account_mobile: "My Account",
+            nav_login: "Log In",
+            nav_register: "Create Account",
+            nav_dashboard: "Dashboard",
+            nav_login_mobile: "Log In",
+            nav_register_mobile: "Create Account",
+            nav_dashboard_mobile: "Dashboard",
+            nav_logged_in_prefix: "Signed in as",
             nav_get_quote_mobile: "Get a Quote",
             hero_title: "From traditional to smart – connect your farm to the future.",
             hero_subtitle: "Affordable retrofit solutions for more efficient farming.",
@@ -259,15 +276,19 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_email: "Email",
             contact_phone: "Phone Number",
             contact_message: "Message",
-            contact_send: "<i class='fas fa-paper-plane mr-2'></i> Send Message",
+            contact_send: "Send message",
+            contact_send_label: "Send message",
             contact_sending: "Sending message…",
             contact_success_message: "Your message was sent successfully.",
             contact_error_message: "We couldn't send your message. Please check the fields and try again.",
             contact_network_error: "A network error occurred. Please try again.",
+            contact_validation_name: "Please enter a valid name (2–120 characters).",
+            contact_validation_email: "Please enter a valid email address.",
+            contact_validation_phone: "The phone number looks invalid.",
+            contact_validation_message: "Your message must contain at least 20 characters.",
             account_title: "My Account",
             auth_login_title: "Log In",
             auth_login_btn: "Log In",
-            auth_register_prompt: "Don't have an account yet? <a data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_prompt: "Don't have an account yet? <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>Create an account</a>",
             auth_register_title: "Create an Account",
             auth_register_btn: "Create Account",
@@ -282,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "Email",
             auth_phone_placeholder: "Phone Number",
             auth_region_placeholder: "Region",
-            auth_login_prompt: "Already have an account? <a data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             auth_login_prompt: "Already have an account? <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>Log In</a>",
             products_section_title: "My Products",
             product_form_instructions: "Provide key product details to update the dashboard.",
@@ -336,6 +356,13 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_solutions_mobile: "حلولنا",
             nav_ai_advisor_mobile: "✨ المستشار الذكي",
             nav_account_mobile: "حسابي",
+            nav_login: "تسجيل الدخول",
+            nav_register: "إنشاء حساب",
+            nav_dashboard: "لوحة التحكم",
+            nav_login_mobile: "تسجيل الدخول",
+            nav_register_mobile: "إنشاء حساب",
+            nav_dashboard_mobile: "لوحة التحكم",
+            nav_logged_in_prefix: "متصل باسم",
             nav_get_quote_mobile: "اطلب عرض سعر",
             hero_title: "من الزراعة التقليدية إلى الذكية – اربط مزرعتك بالمستقبل.",
             hero_subtitle: "حلول تحديث بأسعار معقولة لزراعة أكثر كفاءة.",
@@ -391,15 +418,19 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_email: "البريد الإلكتروني",
             contact_phone: "رقم الهاتف",
             contact_message: "الرسالة",
-            contact_send: "<i class='fas fa-paper-plane ml-2'></i> إرسال الرسالة",
+            contact_send: "إرسال الرسالة",
+            contact_send_label: "إرسال الرسالة",
             contact_sending: "جارٍ إرسال الرسالة…",
             contact_success_message: "تم إرسال رسالتك بنجاح.",
             contact_error_message: "تعذر إرسال الرسالة. تحقق من الحقول وحاول مرة أخرى.",
             contact_network_error: "حدث خطأ في الشبكة. حاول مجددًا.",
+            contact_validation_name: "يرجى إدخال اسم صالح (من 2 إلى 120 حرفًا).",
+            contact_validation_email: "يرجى إدخال بريد إلكتروني صالح.",
+            contact_validation_phone: "رقم الهاتف غير صالح.",
+            contact_validation_message: "يجب أن يحتوي رسالتك على 20 حرفًا على الأقل.",
             account_title: "حسابي",
             auth_login_title: "تسجيل الدخول",
             auth_login_btn: "تسجيل الدخول",
-            auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_prompt: "لا يوجد لديك حساب بعد؟ <a href='register.php' data-route='register' class='text-brand-green-400 font-bold'>إنشاء حساب</a>",
             auth_register_title: "إنشاء حساب",
             auth_register_btn: "إنشاء الحساب",
@@ -414,7 +445,6 @@ document.addEventListener('DOMContentLoaded', () => {
             auth_email_placeholder: "البريد الإلكتروني",
             auth_phone_placeholder: "رقم الهاتف",
             auth_region_placeholder: "المنطقة",
-            auth_login_prompt: "لديك حساب بالفعل؟ <a data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             auth_login_prompt: "لديك حساب بالفعل؟ <a href='account.php' data-route='account' class='text-brand-blue-500 font-bold'>تسجيل الدخول</a>",
             products_section_title: "منتجاتي",
             product_form_instructions: "أدخل بيانات المنتج الأساسية لتحديث لوحة التحكم.",
@@ -455,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     // --- SÉLECTEURS D'ÉLÉMENTS ---
-   let currentLang = 'fr';
+    const defaultLang = 'fr';
     const htmlElement = document.documentElement;
     const body = document.body;
     const languageSwitcher = document.getElementById('language-switcher');
@@ -464,13 +494,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIconLight = document.getElementById('theme-icon-light');
     const themeIconDark = document.getElementById('theme-icon-dark');
-    const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
-    const ctaButtons = document.querySelectorAll('.button, .cta-button');
-    const accountLink = document.body.dataset.accountLink || 'account.php';
-    const registerLink = document.body.dataset.registerLink || 'register.php';
-    const profileLink = document.body.dataset.profileLink || 'profile.php';
-    const accountLink = document.body.dataset.accountLink || '/account.php';
-    const registerLink = document.body.dataset.registerLink || '/register.php';
+    const accountLink = body.dataset.accountLink || 'account.php';
+    const registerLink = body.dataset.registerLink || 'register.php';
+    const profileLink = body.dataset.profileLink || 'profile.php';
+    const requestPath = body.dataset.requestPath || window.location.pathname;
+
+    const savedLang = localStorage.getItem('language');
+    let currentLang = savedLang || body.dataset.currentLang || defaultLang;
 
     const applyDynamicLinks = () => {
         document.querySelectorAll('[data-route="account"]').forEach(link => {
@@ -486,8 +516,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const applyLanguage = (lang) => {
         currentLang = lang;
+        body.dataset.currentLang = lang;
         htmlElement.lang = lang;
-        htmlElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+        htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
         document.querySelectorAll('[data-translate]').forEach(el => {
             const key = el.getAttribute('data-translate');
             if (!el.dataset.original) {
@@ -496,9 +527,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const translation = translations[lang] && translations[lang][key];
             if (translation) {
                 el.innerHTML = translation;
-            } else {
+            } else if (el.dataset.original) {
                 el.innerHTML = el.dataset.original;
-                console.warn(`Missing translation for key '${key}' in language '${lang}'`);
             }
         });
         document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
@@ -521,14 +551,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const savedLang = localStorage.getItem('language') || 'fr';
+    if (!translations[currentLang]) {
+        currentLang = defaultLang;
+    }
+
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    if (languageSwitcher) languageSwitcher.value = savedLang;
-    applyLanguage(savedLang);
+    if (languageSwitcher) {
+        languageSwitcher.value = currentLang;
+    }
+    applyLanguage(currentLang);
     applyDynamicLinks();
     applyTheme(savedTheme);
 
-    const currentPage = window.location.pathname.split("/").pop() || "index.php";
+    const currentPage = (requestPath.split("/").pop() || 'index.php') || 'index.php';
     document.querySelectorAll('.nav-link').forEach(link => {
         if (link.getAttribute('href') === currentPage) link.classList.add('active');
     });
@@ -537,9 +572,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const newLang = e.target.value;
         localStorage.setItem('language', newLang);
         applyLanguage(newLang);
-        applyDynamicLinks();
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', newLang);
+        window.location.href = url.toString();
     });
-    if (menuBtn && mobileMenu) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', String(isHidden));
+        });
+    }
     if (themeToggle) themeToggle.addEventListener('click', () => {
         const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
         localStorage.setItem('theme', newTheme);
@@ -566,16 +609,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const progressContainer = document.getElementById('progress-container');
         const progressBar = document.getElementById('progressBar');
 
-        function showSpinner(show) { aiSpinner.classList.toggle('hidden', !show); }
-        function updateProgressBar(p) { if(progressBar) progressBar.style.width = `${p}%`; }
+        const showSpinner = (show) => { aiSpinner.classList.toggle('hidden', !show); };
+        const updateProgressBar = (p) => { if (progressBar) progressBar.style.width = `${p}%`; };
 
-        function setInputEnabled(enabled) {
+        const setInputEnabled = (enabled) => {
             textInput.disabled = !enabled;
             aiInputForm.querySelector('button[type="submit"]').disabled = !enabled;
             textInput.placeholder = enabled ? "Posez votre question ici..." : "Chargement des modèles IA...";
-        }
+        };
 
-        async function preloadModels() {
+        const preloadModels = async () => {
             setInputEnabled(false);
             progressContainer.classList.remove('hidden');
             updateProgressBar(10);
@@ -584,21 +627,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (typeof mobilenet !== 'undefined') {
                     await tf.setBackend('webgl');
                     models.image = await mobilenet.load({ version: 2, alpha: 1.0 });
-                    console.log('Modèle IA Image chargé.');
                     updateProgressBar(100);
                 }
                 models.ready = true;
                 aiResponseText.innerHTML = `<p data-translate="ai_welcome">${translations[currentLang].ai_welcome}</p>`;
                 setInputEnabled(true);
             } catch (error) {
-                console.error("Échec du chargement des modèles:", error);
+                console.error('Échec du chargement des modèles:', error);
                 aiResponseText.textContent = "Erreur lors du chargement des modèles IA.";
             } finally {
                  setTimeout(() => progressContainer.classList.add('hidden'), 1000);
             }
-        }
+        };
 
-        async function handleTextAnalysis(question) {
+        const handleTextAnalysis = async (question) => {
             if (!question.trim()) return;
             showSpinner(true);
             aiResponseText.textContent = '';
@@ -622,9 +664,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 showSpinner(false);
             }
-        }
+        };
 
-        async function handleImageAnalysis(imageElement) {
+        const handleImageAnalysis = async (imageElement) => {
             if (!imageElement || !imageElement.src) return;
             if (!models.ready || !models.image) {
                  aiResponseText.textContent = "Le modèle IA image n'est pas encore prêt.";
@@ -645,14 +687,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     aiResponseText.innerHTML = "<p>Aucun objet n'a pu être identifié. Essayez une autre photo.</p>";
                 }
             } catch (error) {
-                console.error("Erreur MobileNet:", error);
+                console.error('Erreur MobileNet:', error);
                 aiResponseText.textContent = "Une erreur est survenue lors de l'analyse de l'image.";
             } finally {
                 showSpinner(false);
             }
-        }
+        };
 
-        function displayImage(src) {
+        const displayImage = (src) => {
             imagePreviewWrapper.classList.remove('hidden');
             previewImg.src = src;
             previewImg.hidden = false;
@@ -664,9 +706,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 webcamBtn.classList.remove('active');
             }
             handleImageAnalysis(previewImg);
-        }
+        };
 
-        async function toggleCam() {
+        const toggleCam = async () => {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
                 stream = null;
@@ -687,12 +729,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 captureBtn.classList.remove('hidden');
                 aiResponseText.innerHTML = `<p>Caméra active. Appuyez sur le bouton <i class="fas fa-camera"></i> pour capturer.</p>`;
             } catch (err) {
-                console.error("Erreur caméra:", err);
+                console.error('Erreur caméra:', err);
                 alert("Impossible d'accéder à la caméra.");
             }
-        }
+        };
 
-        function captureImageFromCam() {
+        const captureImageFromCam = () => {
             if (!stream) return;
             const canvas = document.createElement('canvas');
             canvas.width = cam.videoWidth;
@@ -700,7 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
             canvas.getContext('2d').drawImage(cam, 0, 0);
             const imageUrl = canvas.toDataURL('image/jpeg');
             displayImage(imageUrl);
-        }
+        };
 
         aiInputForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -844,7 +886,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (registerSection) registerSection.classList.remove('hidden');
                 }
             });
-    }
 
         // Gère la soumission du formulaire d'ajout de produit
         if (addProductForm) addProductForm.addEventListener('submit', (e) => {
@@ -875,7 +916,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gère la déconnexion
         if (logoutBtn) logoutBtn.addEventListener('click', () => {
             csrfFetch('server/auth.php?action=logout', { method: 'POST' })
-            csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
                 .then(() => { window.location.href = accountLink; });
         });
 
@@ -940,6 +980,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
         };
+
+        displayProducts();
+    }
 
 
     // --- LOGIQUE POUR LA PAGE 'PROFILE.PHP' ---
@@ -1080,7 +1123,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dashboardLogoutBtn) {
             dashboardLogoutBtn.addEventListener('click', () => {
                 csrfFetch('server/auth.php?action=logout', { method: 'POST' })
-                csrfFetch('/server/auth.php?action=logout', { method: 'POST' })
                     .then(() => { window.location.href = accountLink; });
             });
         }
@@ -1219,6 +1261,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         const contactFeedback = document.getElementById('contact-form-feedback');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const submitLabel = submitButton ? submitButton.querySelector('[data-translate="contact_send_label"]') : null;
         const translate = (key, fallback) => (translations[currentLang] && translations[currentLang][key]) || fallback;
         const setContactFeedback = (message, variant = 'neutral') => {
             if (!contactFeedback) return;
@@ -1229,25 +1273,75 @@ document.addEventListener('DOMContentLoaded', () => {
             contactFeedback.classList.add(toneClass);
             contactFeedback.textContent = message;
         };
+        const setSubmitting = (isSubmitting) => {
+            if (!submitButton) return;
+            submitButton.disabled = isSubmitting;
+            submitButton.setAttribute('aria-busy', String(isSubmitting));
+            if (submitLabel) {
+                submitLabel.textContent = translate(isSubmitting ? 'contact_sending' : 'contact_send_label', isSubmitting ? 'Envoi du message…' : 'Envoyer le message');
+            }
+        };
 
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(contactForm);
+            setContactFeedback('');
 
-          csrfFetch('server/contact.php', {
+            const name = (formData.get('name') || '').toString().trim();
+            const email = (formData.get('email') || '').toString().trim();
+            const phone = (formData.get('phone') || '').toString().trim();
+            const message = (formData.get('message') || '').toString().trim();
+            const honeypot = (formData.get('company') || '').toString().trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^\+?[0-9\s.-]{6,25}$/;
+
+            if (name.length < 2 || name.length > 120) {
+                setContactFeedback(translate('contact_validation_name', 'Veuillez saisir un nom valide (2 à 120 caractères).'), 'error');
+                return;
+            }
+            if (!emailRegex.test(email)) {
+                setContactFeedback(translate('contact_validation_email', 'Veuillez saisir une adresse email valide.'), 'error');
+                return;
+            }
+            if (phone && !phoneRegex.test(phone)) {
+                setContactFeedback(translate('contact_validation_phone', 'Le numéro de téléphone est invalide.'), 'error');
+                return;
+            }
+            if (message.length < 20 || message.length > 2000) {
+                setContactFeedback(translate('contact_validation_message', 'Votre message doit contenir au moins 20 caractères.'), 'error');
+                return;
+            }
+
+            if (honeypot) {
+                contactForm.reset();
+                setContactFeedback(translate('contact_success_message', 'Votre message a été envoyé avec succès.'), 'success');
+                return;
+            }
+
+            setSubmitting(true);
+            csrfFetch('server/contact.php', {
                 method: 'POST',
                 body: formData
             })
-                .then(res => res.json())
-                .then(data => {
-                    const message = data.message || translate(data.success ? 'contact_success_message' : 'contact_error_message', data.success ? 'Message envoyé avec succès!' : "Impossible d'envoyer le message.");
-                    setContactFeedback(message, data.success ? 'success' : 'error');
-                    if (data.success) {
+                .then(async (res) => {
+                    if (res.status === 204) {
+                        return { success: true, message: translate('contact_success_message', 'Votre message a été envoyé avec succès.') };
+                    }
+                    const data = await res.json();
+                    return data;
+                })
+                .then((data) => {
+                    const messageText = data && data.message ? data.message : translate(data && data.success ? 'contact_success_message' : 'contact_error_message', data && data.success ? 'Votre message a été envoyé avec succès.' : "Impossible d'envoyer le message.");
+                    setContactFeedback(messageText, data && data.success ? 'success' : 'error');
+                    if (data && data.success) {
                         contactForm.reset();
                     }
                 })
                 .catch(() => {
-                    setContactFeedback(translate('contact_network_error', 'Erreur réseau.'), 'error');
+                    setContactFeedback(translate('contact_network_error', 'Une erreur réseau est survenue. Veuillez réessayer.'), 'error');
+                })
+                .finally(() => {
+                    setSubmitting(false);
                 });
         });
     }

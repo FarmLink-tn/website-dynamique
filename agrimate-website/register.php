@@ -13,7 +13,7 @@ $activeNav = 'account';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main>
+    <main id="main-content" tabindex="-1">
         <section id="account" class="py-20">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="section-title" data-translate="auth_register_title">Créer un compte</h2>
@@ -55,7 +55,6 @@ include __DIR__ . '/includes/header.php';
                         </form>
                         <p id="register-message" class="mt-2 text-red-500"></p>
                         <p class="mt-4 text-text-300" data-translate="auth_login_prompt">Déjà un compte ? <a href="account.php" class="text-brand-blue-500 font-bold" data-route="account">Se connecter</a></p>
-                        <p class="mt-4 text-text-300" data-translate="auth_login_prompt">Déjà un compte ? <a href="/account.php" class="text-brand-blue-500 font-bold" data-route="account">Se connecter</a></p>
                     </div>
 
                 </div>

@@ -1,57 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://farmlink.tn</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/about.html</loc>
+    <loc>https://farmlink.tn/about.php</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/about.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/about.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/about.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/about.php"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/how-it-works.html</loc>
+    <loc>https://farmlink.tn/how-it-works.php</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/how-it-works.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/how-it-works.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/how-it-works.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/how-it-works.php"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/solutions.html</loc>
+    <loc>https://farmlink.tn/solutions.php</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/solutions.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/solutions.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/solutions.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/solutions.php"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/ai-advisor.html</loc>
+    <loc>https://farmlink.tn/ai-advisor.php</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/ai-advisor.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/ai-advisor.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/ai-advisor.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/ai-advisor.php"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/contact.html</loc>
+    <loc>https://farmlink.tn/contact.php</loc>
     <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/contact.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/contact.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/contact.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/contact.php"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/account.html</loc>
+    <loc>https://farmlink.tn/account.php</loc>
     <lastmod>2025-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/account.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/account.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/account.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/account.php"/>
   </url>
   <url>
-    <loc>https://farmlink.tn/register.html</loc>
+    <loc>https://farmlink.tn/register.php</loc>
     <lastmod>2025-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://farmlink.tn/profile.html</loc>
-    <lastmod>2025-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://farmlink.tn/register.php"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://farmlink.tn/register.php?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://farmlink.tn/register.php?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://farmlink.tn/register.php"/>
   </url>
 </urlset>

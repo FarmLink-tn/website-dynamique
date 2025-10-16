@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "no-trailing-whitespace": "off",
+    "void-style": "off",
+    "prefer-native-element": "off"
+  }
+}
