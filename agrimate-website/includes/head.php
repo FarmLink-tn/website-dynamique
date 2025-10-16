@@ -2,8 +2,8 @@
 $pageTitle = $pageTitle ?? 'FarmLink';
 $pageLang = $pageLang ?? current_language();
 $baseUrl = $baseUrl ?? site_base_url();
-$pageDescription = $metaDescription ?? trans('meta.description', $pageLang);
-$pageKeywords = $metaKeywords ?? trans('meta.keywords', $pageLang);
+$pageDescription = $metaDescription ?? 'FarmLink modernise les exploitations agricoles avec des solutions IoT, d\'IA et de rétrofit adaptées aux défis climatiques et hydriques en Tunisie.';
+$pageKeywords = $metaKeywords ?? 'agriculture intelligente, IoT agricole, conseiller IA, irrigation connectée, retrofit, FarmLink, Tunisie';
 $pageRobots = $metaRobots ?? 'index, follow';
 $ogImage = $metaOgImage ?? rtrim($baseUrl, '/') . '/image/logo.png';
 $requestedPath = $canonicalPath ?? (isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/');
@@ -30,6 +30,7 @@ $ogAlternateLocales = array_filter([
 $preconnectHosts = [
     'https://fonts.googleapis.com',
     'https://fonts.gstatic.com',
+    'https://cdnjs.cloudflare.com',
 ];
 ?>
 <!DOCTYPE html>
@@ -67,9 +68,13 @@ $preconnectHosts = [
     <?php foreach ($preconnectHosts as $host): ?>
         <link rel="preconnect" href="<?= htmlspecialchars($host, ENT_QUOTES, 'UTF-8'); ?>" crossorigin>
     <?php endforeach; ?>
-    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941YmG9D5PcJ8y+XKxJ4tT+3btciJ2R2K+7p3u2+Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="aos.css">
+    <style>
+      [data-aos]{opacity:1 !important;transform:none !important;}
+    </style>
     <link rel="stylesheet" href="style.css">
     <?php if (!empty($extraStyles) && is_array($extraStyles)): ?>
         <?php foreach ($extraStyles as $style): ?>

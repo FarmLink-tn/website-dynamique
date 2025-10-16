@@ -18,14 +18,15 @@ if ($method !== 'POST') {
         exit;
     }
     http_response_code(405);
-    echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Method not allowed']);
+    echo json_encode(['success' => false, 'message' => 'Méthode non autorisée.']);
     exit;
 }
 
+// Validate CSRF token on POST requests
 $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? ($_POST['csrf_token'] ?? '');
 if (!$token || !hash_equals($_SESSION['csrf_token'], $token)) {
     http_response_code(403);
-    echo json_encode(['success' => false, 'message' => $responseStrings['error'] ?? 'Invalid CSRF token']);
+    echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
     app_log('contact_invalid_csrf', ['token' => $token !== '' ? 'provided' : 'missing']);
     exit;
 }

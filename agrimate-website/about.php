@@ -1,28 +1,20 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-
-$pageLang = current_language();
-$hero = trans('about.hero', $pageLang);
-$mission = trans('about.mission', $pageLang);
-$timeline = trans('about.timeline', $pageLang);
-$team = trans('about.team', $pageLang);
-$values = trans('about.values', $pageLang);
-
-$pageTitle = 'FarmLink - ' . ($hero['title'] ?? 'À propos');
-$metaDescription = $hero['description'] ?? trans('meta.description', $pageLang);
+$pageTitle = 'À propos de FarmLink Tunisie - Notre mission et notre équipe';
+$metaDescription = "Découvrez l'histoire de FarmLink, notre mission pour digitaliser l'agriculture tunisienne et l'équipe pluridisciplinaire qui accompagne les exploitations vers des performances durables.";
+$metaKeywords = 'FarmLink Tunisie, mission, équipe, agriculture intelligente, retrofit, innovation agricole';
 $canonicalPath = '/about.php';
 $activeNav = 'about';
 
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" role="main">
-        <section class="hero">
-            <div class="container hero__layout">
-                <div class="hero__content">
-                    <p class="eyebrow"><?= htmlspecialchars($hero['eyebrow'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
-                    <h1 class="hero__title"><?= htmlspecialchars($hero['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h1>
-                    <p class="hero__description"><?= htmlspecialchars($hero['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+    <main id="main-content" class="py-20" role="main" tabindex="-1">
+        <section id="about" class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="about_main_title">L'Agriculture de Demain, Une Récolte à la Fois.</h2>
+            <div class="grid md:grid-cols-2 gap-16 items-center mt-20">
+                <div>
+                    <img src="image/about_us_im2.jpg" alt="Ferme intelligente équipée de capteurs IoT" class="rounded-lg shadow-2xl w-full" width="1024" height="640" loading="lazy" decoding="async">
                 </div>
                 <figure class="hero__visual" aria-hidden="true">
                     <img src="image/about_us_im1.png" alt="Équipe FarmLink sur le terrain" loading="lazy" width="960" height="640">

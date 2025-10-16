@@ -1,50 +1,38 @@
-    <footer class="site-footer">
-        <section class="footer-cta" aria-labelledby="footer-cta-title">
-            <div class="footer-cta__content">
-                <div>
-                    <p id="footer-cta-title" class="footer-cta__title"><?= htmlspecialchars(trans('footer.cta_title', $pageLang), ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p class="footer-cta__subtitle"><?= htmlspecialchars(trans('footer.tagline', $pageLang), ENT_QUOTES, 'UTF-8'); ?></p>
-                </div>
-                <a class="footer-cta__button" href="contact.php"><?= htmlspecialchars(trans('footer.cta_button', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a>
-            </div>
-        </section>
-        <div class="footer-columns">
-            <div class="footer-column">
+    <footer class="site-footer border-t border-border-soft mt-12">
+        <div class="container mx-auto px-6 py-12 footer-columns">
+            <div class="footer-column footer-column--brand">
                 <a href="index.php" class="footer-brand">FarmLink</a>
-                <p class="footer-text"><?= htmlspecialchars(trans('footer.tagline', $pageLang), ENT_QUOTES, 'UTF-8'); ?></p>
-                <address class="footer-address">
-                    <?= htmlspecialchars(trans('footer.address', $pageLang), ENT_QUOTES, 'UTF-8'); ?>
-                </address>
+                <p class="footer-text" data-translate="footer_mission">Nous connectons les agriculteurs tunisiens à des outils intelligents et durables.</p>
             </div>
             <div class="footer-column">
-                <h2 class="footer-heading"><?= htmlspecialchars(trans('nav.home', $pageLang), ENT_QUOTES, 'UTF-8'); ?></h2>
+                <h2 class="footer-heading" data-translate="footer_nav_title">Navigation</h2>
                 <ul class="footer-links" aria-label="Navigation secondaire">
-                    <li><a href="index.php"><?= htmlspecialchars(trans('nav.home', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="about.php"><?= htmlspecialchars(trans('nav.about', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="how-it-works.php"><?= htmlspecialchars(trans('nav.how', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="solutions.php"><?= htmlspecialchars(trans('nav.solutions', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="ai-advisor.php"><?= htmlspecialchars(trans('nav.ai', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="contact.php"><?= htmlspecialchars(trans('nav.contact', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
+                    <li><a href="index.php" data-translate="footer_home">Accueil</a></li>
+                    <li><a href="about.php" data-translate="nav_about">À propos</a></li>
+                    <li><a href="how-it-works.php" data-translate="nav_how_it_works">Comment ça marche</a></li>
+                    <li><a href="solutions.php" data-translate="nav_solutions">Nos Solutions</a></li>
+                    <li><a href="ai-advisor.php" data-translate="nav_ai_advisor">✨ Conseiller IA</a></li>
+                    <li><a href="contact.php" data-translate="footer_contact_link">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h2 class="footer-heading"><?= htmlspecialchars(trans('footer.legal', $pageLang), ENT_QUOTES, 'UTF-8'); ?></h2>
+                <h2 class="footer-heading" data-translate="footer_legal_title">Informations légales</h2>
                 <ul class="footer-links" aria-label="Ressources légales">
-                    <li><a href="privacy.php"><?= htmlspecialchars(trans('footer.privacy', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="terms.php"><?= htmlspecialchars(trans('footer.terms', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
-                    <li><a href="cookies.php"><?= htmlspecialchars(trans('footer.cookies', $pageLang), ENT_QUOTES, 'UTF-8'); ?></a></li>
+                    <li><a href="privacy.php" data-translate="footer_privacy">Politique de confidentialité</a></li>
+                    <li><a href="terms.php" data-translate="footer_terms">Conditions d'utilisation</a></li>
+                    <li><a href="cookies.php" data-translate="footer_cookies">Politique de cookies</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h2 class="footer-heading"><?= htmlspecialchars(trans('nav.contact', $pageLang), ENT_QUOTES, 'UTF-8'); ?></h2>
+                <h2 class="footer-heading" data-translate="footer_contact_title">Contact</h2>
                 <ul class="footer-links" aria-label="Coordonnées">
-                    <li><span><?= htmlspecialchars(trans('footer.phone_label', $pageLang), ENT_QUOTES, 'UTF-8'); ?> :</span> <a href="tel:+21612345678">+216 12 345 678</a></li>
-                    <li><span><?= htmlspecialchars(trans('footer.email_label', $pageLang), ENT_QUOTES, 'UTF-8'); ?> :</span> <a href="mailto:contact@farmlink.tn">contact@farmlink.tn</a></li>
+                    <li><a href="mailto:contact@farmlink.tn" data-translate="footer_contact_email">Email : contact@farmlink.tn</a></li>
+                    <li><a href="tel:+21612345678" data-translate="footer_contact_phone">Téléphone : +216 12 345 678</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p><?= htmlspecialchars(trans('footer.copyright', $pageLang), ENT_QUOTES, 'UTF-8'); ?></p>
+            <p data-translate="footer_copyright">&copy; 2025 FarmLink. Tous droits réservés.</p>
         </div>
     </footer>
     <?php if (!empty($beforeMainScripts) && is_array($beforeMainScripts)): ?>

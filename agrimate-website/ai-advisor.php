@@ -11,16 +11,22 @@ $activeNav = 'ai';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" role="main">
-        <section class="hero">
-            <div class="container hero__layout">
-                <div class="hero__content">
-                    <p class="eyebrow">IA agronomique</p>
-                    <h1 class="hero__title">Votre conseiller virtuel connecté au terrain</h1>
-                    <p class="hero__description">Le moteur IA FarmLink analyse vos données de capteurs, images et journaux pour anticiper les stress, recommander des actions et alimenter vos rapports bailleurs en trois langues.</p>
-                    <div class="hero__actions">
-                        <a class="button button--primary" href="contact.php">Demander une démonstration</a>
-                        <a class="button button--ghost" href="solutions.php">Voir les modules compatibles</a>
+    <main id="main-content" role="main" tabindex="-1">
+        <section id="ai-advisor" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title" data-translate="ai_advisor_title">Conseiller Agricole IA</h2>
+
+                <div class="max-w-3xl mx-auto control-card mt-12">
+                    <div id="ai-results-container" class="ai-results-container mb-4">
+                        <div id="image-preview-wrapper" class="hidden">
+                            <img id="previewImg" alt="Aperçu de l'image">
+                            <video id="cam" autoplay playsinline muted hidden></video>
+                            <button id="captureBtn" class="capture-button hidden" title="Prendre une photo"><i class="fas fa-camera"></i></button>
+                        </div>
+                        <div id="ai-response-text" class="ai-response-text">
+                            <p data-translate="ai_welcome">Bonjour ! Posez-moi une question sur vos cultures ou envoyez-moi une photo.</p>
+                        </div>
+                         <div id="ai-spinner" class="spinner mx-auto hidden"></div>
                     </div>
                 </div>
                 <figure class="hero__visual" aria-hidden="true">
