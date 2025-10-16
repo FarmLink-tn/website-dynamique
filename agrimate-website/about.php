@@ -1,25 +1,96 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-$pageTitle = 'FarmLink - À propos';
-$metaDescription = "Découvrez la mission de FarmLink : rendre l'agriculture intelligente accessible grâce au retrofit, à l'IoT et à l'IA pour les exploitations tunisiennes.";
-$metaKeywords = 'FarmLink, à propos, mission, retrofit agricole, innovation agricole Tunisie';
+
+$pageLang = current_language();
+$hero = trans('about.hero', $pageLang);
+$mission = trans('about.mission', $pageLang);
+$timeline = trans('about.timeline', $pageLang);
+$team = trans('about.team', $pageLang);
+$values = trans('about.values', $pageLang);
+
+$pageTitle = 'FarmLink - ' . ($hero['title'] ?? 'À propos');
+$metaDescription = $hero['description'] ?? trans('meta.description', $pageLang);
 $canonicalPath = '/about.php';
 $activeNav = 'about';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" class="py-20" tabindex="-1">
-        <section id="about" class="container mx-auto px-6">
-            <h2 class="section-title" data-translate="about_main_title">L'Agriculture de Demain, Une Récolte à la Fois.</h2>
-            <div class="grid md:grid-cols-2 gap-16 items-center mt-20">
-                <div>
-                    <img src="image/about_us_im2.jpg" alt="Ferme intelligente équipée de capteurs IoT" class="rounded-lg shadow-2xl w-full" width="1024" height="640" loading="lazy" decoding="async">
+    <main id="main-content" role="main">
+        <section class="hero">
+            <div class="container hero__layout">
+                <div class="hero__content">
+                    <p class="eyebrow"><?= htmlspecialchars($hero['eyebrow'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <h1 class="hero__title"><?= htmlspecialchars($hero['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h1>
+                    <p class="hero__description"><?= htmlspecialchars($hero['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
-                <div class="text-left">
-                    <h3 class="text-2xl font-bold text-brand-blue-500 mb-4" data-translate="about_vision_title">Notre Vision : Un futur où chaque ferme est intelligente.</h3>
-                    <p class="text-lg text-text-300" data-translate="about_intro_text">Chez FarmLink, nous voyons l'agriculture non pas comme une industrie du passé, mais comme la technologie la plus essentielle de l'avenir. Nous croyons que la sagesse des pratiques traditionnelles et la puissance des innovations de pointe peuvent coexister pour créer quelque chose de véritablement révolutionnaire. Notre mission est de démocratiser l'agriculture intelligente.</p>
-                    <h4 class="text-xl font-bold text-brand-green-400 mt-6 mb-2" data-translate="about_commitment_title">Notre Engagement : Affronter les défis mondiaux avec l'innovation "retrofit".</h4>
-                    <p class="text-lg text-text-300" data-translate="about_commitment_text">Dans un monde où les ressources sont limitées et les défis climatiques s'intensifient, la mission de FarmLink est plus vitale que jamais.</p>
+                <figure class="hero__visual" aria-hidden="true">
+                    <img src="image/about_us_im1.png" alt="Équipe FarmLink sur le terrain" loading="lazy" width="960" height="640">
+                </figure>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <p class="eyebrow"><?= htmlspecialchars($mission['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <h2 class="section__title"><?= htmlspecialchars($mission['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="grid grid--three">
+                    <?php foreach ($mission['items'] ?? [] as $item): ?>
+                        <article class="card">
+                            <h3><?= htmlspecialchars($item['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($item['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($timeline['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="timeline">
+                    <?php foreach ($timeline['items'] ?? [] as $event): ?>
+                        <article class="timeline__item">
+                            <h3><?= htmlspecialchars($event['year'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($event['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($team['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="team-grid">
+                    <?php foreach ($team['members'] ?? [] as $member): ?>
+                        <article class="team-card">
+                            <h3><?= htmlspecialchars($member['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($member['role'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($values['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                </header>
+                <div class="grid grid--three">
+                    <?php foreach ($values['items'] ?? [] as $value): ?>
+                        <article class="card">
+                            <h3><?= htmlspecialchars($value['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($value['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>

@@ -1,98 +1,142 @@
 <?php
 require __DIR__ . '/includes/bootstrap.php';
-$pageTitle = 'FarmLink - Accueil';
-$metaDescription = "FarmLink modernise l'agriculture tunisienne avec des solutions IoT, IA et retrofit accessibles pour optimiser l'irrigation et les rendements.";
-$metaKeywords = 'FarmLink, agriculture intelligente, IoT agricole, conseiller IA, irrigation connectée, Tunisie';
-$canonicalPath = '/';
+
+$pageLang = current_language();
+$hero = trans('home.hero', $pageLang);
+$metrics = trans('home.metrics', $pageLang);
+$pillars = trans('home.pillars', $pageLang);
+$solutions = trans('home.solutions', $pageLang);
+$workflow = trans('home.workflow', $pageLang);
+$testimonials = trans('home.testimonials', $pageLang);
+$cta = trans('home.cta', $pageLang);
+
+$pageTitle = 'FarmLink Tunisie - ' . ($hero['title'] ?? 'Agriculture intelligente');
+$metaDescription = $hero['description'] ?? trans('meta.description', $pageLang);
+$canonicalPath = '/index.php';
 $activeNav = 'home';
+
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" tabindex="-1">
-        <section id="home" class="hero-bg text-white min-h-screen flex items-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-            <div class="container mx-auto px-6 text-left md:w-1/2 relative z-10" data-aos="fade-right">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight" data-translate="hero_title">Du traditionnel au smart - connectez votre ferme à l'avenir.</h1>
-                <p class="text-xl mb-8" data-translate="hero_subtitle">Solutions de modernisation abordables pour une agriculture plus efficace.</p>
-                <a href="solutions.php" class="button button--glass" data-translate="hero_button">Découvrir nos solutions</a>
-            </div>
-        </section>
-
-        <section class="summary-section py-24" data-aos="fade-up">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-                <div class="summary-image">
-                    <img src="image/about_us_im1.png" alt="Notre vision pour l'agriculture" class="rounded-lg shadow-2xl" width="2816" height="1536" loading="lazy" decoding="async">
-                </div>
-                <div class="summary-text text-left">
-                    <h2 class="section-title" data-translate="summary_about_title">Notre Vision : Un Futur Intelligent</h2>
-                    <p class="summary-desc" data-translate="summary_about_desc">Nous démocratisons l'agriculture intelligente. Découvrez comment notre engagement envers l'innovation "retrofit" relève les défis mondiaux et crée un avenir durable pour tous.</p>
-                    <a href="about.php" class="button button--glass" data-translate="learn_more_about_us">En savoir plus sur nous</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="summary-section bg-bg-850 py-24" data-aos="fade-up">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-                <div class="summary-text text-left">
-                    <h2 class="section-title" data-translate="summary_solutions_title">Solutions Modulaires Puissantes</h2>
-                    <p class="summary-desc" data-translate="summary_solutions_desc">Irrigation intelligente, contrôle des pompes, surveillance environnementale. Explorez nos solutions conçues pour optimiser vos ressources et maximiser vos rendements.</p>
-                    <a href="solutions.php" class="button button--glass" data-translate="explore_solutions">Explorer nos solutions</a>
-                </div>
-                <div class="summary-image">
-                    <img src="image/background_im1.png" alt="Processus de modernisation" class="rounded-lg shadow-2xl" width="1024" height="610" loading="lazy" decoding="async">
-                </div>
-            </div>
-        </section>
-
-        <section class="summary-section py-24" data-aos="fade-up">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-                 <div class="summary-text text-left md:order-2">
-                    <h2 class="section-title" data-translate="summary_ai_advisor_title">Votre Agronome Personnel</h2>
-                    <p class="summary-desc" data-translate="summary_ai_advisor_desc">Un problème avec vos cultures ? Décrivez-le à notre Conseiller IA et recevez une analyse et des recommandations instantanées pour protéger votre récolte.</p>
-                    <a href="ai-advisor.php" class="button button--glass" data-translate="try_ai_advisor">Essayer le conseiller IA</a>
-                </div>
-                <div class="summary-image md:order-1">
-                    <img src="image/about_us_im2.jpg" alt="Conseiller agricole IA" class="rounded-lg shadow-2xl" width="1024" height="640" loading="lazy" decoding="async">
-                </div>
-            </div>
-        </section>
-
-        <section class="summary-section bg-bg-850 py-24" data-aos="fade-up">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="section-title" data-translate="summary_contact_title">Prêt à moderniser votre ferme ?</h2>
-                <p class="summary-desc max-w-2xl mx-auto" data-translate="summary_contact_desc">Discutons de vos besoins. Contactez-nous dès aujourd'hui pour obtenir un devis personnalisé et découvrir comment FarmLink peut transformer votre exploitation.</p>
-                <a href="contact.php" class="button" data-translate="contact_us_button">Contactez-nous</a>
-            </div>
-        </section>
-
-        <section class="bg-bg-950 text-white" data-aos="fade-up">
-            <div class="container mx-auto px-6 text-center py-20">
-                <h2 class="section-title" data-translate="testimonials_title">Ce que disent nos agriculteurs</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                    <div class="testimonial-card">
-                        <img src="image/Karim A.png" alt="Photo de Karim A." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft" width="512" height="512" loading="lazy" decoding="async">
-                        <p class="text-lg italic mt-4" data-translate="testimonial_1_text">"FarmLink a transformé ma gestion de l'eau. J'économise du temps et de l'argent, et mes rendements n'ont jamais été aussi bons."</p>
-                        <div class="mt-4">
-                            <p class="font-bold" data-translate="testimonial_1_name">Karim A.</p>
-                            <p class="text-sm text-text-500" data-translate="testimonial_1_location">Agriculteur, Sidi Bouzid</p>
-                        </div>
+    <main id="main-content" role="main">
+        <section class="hero">
+            <div class="container hero__layout">
+                <div class="hero__content">
+                    <p class="eyebrow"><?= htmlspecialchars($hero['eyebrow'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <h1 class="hero__title"><?= htmlspecialchars($hero['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h1>
+                    <p class="hero__description"><?= htmlspecialchars($hero['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <div class="hero__actions">
+                        <a class="button button--primary" href="solutions.php"><?= htmlspecialchars($hero['primary'] ?? '', ENT_QUOTES, 'UTF-8'); ?></a>
+                        <a class="button button--ghost" href="contact.php"><?= htmlspecialchars($hero['secondary'] ?? '', ENT_QUOTES, 'UTF-8'); ?></a>
                     </div>
-                    <div class="testimonial-card">
-                        <img src="image/fatma.png" alt="Photo de Fatma M." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft" width="2048" height="2048" loading="lazy" decoding="async">
-                        <p class="text-lg italic mt-4" data-translate="testimonial_2_text">"L'installation a été incroyablement simple sur mon équipement existant. Le panneau de contrôle est très intuitif."</p>
-                        <div class="mt-4">
-                            <p class="font-bold" data-translate="testimonial_2_name">Fatma M.</p>
-                            <p class="text-sm text-text-500" data-translate="testimonial_2_location">Exploitante d'oliveraie, Sfax</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <img src="image/yousef.png" alt="Photo de Youssef B." class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-border-soft" width="1905" height="1909" loading="lazy" decoding="async">
-                        <p class="text-lg italic mt-4" data-translate="testimonial_3_text">"Le conseiller IA est un véritable plus. Il m'a aidé à identifier un problème de ravageurs avant qu'il ne se propage. C'est l'avenir !"</p>
-                        <div class="mt-4">
-                            <p class="font-bold" data-translate="testimonial_3_name">Youssef B.</p>
-                            <p class="text-sm text-text-500" data-translate="testimonial_3_location">Serriste, Kairouan</p>
-                        </div>
-                    </div>
+                </div>
+                <figure class="hero__visual" aria-hidden="true">
+                    <img src="image/background_im1.png" alt="" loading="lazy" width="960" height="640">
+                </figure>
+            </div>
+        </section>
+
+        <?php if (is_array($metrics) && count($metrics) > 0): ?>
+            <section class="metrics">
+                <div class="container metrics__grid" aria-label="<?= htmlspecialchars($pillars['title'] ?? 'FarmLink impact', ENT_QUOTES, 'UTF-8'); ?>">
+                    <?php foreach ($metrics as $metric): ?>
+                        <article class="metric-card">
+                            <p class="metric-card__value"><?= htmlspecialchars($metric['value'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p class="metric-card__label"><?= htmlspecialchars($metric['label'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+        <?php endif; ?>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <p class="eyebrow"><?= htmlspecialchars($pillars['eyebrow'] ?? ($pillars['title'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></p>
+                    <h2 class="section__title"><?= htmlspecialchars($pillars['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                    <?php if (!empty($pillars['description'])): ?>
+                        <p class="section__description"><?= htmlspecialchars($pillars['description'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <?php endif; ?>
+                </header>
+                <div class="grid grid--three">
+                    <?php foreach ($pillars['items'] ?? [] as $pillar): ?>
+                        <article class="card">
+                            <h3><?= htmlspecialchars($pillar['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($pillar['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <p class="eyebrow"><?= htmlspecialchars($solutions['eyebrow'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <h2 class="section__title"><?= htmlspecialchars($solutions['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                    <?php if (!empty($solutions['description'])): ?>
+                        <p class="section__description"><?= htmlspecialchars($solutions['description'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <?php endif; ?>
+                </header>
+                <div class="grid grid--three">
+                    <?php foreach ($solutions['items'] ?? [] as $solution): ?>
+                        <article class="card">
+                            <h3><?= htmlspecialchars($solution['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p><?= htmlspecialchars($solution['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($workflow['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                    <?php if (!empty($workflow['description'])): ?>
+                        <p class="section__description"><?= htmlspecialchars($workflow['description'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <?php endif; ?>
+                </header>
+                <div class="workflow">
+                    <?php foreach ($workflow['steps'] ?? [] as $step): ?>
+                        <article class="workflow__step">
+                            <h3><?= htmlspecialchars($step['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <ul class="list">
+                                <?php foreach ($step['points'] ?? [] as $point): ?>
+                                    <li><?= htmlspecialchars($point, ENT_QUOTES, 'UTF-8'); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title"><?= htmlspecialchars($testimonials['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                    <?php if (!empty($testimonials['description'])): ?>
+                        <p class="section__description"><?= htmlspecialchars($testimonials['description'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <?php endif; ?>
+                </header>
+                <div class="testimonials">
+                    <?php foreach ($testimonials['items'] ?? [] as $item): ?>
+                        <article class="testimonial-card">
+                            <p>“<?= htmlspecialchars($item['quote'] ?? '', ENT_QUOTES, 'UTF-8'); ?>”</p>
+                            <strong><?= htmlspecialchars($item['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="cta-block">
+                    <h2><?= htmlspecialchars($cta['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></h2>
+                    <p><?= htmlspecialchars($cta['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                    <a class="button button--primary" href="contact.php"><?= htmlspecialchars($cta['button'] ?? '', ENT_QUOTES, 'UTF-8'); ?></a>
                 </div>
             </div>
         </section>
