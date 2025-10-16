@@ -8,10 +8,13 @@ $activeNav = 'home';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" role="main" tabindex="-1">
         <section id="home" class="hero-bg text-white min-h-screen flex items-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-            <div class="container mx-auto px-6 text-left md:w-1/2 relative z-10" data-aos="fade-right">
+            <picture class="hero-media" aria-hidden="true">
+                <img src="image/background_im2.png" alt="Champ irrigué connecté au coucher du soleil" class="hero-image" width="1024" height="559" loading="eager" decoding="async" fetchpriority="high">
+            </picture>
+            <div class="absolute inset-0 bg-black bg-opacity-60 z-10" aria-hidden="true"></div>
+            <div class="container mx-auto px-6 text-left md:w-1/2 relative z-20" data-aos="fade-right">
                 <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight" data-translate="hero_title">Du traditionnel au smart - connectez votre ferme à l'avenir.</h1>
                 <p class="text-xl mb-8" data-translate="hero_subtitle">Solutions de modernisation abordables pour une agriculture plus efficace.</p>
                 <a href="solutions.php" class="button button--glass" data-translate="hero_button">Découvrir nos solutions</a>

@@ -8,7 +8,7 @@ $activeNav = 'contact';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" role="main" tabindex="-1">
         <section id="contact" class="py-20">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="section-title" data-translate="contact_title">Contactez-nous</h2>
