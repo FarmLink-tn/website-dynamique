@@ -1,7 +1,7 @@
 <?php
 $pageTitle = $pageTitle ?? 'FarmLink';
 $pageLang = $pageLang ?? current_language();
-$baseUrl = $baseUrl ?? 'https://farmlink.tn';
+$baseUrl = $baseUrl ?? site_base_url();
 $pageDescription = $metaDescription ?? 'FarmLink modernise les exploitations agricoles avec des solutions IoT, d\'IA et de rétrofit adaptées aux défis climatiques et hydriques en Tunisie.';
 $pageKeywords = $metaKeywords ?? 'agriculture intelligente, IoT agricole, conseiller IA, irrigation connectée, retrofit, FarmLink, Tunisie';
 $pageRobots = $metaRobots ?? 'index, follow';

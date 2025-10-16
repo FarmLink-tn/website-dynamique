@@ -2,7 +2,7 @@
 $activeNav = $activeNav ?? '';
 $pageLang = $pageLang ?? current_language();
 $requestedPath = $requestedPath ?? (isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/');
-$baseUrl = $baseUrl ?? 'https://farmlink.tn';
+$baseUrl = $baseUrl ?? site_base_url();
 $navAccountPath = isAuthenticated() ? 'profile.php' : 'account.php';
 $registerPath = 'register.php';
 $defaultLanguage = $defaultLanguage ?? 'fr';
