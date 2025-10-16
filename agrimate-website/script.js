@@ -53,7 +53,6 @@ function csrfFetch(url, options = {}) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    AOS.init();
     // --- DICTIONNAIRE DE TRADUCTION COMPLET ---
     const translations = {
         fr: {
@@ -129,6 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_name: "Nom",
             contact_email: "Email",
             contact_phone: "Numéro de téléphone",
+            contact_name_placeholder: "Votre nom complet",
+            contact_email_placeholder: "votre.email@exemple.com",
+            contact_phone_placeholder: "Votre numéro de téléphone (optionnel)",
+            contact_message_placeholder: "Décrivez votre projet ou votre question ici...",
             contact_message: "Message",
             contact_send: "Envoyer le message",
             contact_send_label: "Envoyer le message",
@@ -188,6 +191,62 @@ document.addEventListener('DOMContentLoaded', () => {
             profile_phone_label: "Téléphone",
             profile_region_label: "Région",
             profile_update_button: "Mettre à jour",
+            footer_mission: "Nous connectons les agriculteurs tunisiens à des outils intelligents et durables.",
+            footer_nav_title: "Navigation",
+            footer_legal_title: "Informations légales",
+            footer_home: "Accueil",
+            footer_contact_link: "Contact",
+            footer_privacy: "Politique de confidentialité",
+            footer_terms: "Conditions d'utilisation",
+            footer_cookies: "Politique de cookies",
+            footer_contact_title: "Contact",
+            footer_contact_email: "Email : contact@farmlink.tn",
+            footer_contact_phone: "Téléphone : +216 12 345 678",
+            privacy_title: "Politique de confidentialité",
+            privacy_intro: "Cette politique explique comment FarmLink collecte, utilise et protège les informations personnelles de ses utilisateurs et clients.",
+            privacy_collection_heading: "Données que nous collectons",
+            privacy_collection_text: "Nous collectons uniquement les informations nécessaires pour fournir nos services et répondre à vos demandes.",
+            privacy_collection_item_1: "Données d'identité : nom, prénom, entreprise et coordonnées.",
+            privacy_collection_item_2: "Données de contact : adresse email, numéro de téléphone et préférences linguistiques.",
+            privacy_collection_item_3: "Données d'utilisation : interactions sur le site, demandes envoyées et réponses reçues.",
+            privacy_use_heading: "Comment nous utilisons vos données",
+            privacy_use_item_1: "Répondre à vos demandes de contact et préparer des devis personnalisés.",
+            privacy_use_item_2: "Assurer le suivi de votre compte FarmLink et sécuriser l'accès aux tableaux de bord.",
+            privacy_use_item_3: "Améliorer nos services, mesurer les performances et détecter les tentatives de fraude.",
+            privacy_legal_heading: "Base légale & conservation",
+            privacy_legal_text: "Vos données sont traitées sur la base de votre consentement, de l'exécution d'un contrat ou de nos intérêts légitimes. Elles sont conservées pendant la durée de la relation commerciale, puis archivées pendant la période légale nécessaire.",
+            privacy_rights_heading: "Vos droits",
+            privacy_rights_intro: "Conformément au RGPD et à la loi tunisienne, vous disposez des droits suivants :",
+            privacy_rights_item_1: "Accéder à vos données et en obtenir une copie.",
+            privacy_rights_item_2: "Rectifier des informations inexactes ou incomplètes.",
+            privacy_rights_item_3: "Demander l'effacement de vos données ou la limitation du traitement.",
+            privacy_rights_item_4: "Vous opposer au traitement ou retirer votre consentement à tout moment.",
+            privacy_contact_heading: "Contact et réclamations",
+            privacy_contact_text: "Pour exercer vos droits ou poser une question, contactez-nous à l'adresse contact@farmlink.tn. Vous pouvez également saisir l'autorité de protection des données compétente.",
+            terms_title: "Conditions d'utilisation",
+            terms_intro: "Ces conditions régissent l'utilisation du site et des services FarmLink par les agriculteurs, partenaires et visiteurs.",
+            terms_usage_heading: "Utilisation du site",
+            terms_usage_text: "Vous vous engagez à utiliser FarmLink de manière conforme à la loi et à ne pas porter atteinte à l'intégrité du service ni aux droits de tiers.",
+            terms_accounts_heading: "Comptes et sécurité",
+            terms_accounts_text: "Les accès réservés (tableau de bord, administration) sont strictement personnels. Vous devez protéger vos identifiants et signaler toute utilisation non autorisée.",
+            terms_liability_heading: "Responsabilité",
+            terms_liability_text: "FarmLink met en œuvre des mesures techniques pour assurer la disponibilité du service. Nous ne pouvons toutefois être tenus responsables des dommages indirects ou causés par une mauvaise utilisation.",
+            terms_changes_heading: "Modifications",
+            terms_changes_text: "Nous pouvons mettre à jour ces conditions pour refléter l'évolution de nos services ou la réglementation. Les nouvelles versions prennent effet dès leur publication.",
+            terms_contact_heading: "Nous contacter",
+            terms_contact_text: "Pour toute question relative à ces conditions, écrivez-nous à contact@farmlink.tn. Nous répondrons dans les meilleurs délais.",
+            cookies_title: "Politique de cookies",
+            cookies_intro: "Cette politique détaille les types de cookies utilisés sur FarmLink et les moyens de gérer vos préférences.",
+            cookies_definition_heading: "Qu'est-ce qu'un cookie ?",
+            cookies_definition_text: "Un cookie est un petit fichier texte déposé sur votre appareil pour assurer le bon fonctionnement du site et améliorer votre expérience.",
+            cookies_types_heading: "Cookies utilisés",
+            cookies_types_item_1: "Cookies essentiels : nécessaires à la sécurité, à la gestion de session et au maintien de vos préférences linguistiques.",
+            cookies_types_item_2: "Cookies de performance : nous aident à mesurer l'utilisation du site pour améliorer nos services.",
+            cookies_types_item_3: "Aucun cookie publicitaire tiers n'est utilisé sur FarmLink.",
+            cookies_control_heading: "Vos choix",
+            cookies_control_text: "Vous pouvez configurer votre navigateur pour bloquer ou supprimer les cookies. Certaines fonctionnalités essentielles de FarmLink peuvent toutefois ne plus fonctionner correctement.",
+            cookies_contact_heading: "Nous contacter",
+            cookies_contact_text: "Pour toute question sur l'utilisation des cookies, écrivez-nous à contact@farmlink.tn.",
             context_agricole: `
                 ### SUJET: AGRICULTURE EN TUNISIE ###
                 L'agriculture en Tunisie fait face à des défis comme la sécheresse et la salinité des sols. Les cultures principales sont les olives, les céréales, les dattes et les agrumes. La bonne gestion de l'eau est cruciale.
@@ -275,6 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_name: "Name",
             contact_email: "Email",
             contact_phone: "Phone Number",
+            contact_name_placeholder: "Your full name",
+            contact_email_placeholder: "your.email@example.com",
+            contact_phone_placeholder: "Your phone number (optional)",
+            contact_message_placeholder: "Describe your project or question here...",
             contact_message: "Message",
             contact_send: "Send message",
             contact_send_label: "Send message",
@@ -334,6 +397,62 @@ document.addEventListener('DOMContentLoaded', () => {
             profile_phone_label: "Phone",
             profile_region_label: "Region",
             profile_update_button: "Update",
+            footer_mission: "We connect Tunisian farmers with smart, sustainable tools.",
+            footer_nav_title: "Navigation",
+            footer_legal_title: "Legal",
+            footer_home: "Home",
+            footer_contact_link: "Contact",
+            footer_privacy: "Privacy Policy",
+            footer_terms: "Terms of Use",
+            footer_cookies: "Cookie Policy",
+            footer_contact_title: "Get in touch",
+            footer_contact_email: "Email: contact@farmlink.tn",
+            footer_contact_phone: "Phone: +216 12 345 678",
+            privacy_title: "Privacy Policy",
+            privacy_intro: "This policy explains how FarmLink collects, uses, and protects users' and customers' personal information.",
+            privacy_collection_heading: "Data We Collect",
+            privacy_collection_text: "We only collect information required to deliver our services and respond to your requests.",
+            privacy_collection_item_1: "Identity data: name, surname, company, and contact details.",
+            privacy_collection_item_2: "Contact data: email address, phone number, and language preferences.",
+            privacy_collection_item_3: "Usage data: site interactions, submitted requests, and responses provided.",
+            privacy_use_heading: "How We Use Your Data",
+            privacy_use_item_1: "Answer contact requests and prepare tailored proposals.",
+            privacy_use_item_2: "Maintain your FarmLink account and secure dashboard access.",
+            privacy_use_item_3: "Improve our services, measure performance, and detect fraud attempts.",
+            privacy_legal_heading: "Legal Basis & Retention",
+            privacy_legal_text: "We process data based on your consent, contract performance, or our legitimate interests. Data is kept for the duration of our relationship and archived for the legally required period.",
+            privacy_rights_heading: "Your Rights",
+            privacy_rights_intro: "Under GDPR and Tunisian law, you have the following rights:",
+            privacy_rights_item_1: "Access your data and request a copy.",
+            privacy_rights_item_2: "Correct inaccurate or incomplete information.",
+            privacy_rights_item_3: "Request deletion of your data or restriction of processing.",
+            privacy_rights_item_4: "Object to processing or withdraw consent at any time.",
+            privacy_contact_heading: "Contact & Complaints",
+            privacy_contact_text: "To exercise your rights or ask a question, email us at contact@farmlink.tn. You may also contact the relevant data protection authority.",
+            terms_title: "Terms of Use",
+            terms_intro: "These terms govern how farmers, partners, and visitors use the FarmLink website and services.",
+            terms_usage_heading: "Use of the Website",
+            terms_usage_text: "You agree to use FarmLink lawfully and to avoid any action that harms the service or third-party rights.",
+            terms_accounts_heading: "Accounts & Security",
+            terms_accounts_text: "Restricted areas (dashboard, admin) are personal. Protect your credentials and report unauthorised access.",
+            terms_liability_heading: "Liability",
+            terms_liability_text: "FarmLink implements technical safeguards to ensure availability. We cannot be held liable for indirect damages or misuse.",
+            terms_changes_heading: "Changes",
+            terms_changes_text: "We may update these terms to reflect service changes or regulations. Updates apply as soon as they are published.",
+            terms_contact_heading: "Contact Us",
+            terms_contact_text: "For any questions about these terms, email contact@farmlink.tn and we'll respond promptly.",
+            cookies_title: "Cookie Policy",
+            cookies_intro: "This policy describes the types of cookies used on FarmLink and how to manage your preferences.",
+            cookies_definition_heading: "What Is a Cookie?",
+            cookies_definition_text: "A cookie is a small text file stored on your device to keep the site running smoothly and enhance your experience.",
+            cookies_types_heading: "Cookies We Use",
+            cookies_types_item_1: "Essential cookies: required for security, session management, and remembering your language choice.",
+            cookies_types_item_2: "Performance cookies: help us measure site usage to improve our services.",
+            cookies_types_item_3: "No third-party advertising cookies are used on FarmLink.",
+            cookies_control_heading: "Your Choices",
+            cookies_control_text: "You can configure your browser to block or delete cookies. Some essential FarmLink features may stop working correctly.",
+            cookies_contact_heading: "Contact Us",
+            cookies_contact_text: "If you have questions about cookies, email contact@farmlink.tn.",
             context_agricole: `
                 ### SUBJECT: AGRICULTURE IN TUNISIA ###
                 Agriculture in Tunisia faces challenges like drought and soil salinity. Main crops include olives, cereals, dates, and citrus fruits. Good water management is crucial.
@@ -417,6 +536,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contact_name: "الاسم",
             contact_email: "البريد الإلكتروني",
             contact_phone: "رقم الهاتف",
+            contact_name_placeholder: "اسمك الكامل",
+            contact_email_placeholder: "your.email@example.com",
+            contact_phone_placeholder: "رقم هاتفك (اختياري)",
+            contact_message_placeholder: "صف مشروعك أو سؤالك هنا...",
             contact_message: "الرسالة",
             contact_send: "إرسال الرسالة",
             contact_send_label: "إرسال الرسالة",
@@ -476,6 +599,62 @@ document.addEventListener('DOMContentLoaded', () => {
             profile_phone_label: "الهاتف",
             profile_region_label: "المنطقة",
             profile_update_button: "تحديث",
+            footer_mission: "نربط المزارعين التونسيين بأدوات ذكية ومستدامة.",
+            footer_nav_title: "التنقل",
+            footer_legal_title: "الوثائق القانونية",
+            footer_home: "الرئيسية",
+            footer_contact_link: "اتصل بنا",
+            footer_privacy: "سياسة الخصوصية",
+            footer_terms: "شروط الاستخدام",
+            footer_cookies: "سياسة ملفات تعريف الارتباط",
+            footer_contact_title: "تواصل معنا",
+            footer_contact_email: "البريد الإلكتروني: contact@farmlink.tn",
+            footer_contact_phone: "الهاتف: ‎+216 12 345 678",
+            privacy_title: "سياسة الخصوصية",
+            privacy_intro: "توضح هذه السياسة كيفية جمع FarmLink للمعلومات الشخصية واستخدامها وحمايتها للمستخدمين والعملاء.",
+            privacy_collection_heading: "البيانات التي نجمعها",
+            privacy_collection_text: "نجمع فقط المعلومات اللازمة لتقديم خدماتنا والرد على طلباتك.",
+            privacy_collection_item_1: "بيانات الهوية: الاسم واللقب والشركة وبيانات الاتصال.",
+            privacy_collection_item_2: "بيانات الاتصال: عنوان البريد الإلكتروني، رقم الهاتف، وتفضيلات اللغة.",
+            privacy_collection_item_3: "بيانات الاستخدام: التفاعلات على الموقع، الطلبات المرسلة، والردود المستلمة.",
+            privacy_use_heading: "كيفية استخدامنا لبياناتك",
+            privacy_use_item_1: "الرد على طلبات الاتصال وإعداد عروض مخصصة.",
+            privacy_use_item_2: "متابعة حسابك على FarmLink وتأمين الوصول إلى لوحات التحكم.",
+            privacy_use_item_3: "تحسين خدماتنا، قياس الأداء، واكتشاف محاولات الاحتيال.",
+            privacy_legal_heading: "الأساس القانوني والاحتفاظ",
+            privacy_legal_text: "نُعالج بياناتك بناءً على موافقتك أو تنفيذ عقد أو مصالحنا المشروعة. نحتفظ بالبيانات طوال العلاقة التجارية ثم نؤرشفها للمدة القانونية اللازمة.",
+            privacy_rights_heading: "حقوقك",
+            privacy_rights_intro: "وفقًا للائحة العامة لحماية البيانات والقانون التونسي لديك الحقوق التالية:",
+            privacy_rights_item_1: "الوصول إلى بياناتك وطلب نسخة منها.",
+            privacy_rights_item_2: "تصحيح المعلومات غير الدقيقة أو غير المكتملة.",
+            privacy_rights_item_3: "طلب حذف بياناتك أو تقييد معالجتها.",
+            privacy_rights_item_4: "الاعتراض على المعالجة أو سحب موافقتك في أي وقت.",
+            privacy_contact_heading: "التواصل والشكاوى",
+            privacy_contact_text: "لممارسة حقوقك أو طرح سؤال راسلنا على contact@farmlink.tn. يمكنك أيضًا التواصل مع هيئة حماية البيانات المختصة.",
+            terms_title: "شروط الاستخدام",
+            terms_intro: "تنظم هذه الشروط كيفية استخدام المزارعين والشركاء والزوار لموقع وخدمات FarmLink.",
+            terms_usage_heading: "استخدام الموقع",
+            terms_usage_text: "تتعهد باستخدام FarmLink بشكل قانوني وعدم الإضرار بالخدمة أو حقوق الآخرين.",
+            terms_accounts_heading: "الحسابات والأمان",
+            terms_accounts_text: "المناطق المحمية (لوحة التحكم، الإدارة) شخصية. يجب حماية بيانات الدخول والإبلاغ عن أي استخدام غير مصرح به.",
+            terms_liability_heading: "المسؤولية",
+            terms_liability_text: "تُطبق FarmLink تدابير تقنية لضمان توفر الخدمة. لا نتحمل مسؤولية الأضرار غير المباشرة أو سوء الاستخدام.",
+            terms_changes_heading: "التعديلات",
+            terms_changes_text: "قد نقوم بتحديث هذه الشروط لتواكب تطور خدماتنا أو القوانين. تصبح النسخ الجديدة سارية فور نشرها.",
+            terms_contact_heading: "اتصل بنا",
+            terms_contact_text: "لأي استفسار حول هذه الشروط راسلنا على contact@farmlink.tn وسنرد عليك في أقرب وقت.",
+            cookies_title: "سياسة ملفات تعريف الارتباط",
+            cookies_intro: "تشرح هذه السياسة أنواع ملفات تعريف الارتباط المستخدمة على FarmLink وكيفية إدارة تفضيلاتك.",
+            cookies_definition_heading: "ما هو ملف تعريف الارتباط؟",
+            cookies_definition_text: "ملف تعريف الارتباط هو ملف نصي صغير يُخزن على جهازك لضمان عمل الموقع وتحسين تجربتك.",
+            cookies_types_heading: "ملفات تعريف الارتباط التي نستخدمها",
+            cookies_types_item_1: "ملفات أساسية: ضرورية للأمان وإدارة الجلسة وتذكر تفضيلات اللغة.",
+            cookies_types_item_2: "ملفات الأداء: تساعدنا على قياس استخدام الموقع لتحسين خدماتنا.",
+            cookies_types_item_3: "لا نستخدم أي ملفات تعريف ارتباط إعلانية تابعة لطرف ثالث على FarmLink.",
+            cookies_control_heading: "اختياراتك",
+            cookies_control_text: "يمكنك ضبط متصفحك لحظر ملفات تعريف الارتباط أو حذفها. قد تتوقف بعض وظائف FarmLink الأساسية عن العمل بشكل صحيح.",
+            cookies_contact_heading: "تواصل معنا",
+            cookies_contact_text: "لأي سؤال حول ملفات تعريف الارتباط راسلنا على contact@farmlink.tn.",
             context_agricole: `
                 ### الموضوع: الزراعة في تونس ###
                 تواجه الزراعة في تونس تحديات مثل الجفاف وملوحة التربة. المحاصيل الرئيسية تشمل الزيتون والحبوب والتمور والحمضيات. الإدارة الجيدة للمياه أمر بالغ الأهمية.
@@ -485,9 +664,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     // --- SÉLECTEURS D'ÉLÉMENTS ---
-    const defaultLang = 'fr';
-    const htmlElement = document.documentElement;
     const body = document.body;
+    const defaultLang = body.dataset.defaultLang || 'fr';
+    const htmlElement = document.documentElement;
     const languageSwitcher = document.getElementById('language-switcher');
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -500,7 +679,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const requestPath = body.dataset.requestPath || window.location.pathname;
 
     const savedLang = localStorage.getItem('language');
-    let currentLang = savedLang || body.dataset.currentLang || defaultLang;
+    const sessionLang = body.dataset.currentLang || defaultLang;
+    let currentLang = savedLang && translations[savedLang] ? savedLang : sessionLang;
+    if (!translations[currentLang]) {
+        currentLang = defaultLang;
+    }
+    localStorage.setItem('language', currentLang);
 
     const applyDynamicLinks = () => {
         document.querySelectorAll('[data-route="account"]').forEach(link => {
@@ -519,6 +703,9 @@ document.addEventListener('DOMContentLoaded', () => {
         body.dataset.currentLang = lang;
         htmlElement.lang = lang;
         htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        if (languageSwitcher && languageSwitcher.value !== lang) {
+            languageSwitcher.value = lang;
+        }
         document.querySelectorAll('[data-translate]').forEach(el => {
             const key = el.getAttribute('data-translate');
             if (!el.dataset.original) {
@@ -551,11 +738,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (!translations[currentLang]) {
-        currentLang = defaultLang;
-    }
-
     const savedTheme = localStorage.getItem('theme') || 'dark';
+    const localeHrefMap = languageSwitcher
+        ? Array.from(languageSwitcher.options).reduce((acc, option) => {
+            const value = option.value.trim();
+            const href = option.dataset.href;
+            if (value && href) {
+                acc[value] = href;
+            }
+            return acc;
+        }, {})
+        : {};
+
     if (languageSwitcher) {
         languageSwitcher.value = currentLang;
     }
@@ -570,10 +764,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (languageSwitcher) languageSwitcher.addEventListener('change', (e) => {
         const newLang = e.target.value;
-        localStorage.setItem('language', newLang);
+        if (translations[newLang]) {
+            localStorage.setItem('language', newLang);
+        } else {
+            localStorage.removeItem('language');
+        }
         applyLanguage(newLang);
+        const targetHref = localeHrefMap[newLang];
+        if (targetHref) {
+            window.location.href = targetHref;
+            return;
+        }
         const url = new URL(window.location.href);
-        url.searchParams.set('lang', newLang);
+        if (newLang === defaultLang) {
+            url.searchParams.delete('lang');
+        } else {
+            url.searchParams.set('lang', newLang);
+        }
         window.location.href = url.toString();
     });
     if (menuBtn && mobileMenu) {
@@ -771,6 +978,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('ai-advisor')) {
             preloadModels();
         }
+    }
+
+    const skipLink = document.querySelector('.skip-link');
+    const mainContent = document.getElementById('main-content');
+    if (skipLink && mainContent) {
+        skipLink.addEventListener('click', () => {
+            requestAnimationFrame(() => {
+                mainContent.focus();
+            });
+        });
     }
 
     // Fetch CSRF token for the session

@@ -13,6 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $assetBaseUrl = rtrim(getenv('ASSET_BASE_URL') ?: '', '/');
+$siteBaseUrlEnv = rtrim(getenv('SITE_BASE_URL') ?: getenv('BASE_URL') ?: '', '/');
 
 $supportedLanguages = ['fr', 'en', 'ar'];
 $defaultLanguage = 'fr';
@@ -51,6 +52,26 @@ if (!function_exists('asset_url')) {
         }
 
         return $normalized;
+    }
+}
+
+if (!function_exists('site_base_url')) {
+    function site_base_url(): string
+    {
+        global $siteBaseUrlEnv, $httpsOn;
+
+        if ($siteBaseUrlEnv !== '') {
+            return $siteBaseUrlEnv;
+        }
+
+        $isHttps = $httpsOn ?? ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443'));
+        $scheme = $isHttps ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST']
+            ?? $_SERVER['SERVER_NAME']
+            ?? 'localhost';
+
+        return rtrim($scheme . '://' . $host, '/');
     }
 }
 
